@@ -4,6 +4,7 @@
 
 :root {
   --panel-width: 360px;
+  --timeseries-height: 270px;
 
   --bg: #0f172a;
   --panel: #ffffff;
@@ -33,13 +34,6 @@ body,
   display: grid;
   grid-template-columns: 1fr var(--panel-width);
   background: var(--bg);
-}
-
-.subtitle {
-  margin: 0 0 0.75rem;
-  font-size: 0.9rem;
-  line-height: 1.35;
-  color: var(--muted);
 }
 
 /* =========================================================
@@ -81,7 +75,7 @@ header {
 }
 
 h1 {
-  margin: 0 0 0.75rem;
+  margin: 0 0 0.5rem;
   font-size: 1.35rem;
   line-height: 1.2;
 }
@@ -89,6 +83,13 @@ h1 {
 h2 {
   margin: 0 0 0.5rem;
   font-size: 0.95rem;
+}
+
+.subtitle {
+  margin: 0 0 0.75rem;
+  font-size: 0.9rem;
+  line-height: 1.35;
+  color: var(--muted);
 }
 
 /* =========================================================
@@ -253,63 +254,70 @@ summary {
 }
 
 /* =========================================================
-   Time series list
+   Bottom time-series panel
    ========================================================= */
 
-.helper-text {
-  margin: 0.5rem 0 0.75rem;
+.timeseries-panel {
+  position: fixed;
+  left: 0;
+  right: var(--panel-width);
+  bottom: 0;
+  z-index: 900;
+  height: var(--timeseries-height);
+  padding: 0.8rem 1rem 1rem;
+  background: rgba(248, 250, 252, 0.96);
+  border-top: 1px solid var(--border);
+  box-shadow: 0 -12px 30px rgba(15, 23, 42, 0.18);
+  backdrop-filter: blur(8px);
+}
+
+.timeseries-panel.collapsed {
+  height: auto;
+  padding-bottom: 0.8rem;
+}
+
+.timeseries-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.timeseries-header h2 {
+  margin: 0 0 0.15rem;
+  font-size: 0.95rem;
+}
+
+.timeseries-header p {
+  margin: 0;
   font-size: 0.8rem;
   color: var(--muted);
 }
 
-.timeseries-list {
-  display: grid;
-  gap: 0.4rem;
-  max-height: 320px;
-  overflow-y: auto;
-  padding-right: 0.25rem;
-}
-
-.timeseries-row {
-  width: 100%;
-  padding: 0.6rem;
-  text-align: left;
+.timeseries-toggle {
+  padding: 0.4rem 0.65rem;
   font: inherit;
-  background: #f8fafc;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #334155;
+  background: #ffffff;
   border: 1px solid var(--border);
-  border-radius: 0.65rem;
+  border-radius: 999px;
   cursor: pointer;
 }
 
-.timeseries-row:hover {
-  background: #eef2ff;
-  border-color: #c7d2fe;
+.timeseries-toggle:hover {
+  background: #f1f5f9;
 }
 
-.timeseries-row.active {
-  background: #dbeafe;
-  border-color: #60a5fa;
+.timeseries-body {
+  height: calc(var(--timeseries-height) - 82px);
+  min-height: 160px;
 }
 
-.timeseries-time {
-  display: block;
-  margin-bottom: 0.2rem;
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--text);
-}
-
-.timeseries-value {
-  display: block;
-  font-size: 0.8rem;
-  color: var(--muted);
-}
-
-.timeseries-location {
-  display: block;
-  margin-top: 0.15rem;
-  font-size: 0.72rem;
-  color: var(--muted);
+.timeseries-panel.collapsed .timeseries-body {
+  display: none;
 }
 
 /* =========================================================
@@ -330,5 +338,15 @@ summary {
     height: auto;
     border-left: none;
     border-top: 1px solid var(--border);
+    padding-bottom: 5rem;
+  }
+
+  .timeseries-panel {
+    right: 0;
+    height: 250px;
+  }
+
+  .timeseries-body {
+    height: 165px;
   }
 }

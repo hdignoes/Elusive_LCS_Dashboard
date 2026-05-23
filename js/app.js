@@ -3,10 +3,12 @@ let trackLayer;
 let plumeLayer;
 let currentMarker;
 let selectedHistoryMarker;
+let timeseriesChart;
 
 let latestData = null;
 let historyData = null;
 let selectedPollutant = CONFIG.defaultPollutant;
+let timeseriesPoints = [];
 
 const els = {
   status: document.getElementById("status-pill"),
@@ -15,7 +17,10 @@ const els = {
   pollutantSelect: document.getElementById("pollutant-select"),
   pollutantList: document.getElementById("pollutant-list"),
   legend: document.getElementById("legend"),
-  timeseriesList: document.getElementById("timeseries-list")
+  timeseriesPanel: document.getElementById("timeseries-panel"),
+  timeseriesToggle: document.getElementById("timeseries-toggle"),
+  timeseriesSubtitle: document.getElementById("timeseries-subtitle"),
+  timeseriesChart: document.getElementById("timeseries-chart")
 };
 
 document.addEventListener("DOMContentLoaded", init);
@@ -23,6 +28,7 @@ document.addEventListener("DOMContentLoaded", init);
 function init() {
   initMap();
   initPollutantSelect();
+  initTimeseriesPanel();
   loadAllData();
 
   setInterval(loadAllData, CONFIG.refreshMs);
@@ -60,7 +66,7 @@ function initPollutantSelect() {
 
     renderPlume();
     renderLegend();
-    renderTimeSeries();
+    renderTimeseriesChart();
 
     if (selectedHistoryMarker && selectedHistoryMarker._selectedPoint) {
       selectedHistoryMarker.bindPopup(
@@ -70,6 +76,23 @@ function initPollutantSelect() {
   });
 
   renderLegend();
+}
+
+function initTimeseriesPanel() {
+  if (!els.timeseriesPanel || !els.timeseriesToggle) return;
+
+  els.timeseriesToggle.addEventListener("click", () => {
+    const isCollapsed = els.timeseriesPanel.classList.toggle("collapsed");
+
+    els.timeseriesToggle.textContent = isCollapsed ? "Show" : "Minimize";
+    els.timeseriesToggle.setAttribute("aria-expanded", String(!isCollapsed));
+
+    setTimeout(() => {
+      if (timeseriesChart) {
+        timeseriesChart.resize();
+      }
+    }, 0);
+  });
 }
 
 /* =========================================================
@@ -90,7 +113,7 @@ async function loadAllData() {
     renderPlume();
     renderCurrentMarker();
     renderPanel();
-    renderTimeSeries();
+    renderTimeseriesChart();
 
     setStatusFromTimestamp(latest.timestamp);
   } catch (error) {
@@ -133,10 +156,11 @@ function getHistoryPoints() {
         Number.isFinite(Number(coords[1]))
       );
     })
-    .map((feature) => {
+    .map((feature, index) => {
       const [lon, lat] = feature.geometry.coordinates;
 
       return {
+        index,
         lat: Number(lat),
         lon: Number(lon),
         properties: feature.properties || {}
@@ -144,36 +168,37 @@ function getHistoryPoints() {
     });
 }
 
-function getLatestBearing() {
-  const points = getHistoryPoints()
-    .map((point, index) => {
+function getSortedHistoryPointsAscending() {
+  return getHistoryPoints()
+    .map((point) => {
       return {
         ...point,
-        index,
         time: Date.parse(point.properties.timestamp)
       };
     })
-    .filter((point) => {
-      return (
-        Number.isFinite(point.lat) &&
-        Number.isFinite(point.lon)
-      );
+    .sort((a, b) => {
+      const aHasTime = Number.isFinite(a.time);
+      const bHasTime = Number.isFinite(b.time);
+
+      if (aHasTime && bHasTime && a.time !== b.time) {
+        return a.time - b.time;
+      }
+
+      return a.index - b.index;
     });
+}
+
+function getLatestBearing() {
+  const points = getSortedHistoryPointsAscending().filter((point) => {
+    return (
+      Number.isFinite(point.lat) &&
+      Number.isFinite(point.lon)
+    );
+  });
 
   if (points.length < 2) {
     return null;
   }
-
-  points.sort((a, b) => {
-    const aHasTime = Number.isFinite(a.time);
-    const bHasTime = Number.isFinite(b.time);
-
-    if (aHasTime && bHasTime && a.time !== b.time) {
-      return a.time - b.time;
-    }
-
-    return a.index - b.index;
-  });
 
   const from = points[points.length - 2];
   const to = points[points.length - 1];
@@ -192,7 +217,7 @@ function getLatestBearing() {
 function renderTrack() {
   trackLayer.clearLayers();
 
-  const points = getHistoryPoints();
+  const points = getSortedHistoryPointsAscending();
   const latLngs = points.map((point) => [point.lat, point.lon]);
 
   if (latLngs.length === 0) return;
@@ -215,7 +240,7 @@ function renderTrack() {
 function renderPlume() {
   plumeLayer.clearLayers();
 
-  const points = getHistoryPoints();
+  const points = getSortedHistoryPointsAscending();
   const pollutantMeta = CONFIG.pollutants[selectedPollutant];
 
   points.forEach((point) => {
@@ -370,73 +395,144 @@ function renderLegend() {
   });
 }
 
-function renderTimeSeries() {
-  if (!els.timeseriesList) return;
+/* =========================================================
+   Time-series chart
+   ========================================================= */
 
-  const points = getHistoryPoints()
-    .map((point, index) => {
-      return {
-        ...point,
-        index,
-        time: Date.parse(point.properties.timestamp)
-      };
-    })
-    .sort((a, b) => {
-      const aHasTime = Number.isFinite(a.time);
-      const bHasTime = Number.isFinite(b.time);
-
-      if (aHasTime && bHasTime && a.time !== b.time) {
-        return b.time - a.time;
-      }
-
-      return b.index - a.index;
-    });
-
-  els.timeseriesList.innerHTML = "";
-
-  if (points.length === 0) {
-    els.timeseriesList.textContent = "No history data available.";
-    return;
-  }
+function renderTimeseriesChart() {
+  if (!els.timeseriesChart || typeof Chart === "undefined") return;
 
   const pollutantMeta = CONFIG.pollutants[selectedPollutant];
 
-  points.forEach((point) => {
-    const row = document.createElement("button");
-    row.type = "button";
-    row.className = "timeseries-row";
-    row.dataset.index = point.index;
+  timeseriesPoints = getSortedHistoryPointsAscending();
 
-    const timestamp = point.properties.timestamp;
-    const value = point.properties[selectedPollutant];
-
-    row.innerHTML = `
-      <span class="timeseries-time">
-        ${timestamp ? formatTimestamp(timestamp) : "Unknown time"}
-      </span>
-      <span class="timeseries-value">
-        ${pollutantMeta.label}: ${formatValue(value, pollutantMeta.unit)}
-      </span>
-      <span class="timeseries-location">
-        ${point.lat.toFixed(5)}, ${point.lon.toFixed(5)}
-      </span>
-    `;
-
-    row.addEventListener("click", () => {
-      focusHistoryPoint(point);
-      setActiveTimeSeriesRow(row);
-    });
-
-    els.timeseriesList.appendChild(row);
-  });
-}
-
-function setActiveTimeSeriesRow(activeRow) {
-  document.querySelectorAll(".timeseries-row").forEach((row) => {
-    row.classList.remove("active");
+  const labels = timeseriesPoints.map((point) => {
+    return point.properties.timestamp
+      ? formatTimestampShort(point.properties.timestamp)
+      : "Unknown";
   });
 
-  activeRow.classList.add("active");
+  const values = timeseriesPoints.map((point) => {
+    const value = Number(point.properties[selectedPollutant]);
+    return Number.isFinite(value) ? value : null;
+  });
+
+  const pointColors = timeseriesPoints.map((point) => {
+    const value = Number(point.properties[selectedPollutant]);
+
+    if (!Number.isFinite(value)) {
+      return "#94a3b8";
+    }
+
+    return getPollutantColor(value, pollutantMeta.range);
+  });
+
+  if (els.timeseriesSubtitle) {
+    els.timeseriesSubtitle.textContent =
+      `Showing ${pollutantMeta.label}. Click a point to jump to that location on the map.`;
+  }
+
+  if (timeseriesChart) {
+    timeseriesChart.destroy();
+  }
+
+  timeseriesChart = new Chart(els.timeseriesChart, {
+    type: "line",
+    data: {
+      labels,
+      datasets: [
+        {
+          label: pollutantMeta.unit
+            ? `${pollutantMeta.label} (${pollutantMeta.unit})`
+            : pollutantMeta.label,
+          data: values,
+          borderColor: "#0f172a",
+          backgroundColor: "rgba(15, 23, 42, 0.08)",
+          borderWidth: 2,
+          tension: 0.25,
+          pointRadius: 3,
+          pointHoverRadius: 7,
+          pointBackgroundColor: pointColors,
+          pointBorderColor: "#0f172a",
+          pointBorderWidth: 1,
+          spanGaps: false
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: {
+        mode: "nearest",
+        intersect: true
+      },
+      plugins: {
+        legend: {
+          display: false
+        },
+        tooltip: {
+          callbacks: {
+            title: (items) => {
+              const index = items[0].dataIndex;
+              const point = timeseriesPoints[index];
+
+              return point?.properties?.timestamp
+                ? formatTimestamp(point.properties.timestamp)
+                : "Unknown time";
+            },
+            label: (item) => {
+              return `${pollutantMeta.label}: ${formatValue(item.raw, pollutantMeta.unit)}`;
+            },
+            afterLabel: (item) => {
+              const point = timeseriesPoints[item.dataIndex];
+
+              if (!point) return "";
+
+              return `Location: ${point.lat.toFixed(5)}, ${point.lon.toFixed(5)}`;
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: {
+            maxTicksLimit: 8
+          },
+          grid: {
+            display: false
+          }
+        },
+        y: {
+          title: {
+            display: true,
+            text: pollutantMeta.unit
+              ? `${pollutantMeta.label} (${pollutantMeta.unit})`
+              : pollutantMeta.label
+          },
+          ticks: {
+            precision: 0
+          }
+        }
+      },
+      onClick: (event) => {
+        const chartPoints = timeseriesChart.getElementsAtEventForMode(
+          event,
+          "nearest",
+          {
+            intersect: true
+          },
+          true
+        );
+
+        if (chartPoints.length === 0) return;
+
+        const index = chartPoints[0].index;
+        const point = timeseriesPoints[index];
+
+        focusHistoryPoint(point);
+      }
+    }
+  });
 }
 
 /* =========================================================
@@ -511,7 +607,7 @@ function setStatusFromTimestamp(timestamp) {
   }
 
   if (ageMinutes < -5) {
-    els.status.textContent = "Testing timestamp";
+    els.status.textContent = "Sample route";
     els.status.className = "status-pill stale";
     return;
   }
@@ -539,6 +635,21 @@ function formatTimestamp(timestamp) {
   return date.toLocaleString([], {
     dateStyle: "medium",
     timeStyle: "short"
+  });
+}
+
+function formatTimestampShort(timestamp) {
+  const date = new Date(timestamp);
+
+  if (Number.isNaN(date.getTime())) {
+    return timestamp;
+  }
+
+  return date.toLocaleString([], {
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit"
   });
 }
 
