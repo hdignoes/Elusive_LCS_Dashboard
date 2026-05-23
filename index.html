@@ -20,7 +20,10 @@
     <aside id="info-panel">
       <header>
         <p class="eyebrow">Race2AK</p>
-        <h1>Tracking Air Quality on SV Elusive's Race to Alaska!</h1>
+        <h1>SV Elusive R2AK Air Pollution Tracker</h1>
+        <p class="subtitle">
+          Live air-quality observations from a moving vessel during Race to Alaska.
+        </p>
         <p id="status-pill" class="status-pill">Loading...</p>
       </header>
 
@@ -34,20 +37,28 @@
         <p id="last-updated">—</p>
       </section>
 
-      <section class="card">
-        <label for="pollutant-select">Plume pollutant</label>
-        <select id="pollutant-select"></select>
-      </section>
-
       <details class="card" open>
         <summary>Current Pollutants</summary>
         <div id="pollutant-list" class="pollutant-list"></div>
       </details>
 
       <section class="card">
+        <label for="pollutant-select">Plume pollutant</label>
+        <select id="pollutant-select"></select>
+      </section>
+
+      <section class="card">
         <h2>Legend</h2>
         <div id="legend"></div>
       </section>
+
+      <details class="card">
+        <summary>Time Series</summary>
+        <p class="helper-text">
+          Click a timestamp to jump to that point on the map.
+        </p>
+        <div id="timeseries-list" class="timeseries-list"></div>
+      </details>
     </aside>
   </main>
 

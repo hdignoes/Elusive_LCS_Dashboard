@@ -35,6 +35,13 @@ body,
   background: var(--bg);
 }
 
+.subtitle {
+  margin: 0 0 0.75rem;
+  font-size: 0.9rem;
+  line-height: 1.35;
+  color: var(--muted);
+}
+
 /* =========================================================
    Map
    ========================================================= */
@@ -243,6 +250,66 @@ summary {
   height: 1rem;
   border: 1px solid rgba(15, 23, 42, 0.2);
   border-radius: 999px;
+}
+
+/* =========================================================
+   Time series list
+   ========================================================= */
+
+.helper-text {
+  margin: 0.5rem 0 0.75rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.timeseries-list {
+  display: grid;
+  gap: 0.4rem;
+  max-height: 320px;
+  overflow-y: auto;
+  padding-right: 0.25rem;
+}
+
+.timeseries-row {
+  width: 100%;
+  padding: 0.6rem;
+  text-align: left;
+  font: inherit;
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 0.65rem;
+  cursor: pointer;
+}
+
+.timeseries-row:hover {
+  background: #eef2ff;
+  border-color: #c7d2fe;
+}
+
+.timeseries-row.active {
+  background: #dbeafe;
+  border-color: #60a5fa;
+}
+
+.timeseries-time {
+  display: block;
+  margin-bottom: 0.2rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.timeseries-value {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.timeseries-location {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.72rem;
+  color: var(--muted);
 }
 
 /* =========================================================
