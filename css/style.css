@@ -265,7 +265,7 @@ summary {
   z-index: 900;
   height: var(--timeseries-height);
   padding: 0.8rem 1rem 1rem;
-  background: rgba(248, 250, 252, 0.96);
+  background: rgba(248, 250, 252, 0.56);
   border-top: 1px solid var(--border);
   box-shadow: 0 -12px 30px rgba(15, 23, 42, 0.18);
   backdrop-filter: blur(8px);
@@ -354,7 +354,7 @@ summary {
   z-index: 900;
   height: var(--timeseries-height);
   padding: 0.8rem 1rem 1rem;
-  background: rgba(248, 250, 252, 0.78);
+  background: rgba(248, 250, 252, 0.4);
   border-top: 1px solid var(--border);
   box-shadow: 0 -12px 30px rgba(15, 23, 42, 0.18);
   backdrop-filter: blur(8px);
