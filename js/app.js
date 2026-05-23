@@ -108,18 +108,26 @@ async function loadAllData() {
 
     historyData = history;
     latestData = latest;
+  } catch (error) {
+    console.error("Data loading error:", error);
 
+    els.status.textContent = "Data loading error";
+    els.status.className = "status-pill error";
+    return;
+  }
+
+  try {
     renderTrack();
     renderPlume();
     renderCurrentMarker();
     renderPanel();
     renderTimeseriesChart();
 
-    setStatusFromTimestamp(latest.timestamp);
+    setStatusFromTimestamp(latestData.timestamp);
   } catch (error) {
-    console.error(error);
+    console.error("Dashboard rendering error:", error);
 
-    els.status.textContent = "Data error";
+    els.status.textContent = "Display error";
     els.status.className = "status-pill error";
   }
 }
@@ -331,10 +339,12 @@ function renderPanel() {
   const lat = Number(latestData.lat);
   const lon = Number(latestData.lon);
 
-  els.location.textContent =
-    Number.isFinite(lat) && Number.isFinite(lon)
-      ? `${lat.toFixed(5)}, ${lon.toFixed(5)}`
-      : "Unknown";
+  if (els.location) {
+    els.location.textContent =
+      Number.isFinite(lat) && Number.isFinite(lon)
+        ? `${lat.toFixed(5)}, ${lon.toFixed(5)}`
+        : "Unknown";
+  }
 
   els.updated.textContent = latestData.timestamp
     ? formatTimestamp(latestData.timestamp)
