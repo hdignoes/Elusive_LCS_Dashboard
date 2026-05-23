@@ -265,8 +265,8 @@ summary {
   z-index: 900;
   height: var(--timeseries-height);
   padding: 0.8rem 1rem 1rem;
-  background: rgba(248, 250, 252, 0.56);
-  border-top: 1px solid var(--border);
+  background: rgba(248, 250, 252, 0.40);
+  border-top: 1px solid rgba(226, 232, 240, 0.55);
   box-shadow: 0 -12px 30px rgba(15, 23, 42, 0.18);
   backdrop-filter: blur(8px);
 }
@@ -301,19 +301,23 @@ summary {
   font-size: 0.8rem;
   font-weight: 700;
   color: #334155;
-  background: #ffffff;
-  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(226, 232, 240, 0.75);
   border-radius: 999px;
   cursor: pointer;
 }
 
 .timeseries-toggle:hover {
-  background: #f1f5f9;
+  background: rgba(255, 255, 255, 0.95);
 }
 
 .timeseries-body {
   height: calc(var(--timeseries-height) - 82px);
   min-height: 160px;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.28);
+  border: 1px solid rgba(226, 232, 240, 0.45);
+  border-radius: 0.9rem;
 }
 
 .timeseries-panel.collapsed .timeseries-body {
@@ -344,19 +348,10 @@ summary {
   .timeseries-panel {
     right: 0;
     height: 250px;
+    background: rgba(248, 250, 252, 0.40);
   }
 
-  .timeseries-panel {
-  position: fixed;
-  left: 0;
-  right: var(--panel-width);
-  bottom: 0;
-  z-index: 900;
-  height: var(--timeseries-height);
-  padding: 0.8rem 1rem 1rem;
-  background: rgba(248, 250, 252, 0.4);
-  border-top: 1px solid var(--border);
-  box-shadow: 0 -12px 30px rgba(15, 23, 42, 0.18);
-  backdrop-filter: blur(8px);
-}
+  .timeseries-body {
+    height: 165px;
+  }
 }
