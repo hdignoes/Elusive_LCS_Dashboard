@@ -346,7 +346,17 @@ summary {
     height: 250px;
   }
 
-  .timeseries-body {
-    height: 165px;
-  }
+  .timeseries-panel {
+  position: fixed;
+  left: 0;
+  right: var(--panel-width);
+  bottom: 0;
+  z-index: 900;
+  height: var(--timeseries-height);
+  padding: 0.8rem 1rem 1rem;
+  background: rgba(248, 250, 252, 0.78);
+  border-top: 1px solid var(--border);
+  box-shadow: 0 -12px 30px rgba(15, 23, 42, 0.18);
+  backdrop-filter: blur(8px);
+}
 }

@@ -4,6 +4,7 @@ let plumeLayer;
 let currentMarker;
 let selectedHistoryMarker;
 let timeseriesChart;
+let selectedHistoryPointIndex = null;
 
 let latestData = null;
 let historyData = null;
@@ -258,16 +259,23 @@ function renderPlume() {
 
     const color = getPollutantColor(value, pollutantMeta.range);
 
-    L.circleMarker([point.lat, point.lon], {
-      radius: 6,
-      color: "#0f172a",
+    const marker = L.circleMarker([point.lat, point.lon], {
+      radius: point.index === selectedHistoryPointIndex ? 9 : 6,
+      color: point.index === selectedHistoryPointIndex ? "#ffffff" : "#0f172a",
       fillColor: color,
-      fillOpacity: 0.7,
-      weight: 1.5,
+      fillOpacity: point.index === selectedHistoryPointIndex ? 0.95 : 0.7,
+      weight: point.index === selectedHistoryPointIndex ? 3 : 1.5,
       opacity: 1
-    })
-      .bindPopup(makePopup(point, selectedPollutant))
-      .addTo(plumeLayer);
+    });
+
+    marker.on("click", () => {
+      selectHistoryPoint(point, {
+        panMap: false,
+        openPopup: true
+      });
+    });
+
+    marker.addTo(plumeLayer);
   });
 }
 
@@ -302,20 +310,25 @@ function renderCurrentMarker() {
   `);
 }
 
-function focusHistoryPoint(point) {
+function focusHistoryPoint(point, options = {}) {
   if (!point) return;
 
-  map.setView([point.lat, point.lon], Math.max(map.getZoom(), 11), {
-    animate: true
-  });
+  const shouldPanMap = options.panMap !== false;
+  const shouldOpenPopup = options.openPopup !== false;
+
+  if (shouldPanMap) {
+    map.setView([point.lat, point.lon], Math.max(map.getZoom(), 11), {
+      animate: true
+    });
+  }
 
   if (selectedHistoryMarker) {
     selectedHistoryMarker.setLatLng([point.lat, point.lon]);
   } else {
     selectedHistoryMarker = L.circleMarker([point.lat, point.lon], {
-      radius: 10,
-      color: "#0f172a",
-      fillColor: "#ffffff",
+      radius: 11,
+      color: "#ffffff",
+      fillColor: "#0f172a",
       fillOpacity: 0.95,
       weight: 3,
       opacity: 1
@@ -323,10 +336,21 @@ function focusHistoryPoint(point) {
   }
 
   selectedHistoryMarker._selectedPoint = point;
+  selectedHistoryMarker.bindPopup(makePopup(point, selectedPollutant));
 
-  selectedHistoryMarker
-    .bindPopup(makePopup(point, selectedPollutant))
-    .openPopup();
+  if (shouldOpenPopup) {
+    selectedHistoryMarker.openPopup();
+  }
+}
+
+function selectHistoryPoint(point, options = {}) {
+  if (!point) return;
+
+  selectedHistoryPointIndex = point.index;
+
+  focusHistoryPoint(point, options);
+  renderPlume();
+  updateTimeseriesHighlight();
 }
 
 /* =========================================================
@@ -437,6 +461,22 @@ function renderTimeseriesChart() {
     return getPollutantColor(value, pollutantMeta.range);
   });
 
+  const pointRadii = timeseriesPoints.map((point) => {
+    return point.index === selectedHistoryPointIndex ? 7 : 3;
+  });
+
+  const pointHoverRadii = timeseriesPoints.map((point) => {
+    return point.index === selectedHistoryPointIndex ? 9 : 7;
+  });
+
+  const pointBorderColors = timeseriesPoints.map((point) => {
+    return point.index === selectedHistoryPointIndex ? "#ffffff" : "#0f172a";
+  });
+
+  const pointBorderWidths = timeseriesPoints.map((point) => {
+    return point.index === selectedHistoryPointIndex ? 3 : 1;
+  });
+
   if (els.timeseriesSubtitle) {
     els.timeseriesSubtitle.textContent =
       `Showing ${pollutantMeta.label}. Click a point to jump to that location on the map.`;
@@ -460,11 +500,11 @@ function renderTimeseriesChart() {
           backgroundColor: "rgba(15, 23, 42, 0.08)",
           borderWidth: 2,
           tension: 0.25,
-          pointRadius: 3,
-          pointHoverRadius: 7,
+          pointRadius: pointRadii,
+          pointHoverRadius: pointHoverRadii,
           pointBackgroundColor: pointColors,
-          pointBorderColor: "#0f172a",
-          pointBorderWidth: 1,
+          pointBorderColor: pointBorderColors,
+          pointBorderWidth: pointBorderWidths,
           spanGaps: false
         }
       ]
@@ -539,10 +579,54 @@ function renderTimeseriesChart() {
         const index = chartPoints[0].index;
         const point = timeseriesPoints[index];
 
-        focusHistoryPoint(point);
+        selectHistoryPoint(point, {
+          panMap: true,
+          openPopup: true
+        });
       }
     }
   });
+
+  updateTimeseriesHighlight();
+}
+
+function updateTimeseriesHighlight() {
+  if (!timeseriesChart || !Array.isArray(timeseriesPoints)) return;
+
+  const dataset = timeseriesChart.data.datasets[0];
+
+  dataset.pointRadius = timeseriesPoints.map((point) => {
+    return point.index === selectedHistoryPointIndex ? 7 : 3;
+  });
+
+  dataset.pointHoverRadius = timeseriesPoints.map((point) => {
+    return point.index === selectedHistoryPointIndex ? 9 : 7;
+  });
+
+  dataset.pointBorderColor = timeseriesPoints.map((point) => {
+    return point.index === selectedHistoryPointIndex ? "#ffffff" : "#0f172a";
+  });
+
+  dataset.pointBorderWidth = timeseriesPoints.map((point) => {
+    return point.index === selectedHistoryPointIndex ? 3 : 1;
+  });
+
+  const chartIndex = timeseriesPoints.findIndex((point) => {
+    return point.index === selectedHistoryPointIndex;
+  });
+
+  if (chartIndex >= 0) {
+    timeseriesChart.setActiveElements([
+      {
+        datasetIndex: 0,
+        index: chartIndex
+      }
+    ]);
+  } else {
+    timeseriesChart.setActiveElements([]);
+  }
+
+  timeseriesChart.update("none");
 }
 
 /* =========================================================
