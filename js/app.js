@@ -511,7 +511,7 @@ function setStatusFromTimestamp(timestamp) {
   }
 
   if (ageMinutes < -5) {
-    els.status.textContent = "Future timestamp";
+    els.status.textContent = "Testing timestamp";
     els.status.className = "status-pill stale";
     return;
   }
