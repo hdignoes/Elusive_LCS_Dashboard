@@ -5457,7 +5457,27 @@
         "NO2": null,
         "O3": null,
         "CO2": null,
-        "PM2_5": 3.352,
+        "PM2_5": 3.414,
+        "AQHI": 1.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.2387,
+          49.2526
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-06-07T20:15:00+00:00",
+        "CO": null,
+        "NO": null,
+        "NO2": null,
+        "O3": null,
+        "CO2": null,
+        "PM2_5": 4.851,
         "AQHI": 1.0
       }
     }
