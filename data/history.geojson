@@ -5460,6 +5460,126 @@
         "PM2_5": 2.969,
         "AQHI": 1.0
       }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.2387,
+          49.2526
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-06-08T20:15:00+00:00",
+        "CO": 0.176,
+        "NO": 4.983,
+        "NO2": 4.999,
+        "O3": 22.922,
+        "CO2": 439.294,
+        "PM2_5": 2.927,
+        "AQHI": 1.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.2387,
+          49.2526
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-06-08T20:30:00+00:00",
+        "CO": 0.158,
+        "NO": 4.446,
+        "NO2": 4.826,
+        "O3": 25.208,
+        "CO2": 436.579,
+        "PM2_5": 2.59,
+        "AQHI": 1.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.2387,
+          49.2526
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-06-08T20:45:00+00:00",
+        "CO": 0.157,
+        "NO": 4.354,
+        "NO2": 4.788,
+        "O3": 25.346,
+        "CO2": 435.818,
+        "PM2_5": 2.578,
+        "AQHI": 1.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.2387,
+          49.2526
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-06-08T21:00:00+00:00",
+        "CO": 0.162,
+        "NO": 4.477,
+        "NO2": 4.931,
+        "O3": 23.977,
+        "CO2": 437.173,
+        "PM2_5": 2.965,
+        "AQHI": 2.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.2387,
+          49.2526
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-06-08T21:15:00+00:00",
+        "CO": 0.16,
+        "NO": 4.09,
+        "NO2": 4.994,
+        "O3": 24.146,
+        "CO2": 435.86,
+        "PM2_5": 2.857,
+        "AQHI": 2.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.2387,
+          49.2526
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-06-08T21:30:00+00:00",
+        "CO": 0.157,
+        "NO": 3.865,
+        "NO2": 4.774,
+        "O3": 24.438,
+        "CO2": 433.886,
+        "PM2_5": 2.806,
+        "AQHI": 2.0
+      }
     }
   ]
 }
