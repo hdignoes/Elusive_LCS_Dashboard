@@ -79,6 +79,7 @@ function initPollutantSelect() {
     selectedPollutant = event.target.value;
 
     renderTrack();
+    renderTimeMarkers();
     renderLegend();
     renderTimeseriesChart();
 
@@ -134,7 +135,7 @@ async function loadAllData() {
     ]);
 
     historyData = history;
-    latestData = latest;
+    latestData = normalizeLatestData(latest);
   } catch (error) {
     console.error("Data loading error:", error);
 
@@ -143,19 +144,35 @@ async function loadAllData() {
     return;
   }
 
-  try {
-    renderTrack();
-    renderTimeMarkers();
-    renderCurrentMarker();
-    renderPanel();
-    renderLegend();
-    renderTimeseriesChart();
+  const failures = [];
 
+  const renderSteps = [
+    ["track", renderTrack],
+    ["sunrise/sunset markers", renderTimeMarkers],
+    ["current vessel marker", renderCurrentMarker],
+    ["side panel", renderPanel],
+    ["legend", renderLegend],
+    ["time-series chart", renderTimeseriesChart]
+  ];
+
+  renderSteps.forEach(([label, fn]) => {
+    try {
+      fn();
+    } catch (error) {
+      console.error(`Dashboard rendering error in ${label}:`, error);
+      failures.push(label);
+    }
+  });
+
+  try {
     setStatusFromTimestamp(latestData.timestamp);
   } catch (error) {
-    console.error("Dashboard rendering error:", error);
+    console.error("Status rendering error:", error);
+    failures.push("status");
+  }
 
-    els.status.textContent = "Display error";
+  if (failures.length > 0) {
+    els.status.textContent = `Display issue: ${failures.join(", ")}`;
     els.status.className = "status-pill error";
   }
 }
@@ -176,6 +193,71 @@ async function fetchJson(url) {
   } catch (error) {
     throw new Error(`Invalid JSON in ${url}: ${error.message}`);
   }
+}
+
+function normalizeLatestData(rawLatest) {
+  if (!rawLatest || typeof rawLatest !== "object") {
+    return {
+      timestamp: null,
+      lat: null,
+      lon: null,
+      pollutants: {}
+    };
+  }
+
+  const properties = rawLatest.properties || rawLatest;
+  const coords = rawLatest.geometry?.coordinates;
+
+  const lonFromGeometry = Array.isArray(coords) ? coords[0] : null;
+  const latFromGeometry = Array.isArray(coords) ? coords[1] : null;
+
+  const pollutants = {
+    ...(properties.pollutants || {})
+  };
+
+  Object.keys(CONFIG.pollutants).forEach((key) => {
+    if (pollutants[key] === undefined && properties[key] !== undefined) {
+      pollutants[key] = properties[key];
+    }
+  });
+
+  return {
+    timestamp:
+      properties.timestamp ??
+      properties.time ??
+      properties.datetime ??
+      properties.dateTime ??
+      null,
+
+    lat:
+      properties.lat ??
+      properties.latitude ??
+      latFromGeometry ??
+      null,
+
+    lon:
+      properties.lon ??
+      properties.lng ??
+      properties.longitude ??
+      lonFromGeometry ??
+      null,
+
+    pollutants
+  };
+}
+
+function getLatestPollutantValue(key) {
+  if (!latestData) return null;
+
+  if (latestData.pollutants && latestData.pollutants[key] !== undefined) {
+    return latestData.pollutants[key];
+  }
+
+  if (latestData[key] !== undefined) {
+    return latestData[key];
+  }
+
+  return null;
 }
 
 /* =========================================================
@@ -485,14 +567,14 @@ function renderPanel() {
         : "Unknown";
   }
 
-  els.updated.textContent = latestData.timestamp
+  els.updated.textContent = latestData?.timestamp
     ? formatTimestamp(latestData.timestamp)
     : "Unknown";
 
   els.pollutantList.innerHTML = "";
 
   Object.entries(CONFIG.pollutants).forEach(([key, meta]) => {
-    const value = latestData.pollutants?.[key];
+    const value = getLatestPollutantValue(key);
 
     const row = document.createElement("div");
     row.className = "pollutant-row";
@@ -1192,6 +1274,46 @@ function applyResponsiveDefaults() {
 /* =========================================================
    Formatting helpers
    ========================================================= */
+
+function getLocalTimeParts(timestamp) {
+  if (!timestamp) return null;
+
+  const date = new Date(timestamp);
+
+  if (Number.isNaN(date.getTime())) return null;
+
+  const formatter = new Intl.DateTimeFormat("en-CA", {
+    timeZone: CONFIG.displayTimeZone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false
+  });
+
+  const parts = Object.fromEntries(
+    formatter.formatToParts(date).map((part) => {
+      return [part.type, part.value];
+    })
+  );
+
+  let hour = Number(parts.hour);
+
+  if (hour === 24) {
+    hour = 0;
+  }
+
+  return {
+    year: parts.year,
+    month: parts.month,
+    day: parts.day,
+    hour,
+    minute: Number(parts.minute),
+    second: Number(parts.second)
+  };
+}
 
 function formatTimestamp(timestamp) {
   const date = new Date(timestamp);
