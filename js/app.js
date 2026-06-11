@@ -26,6 +26,7 @@ const els = {
   timeseriesPanel: document.getElementById("timeseries-panel"),
   timeseriesToggle: document.getElementById("timeseries-toggle"),
   timeseriesSubtitle: document.getElementById("timeseries-subtitle"),
+  timeseriesUnitLabel: document.getElementById("timeseries-unit-label"),
   timeseriesChart: document.getElementById("timeseries-chart"),
   timeseriesYAxisChart: document.getElementById("timeseries-y-axis-chart"),
   timeseriesChartInner: document.getElementById("timeseries-chart-inner"),
@@ -690,13 +691,13 @@ function renderTimeseriesChart() {
     return point.index === selectedHistoryPointIndex ? 3 : 1;
   });
 
+  if (els.timeseriesUnitLabel) {
+    els.timeseriesUnitLabel.textContent = pollutantMeta.unit || "";
+  }
+  
   if (els.timeseriesSubtitle) {
-    const subtitleLabel = pollutantMeta.unit
-      ? `${pollutantMeta.label} (${pollutantMeta.unit})`
-      : pollutantMeta.label;
-
     els.timeseriesSubtitle.textContent =
-      `Showing ${subtitleLabel}. Scroll horizontally for long trips. Click a point to jump to the map.`;
+      `Showing ${pollutantMeta.label}. Scroll horizontally for long trips. Click a point to jump to the map.`;
   }
 
   if (timeseriesChart) {

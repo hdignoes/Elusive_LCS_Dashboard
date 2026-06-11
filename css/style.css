@@ -370,6 +370,22 @@ summary {
 /* =========================================================
    Bottom time-series panel
    ========================================================= */
+.timeseries-unit-label {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 0.4rem;
+  padding: 0.12rem 0.4rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #334155;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 999px;
+}
+
+.timeseries-unit-label:empty {
+  display: none;
+}
 
 .timeseries-panel {
   position: fixed;
