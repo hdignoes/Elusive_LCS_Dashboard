@@ -32,11 +32,16 @@ const CONFIG = {
     pixelsPerPoint: 11
   },
 
-  timeMarkers: {
+  sunMarkers: {
     enabled: true,
-    toleranceMinutes: 9,
-    midnightColor: AQHI_PLUS_COLORS.lowModerate,
-    noonColor: AQHI_PLUS_COLORS.high
+    toleranceMinutes: 45
+  },
+
+  dayBoundaryLines: {
+    enabled: true,
+    toleranceMinutes: 20,
+    lineColor: "#334155",
+    textColor: "#334155"
   },
 
   colors: {

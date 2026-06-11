@@ -113,22 +113,27 @@ h2 {
    Tracking link
    ========================================================= */
 
+.subtitle-linkline {
+  margin: -0.35rem 0 0.75rem;
+}
+
 .tracking-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  font-weight: 800;
-  color: #2563eb;
   text-decoration: none;
 }
 
-.tracking-link:hover {
-  color: #1d4ed8;
+.tracking-link.subtle {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.tracking-link.subtle:hover {
+  color: #2563eb;
   text-decoration: underline;
 }
 
-.tracking-link::after {
-  content: "↗";
+.tracking-link.subtle::after {
+  content: " ↗";
   font-size: 0.85em;
 }
 
@@ -263,7 +268,7 @@ summary {
 
 .leaflet-top.leaflet-right {
   top: 0.75rem;
-  right: calc(var(--panel-width) + 0.75rem);
+  right: 0.75rem;
 }
 
 .map-legend {
@@ -308,7 +313,7 @@ summary {
 }
 
 /* =========================================================
-   Time markers on map
+   Sunrise / sunset markers on map
    ========================================================= */
 
 .time-marker {
@@ -319,23 +324,47 @@ summary {
 .time-marker-wrap {
   display: grid;
   place-items: center;
-  width: 34px;
-  height: 34px;
+  width: 44px;
+  height: 44px;
+  padding: 5px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(15, 23, 42, 0.12);
   border-radius: 999px;
-  font-size: 0.68rem;
-  font-weight: 900;
-  color: white;
-  border: 2px solid rgba(255, 255, 255, 0.9);
-  box-shadow: 0 3px 10px rgba(15, 23, 42, 0.35);
+  box-shadow: 0 3px 10px rgba(15, 23, 42, 0.25);
+  backdrop-filter: blur(6px);
 }
 
-.time-marker-wrap.midnight {
-  background: #1e293b;
+.time-marker-wrap svg {
+  width: 30px;
+  height: 30px;
+  display: block;
 }
 
-.time-marker-wrap.noon {
-  background: #f59e0b;
-  color: #1f2937;
+.time-marker-wrap.sunrise svg path,
+.time-marker-wrap.sunrise svg line,
+.time-marker-wrap.sunrise svg circle,
+.time-marker-wrap.sunrise svg polyline {
+  stroke: #1f2937;
+  fill: none;
+  stroke-width: 2.3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.time-marker-wrap.sunset svg path,
+.time-marker-wrap.sunset svg line,
+.time-marker-wrap.sunset svg circle,
+.time-marker-wrap.sunset svg polyline {
+  stroke: #1f2937;
+  fill: none;
+  stroke-width: 2.3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.time-marker-wrap.sunset svg .sun-fill {
+  fill: #1f2937;
+  stroke: #1f2937;
 }
 
 /* =========================================================
@@ -429,7 +458,6 @@ summary {
 /* =========================================================
    Responsive layout
    ========================================================= */
-
 @media (max-width: 800px) {
   :root {
     --timeseries-height: 220px;
@@ -469,6 +497,14 @@ summary {
 
   .subtitle {
     display: none;
+  }
+
+  .subtitle-linkline {
+    margin: -0.15rem 0 0.55rem;
+  }
+
+  .tracking-link.subtle {
+    font-size: 0.78rem;
   }
 
   .card {
@@ -525,8 +561,13 @@ summary {
   }
 
   .time-marker-wrap {
-    width: 28px;
-    height: 28px;
-    font-size: 0.58rem;
+    width: 36px;
+    height: 36px;
+    padding: 4px;
+  }
+
+  .time-marker-wrap svg {
+    width: 24px;
+    height: 24px;
   }
 }

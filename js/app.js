@@ -361,10 +361,10 @@ function renderPollutantTrackSegments(points) {
 function renderTimeMarkers() {
   timeMarkerLayer.clearLayers();
 
-  if (!CONFIG.timeMarkers?.enabled) return;
+  if (!CONFIG.sunMarkers?.enabled) return;
 
   const points = getSortedHistoryPointsAscending();
-  const markers = getNoonMidnightMarkers(points);
+  const markers = getSunriseSunsetMarkers(points);
 
   markers.forEach((marker) => {
     const icon = makeTimeMarkerIcon(marker.type);
@@ -382,7 +382,7 @@ function renderTimeMarkers() {
 
     leafletMarker
       .bindTooltip(
-        `${marker.type === "noon" ? "Noon" : "Midnight"} — ${formatTimestamp(marker.point.properties.timestamp)}`,
+        `${marker.type === "sunrise" ? "Sunrise" : "Sunset"} — ${formatTimestamp(marker.point.properties.timestamp)}`,
         {
           direction: "top",
           offset: [0, -12]
@@ -454,6 +454,8 @@ function focusHistoryPoint(point, options = {}) {
   if (shouldOpenPopup) {
     selectedHistoryMarker.openPopup();
   }
+
+  selectedHistoryMarker.bringToFront();
 }
 
 function selectHistoryPoint(point, options = {}) {
@@ -461,8 +463,8 @@ function selectHistoryPoint(point, options = {}) {
 
   selectedHistoryPointIndex = point.index;
 
-  focusHistoryPoint(point, options);
   renderTrack();
+  focusHistoryPoint(point, options);
   updateTimeseriesHighlight();
 }
 
@@ -519,7 +521,7 @@ function renderLegend() {
     <div class="map-legend-title">${meta.label}</div>
   `;
 
-  meta.breaks.forEach((bin, index) => {
+  meta.breaks.forEach((bin) => {
     const row = document.createElement("div");
     row.className = "legend-row";
 
@@ -710,7 +712,7 @@ function renderTimeseriesChart() {
         });
       }
     },
-    plugins: [noonMidnightChartPlugin]
+    plugins: [dayBoundaryChartPlugin]
   });
 
   updateTimeseriesHighlight();
@@ -756,21 +758,21 @@ function updateTimeseriesHighlight() {
 }
 
 /* =========================================================
-   Noon/midnight markers
+   Day-boundary chart markers
    ========================================================= */
 
-const noonMidnightChartPlugin = {
-  id: "noonMidnightMarkers",
+const dayBoundaryChartPlugin = {
+  id: "dayBoundaryMarkers",
 
   afterDatasetsDraw(chart) {
-    if (!CONFIG.timeMarkers?.enabled) return;
+    if (!CONFIG.dayBoundaryLines?.enabled) return;
 
     const { ctx, chartArea, scales } = chart;
     const xScale = scales.x;
 
     if (!xScale || !chartArea) return;
 
-    const markers = getNoonMidnightMarkers(timeseriesPoints);
+    const markers = getMidnightBoundaryMarkers(timeseriesPoints);
 
     ctx.save();
 
@@ -782,123 +784,266 @@ const noonMidnightChartPlugin = {
       if (chartIndex < 0) return;
 
       const x = xScale.getPixelForValue(chartIndex);
-      const color =
-        marker.type === "noon"
-          ? CONFIG.timeMarkers.noonColor
-          : CONFIG.timeMarkers.midnightColor;
 
       ctx.beginPath();
       ctx.moveTo(x, chartArea.top);
       ctx.lineTo(x, chartArea.bottom);
       ctx.lineWidth = 1.5;
-      ctx.setLineDash(marker.type === "noon" ? [5, 4] : []);
-      ctx.strokeStyle = color;
+      ctx.setLineDash([]);
+      ctx.strokeStyle = CONFIG.dayBoundaryLines.lineColor;
       ctx.stroke();
 
-      ctx.setLineDash([]);
-      ctx.fillStyle = color;
+      const label = formatBoundaryDate(marker.point.properties.timestamp);
+      const nearRightEdge = x > chartArea.right - 48;
+
+      ctx.fillStyle = CONFIG.dayBoundaryLines.textColor;
       ctx.font = "700 10px system-ui, sans-serif";
-      ctx.textAlign = "center";
-      ctx.fillText(marker.type === "noon" ? "Noon" : "Mid", x, chartArea.top + 10);
+      ctx.textBaseline = "top";
+      ctx.textAlign = nearRightEdge ? "right" : "left";
+
+      ctx.fillText(
+        label,
+        nearRightEdge ? x - 4 : x + 4,
+        chartArea.top + 4
+      );
     });
 
     ctx.restore();
   }
 };
 
-function getNoonMidnightMarkers(points) {
-  const toleranceMinutes = CONFIG.timeMarkers?.toleranceMinutes ?? 9;
-  const candidates = new Map();
+/* =========================================================
+   Sunrise / sunset and day-boundary helpers
+   ========================================================= */
+
+function getSunriseSunsetMarkers(points) {
+  const toleranceMinutes = CONFIG.sunMarkers?.toleranceMinutes ?? 45;
+  const grouped = groupPointsByLocalDate(points);
+  const markers = [];
+
+  Object.values(grouped).forEach((dayPoints) => {
+    if (!dayPoints.length) return;
+
+    const referencePoint = dayPoints[Math.floor(dayPoints.length / 2)];
+    const localParts = getLocalTimeParts(referencePoint.properties.timestamp);
+
+    if (!localParts) return;
+
+    const sunTimes = getSunTimesForDate(
+      Number(localParts.year),
+      Number(localParts.month),
+      Number(localParts.day),
+      referencePoint.lat,
+      referencePoint.lon
+    );
+
+    if (!sunTimes) return;
+
+    const sunrisePoint = findNearestPointToLocalMinutes(
+      dayPoints,
+      sunTimes.sunriseMinutes,
+      toleranceMinutes
+    );
+
+    const sunsetPoint = findNearestPointToLocalMinutes(
+      dayPoints,
+      sunTimes.sunsetMinutes,
+      toleranceMinutes
+    );
+
+    if (sunrisePoint) {
+      markers.push({
+        type: "sunrise",
+        point: sunrisePoint
+      });
+    }
+
+    if (sunsetPoint) {
+      markers.push({
+        type: "sunset",
+        point: sunsetPoint
+      });
+    }
+  });
+
+  return markers.sort((a, b) => {
+    return Date.parse(a.point.properties.timestamp) - Date.parse(b.point.properties.timestamp);
+  });
+}
+
+function getMidnightBoundaryMarkers(points) {
+  const toleranceMinutes = CONFIG.dayBoundaryLines?.toleranceMinutes ?? 20;
+  const grouped = groupPointsByLocalDate(points);
+  const markers = [];
+
+  Object.values(grouped).forEach((dayPoints) => {
+    const midnightPoint = findNearestPointToLocalMinutes(dayPoints, 0, toleranceMinutes);
+
+    if (midnightPoint) {
+      markers.push({
+        type: "midnight",
+        point: midnightPoint
+      });
+    }
+  });
+
+  return markers.sort((a, b) => {
+    return Date.parse(a.point.properties.timestamp) - Date.parse(b.point.properties.timestamp);
+  });
+}
+
+function groupPointsByLocalDate(points) {
+  const grouped = {};
 
   points.forEach((point) => {
-    const timestamp = point.properties?.timestamp;
-    const parts = getLocalTimeParts(timestamp);
+    const parts = getLocalTimeParts(point.properties.timestamp);
 
     if (!parts) return;
 
-    const totalMinutes = parts.hour * 60 + parts.minute + parts.second / 60;
+    const key = `${parts.year}-${parts.month}-${parts.day}`;
 
-    const noonOffset = Math.abs(totalMinutes - 720);
-    const midnightOffset = Math.min(totalMinutes, Math.abs(1440 - totalMinutes));
-
-    if (noonOffset <= toleranceMinutes) {
-      addBestTimeMarkerCandidate(candidates, {
-        key: `${parts.year}-${parts.month}-${parts.day}-noon`,
-        type: "noon",
-        offset: noonOffset,
-        point
-      });
+    if (!grouped[key]) {
+      grouped[key] = [];
     }
 
-    if (midnightOffset <= toleranceMinutes) {
-      const midnightDateKey =
-        totalMinutes > 720
-          ? `${parts.year}-${parts.month}-${Number(parts.day) + 1}`
-          : `${parts.year}-${parts.month}-${parts.day}`;
+    grouped[key].push(point);
+  });
 
-      addBestTimeMarkerCandidate(candidates, {
-        key: `${midnightDateKey}-midnight`,
-        type: "midnight",
-        offset: midnightOffset,
-        point
-      });
+  return grouped;
+}
+
+function findNearestPointToLocalMinutes(points, targetMinutes, toleranceMinutes) {
+  let bestPoint = null;
+  let bestOffset = Infinity;
+
+  points.forEach((point) => {
+    const parts = getLocalTimeParts(point.properties.timestamp);
+
+    if (!parts) return;
+
+    const localMinutes = parts.hour * 60 + parts.minute + parts.second / 60;
+
+    const offset = Math.min(
+      Math.abs(localMinutes - targetMinutes),
+      Math.abs(localMinutes - targetMinutes + 1440),
+      Math.abs(localMinutes - targetMinutes - 1440)
+    );
+
+    if (offset < bestOffset) {
+      bestOffset = offset;
+      bestPoint = point;
     }
   });
 
-  return Array.from(candidates.values()).sort((a, b) => {
-    const aTime = Date.parse(a.point.properties.timestamp);
-    const bTime = Date.parse(b.point.properties.timestamp);
-
-    return aTime - bTime;
-  });
+  return bestOffset <= toleranceMinutes ? bestPoint : null;
 }
 
-function addBestTimeMarkerCandidate(candidates, candidate) {
-  const existing = candidates.get(candidate.key);
+function getSunTimesForDate(year, month, day, lat, lon) {
+  const sunriseUtcHours = calculateSunTimeUtcHours(year, month, day, lat, lon, true);
+  const sunsetUtcHours = calculateSunTimeUtcHours(year, month, day, lat, lon, false);
 
-  if (!existing || candidate.offset < existing.offset) {
-    candidates.set(candidate.key, candidate);
+  if (sunriseUtcHours === null || sunsetUtcHours === null) {
+    return null;
   }
-}
 
-function getLocalTimeParts(timestamp) {
-  if (!timestamp) return null;
-
-  const date = new Date(timestamp);
-
-  if (Number.isNaN(date.getTime())) return null;
-
-  const formatter = new Intl.DateTimeFormat("en-CA", {
-    timeZone: CONFIG.displayTimeZone,
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: false
-  });
-
-  const parts = Object.fromEntries(
-    formatter.formatToParts(date).map((part) => {
-      return [part.type, part.value];
-    })
-  );
-
-  let hour = Number(parts.hour);
-
-  if (hour === 24) {
-    hour = 0;
-  }
+  const sunriseMinutes = utcHoursToLocalMinutes(year, month, day, sunriseUtcHours);
+  const sunsetMinutes = utcHoursToLocalMinutes(year, month, day, sunsetUtcHours);
 
   return {
-    year: parts.year,
-    month: parts.month,
-    day: parts.day,
-    hour,
-    minute: Number(parts.minute),
-    second: Number(parts.second)
+    sunriseMinutes,
+    sunsetMinutes
   };
+}
+
+function calculateSunTimeUtcHours(year, month, day, latitude, longitude, isSunrise) {
+  const zenith = 90.8333;
+  const N = dayOfYear(year, month, day);
+  const lngHour = longitude / 15;
+
+  const t = isSunrise
+    ? N + ((6 - lngHour) / 24)
+    : N + ((18 - lngHour) / 24);
+
+  const M = (0.9856 * t) - 3.289;
+
+  let L =
+    M +
+    (1.916 * Math.sin(degreesToRadians(M))) +
+    (0.020 * Math.sin(2 * degreesToRadians(M))) +
+    282.634;
+
+  L = normalizeDegrees(L);
+
+  let RA = radiansToDegrees(Math.atan(0.91764 * Math.tan(degreesToRadians(L))));
+  RA = normalizeDegrees(RA);
+
+  const Lquadrant = Math.floor(L / 90) * 90;
+  const RAquadrant = Math.floor(RA / 90) * 90;
+
+  RA = RA + (Lquadrant - RAquadrant);
+  RA = RA / 15;
+
+  const sinDec = 0.39782 * Math.sin(degreesToRadians(L));
+  const cosDec = Math.cos(Math.asin(sinDec));
+
+  const cosH =
+    (Math.cos(degreesToRadians(zenith)) - (sinDec * Math.sin(degreesToRadians(latitude)))) /
+    (cosDec * Math.cos(degreesToRadians(latitude)));
+
+  if (cosH > 1 || cosH < -1) {
+    return null;
+  }
+
+  let H = isSunrise
+    ? 360 - radiansToDegrees(Math.acos(cosH))
+    : radiansToDegrees(Math.acos(cosH));
+
+  H = H / 15;
+
+  const T = H + RA - (0.06571 * t) - 6.622;
+  let UT = T - lngHour;
+
+  UT = ((UT % 24) + 24) % 24;
+
+  return UT;
+}
+
+function utcHoursToLocalMinutes(year, month, day, utcHours) {
+  const hours = Math.floor(utcHours);
+  const minutes = Math.floor((utcHours - hours) * 60);
+  const seconds = Math.round((((utcHours - hours) * 60) - minutes) * 60);
+
+  const utcDate = new Date(Date.UTC(year, month - 1, day, hours, minutes, seconds));
+  const parts = getLocalTimeParts(utcDate.toISOString());
+
+  if (!parts) return null;
+
+  return parts.hour * 60 + parts.minute + parts.second / 60;
+}
+
+function dayOfYear(year, month, day) {
+  const start = Date.UTC(year, 0, 0);
+  const current = Date.UTC(year, month - 1, day);
+
+  return Math.floor((current - start) / 86400000);
+}
+
+function normalizeDegrees(value) {
+  return ((value % 360) + 360) % 360;
+}
+
+function formatBoundaryDate(timestamp) {
+  const date = new Date(timestamp);
+
+  if (Number.isNaN(date.getTime())) {
+    return timestamp;
+  }
+
+  return date.toLocaleDateString([], {
+    timeZone: CONFIG.displayTimeZone,
+    month: "short",
+    day: "numeric"
+  });
 }
 
 /* =========================================================
@@ -938,16 +1083,42 @@ function makeVesselArrowIcon(bearing) {
 }
 
 function makeTimeMarkerIcon(type) {
-  const label = type === "noon" ? "12" : "00";
+  const sunriseSvg = `
+    <svg viewBox="0 0 32 32" aria-hidden="true">
+      <line x1="4" y1="22" x2="28" y2="22"></line>
+      <path d="M9 22a7 7 0 0 1 14 0"></path>
+      <line x1="16" y1="5" x2="16" y2="10"></line>
+      <line x1="7" y1="10" x2="10.5" y2="13.5"></line>
+      <line x1="25" y1="10" x2="21.5" y2="13.5"></line>
+      <line x1="3" y1="17" x2="8" y2="18"></line>
+      <line x1="29" y1="17" x2="24" y2="18"></line>
+      <polyline points="13,26 16,23 19,26"></polyline>
+    </svg>
+  `;
+
+  const sunsetSvg = `
+    <svg viewBox="0 0 32 32" aria-hidden="true">
+      <line x1="4" y1="22" x2="28" y2="22"></line>
+      <path class="sun-fill" d="M9 22a7 7 0 0 1 14 0Z"></path>
+      <line x1="16" y1="5" x2="16" y2="10"></line>
+      <line x1="7" y1="10" x2="10.5" y2="13.5"></line>
+      <line x1="25" y1="10" x2="21.5" y2="13.5"></line>
+      <line x1="3" y1="17" x2="8" y2="18"></line>
+      <line x1="29" y1="17" x2="24" y2="18"></line>
+      <polyline points="13,24 16,27 19,24"></polyline>
+    </svg>
+  `;
+
+  const svg = type === "sunrise" ? sunriseSvg : sunsetSvg;
 
   return L.divIcon({
     className: "time-marker",
-    iconSize: [34, 34],
-    iconAnchor: [17, 17],
+    iconSize: [44, 44],
+    iconAnchor: [22, 22],
     popupAnchor: [0, -16],
     html: `
       <div class="time-marker-wrap ${type}">
-        ${label}
+        ${svg}
       </div>
     `
   });
