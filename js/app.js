@@ -7,7 +7,6 @@ let timeMarkerLayer;
 let currentMarker;
 let selectedHistoryMarker;
 let timeseriesChart;
-let timeseriesYAxisChart;
 let selectedHistoryPointIndex = null;
 let hasCenteredOnInitialLatest = false;
 
@@ -225,7 +224,10 @@ function setSelectedPollutant(key) {
 
   if (selectedHistoryMarker && selectedHistoryMarker._selectedPoint) {
     selectedHistoryMarker.bindPopup(
-      makePopup(selectedHistoryMarker._selectedPoint, selectedPollutant)
+      makePopup(selectedHistoryMarker._selectedPoint, selectedPollutant),
+      {
+        autoPan: false
+      }
     );
   }
 }
@@ -242,6 +244,7 @@ function initTimeseriesPanel() {
 
     requestAnimationFrame(resizeCharts);
   });
+
   if (els.timeseriesScroll) {
     els.timeseriesScroll.addEventListener(
       "scroll",
@@ -587,7 +590,8 @@ function renderTimeMarkers() {
     leafletMarker.on("click", () => {
       selectHistoryPoint(marker.point, {
         panMap: true,
-        openPopup: true
+        openPopup: true,
+        zoomToPoint: true
       });
     });
 
@@ -670,7 +674,8 @@ function focusLatestPoint() {
   if (points.length > 0) {
     selectHistoryPoint(points[points.length - 1], {
       panMap: true,
-      openPopup: true
+      openPopup: true,
+      zoomToPoint: true
     });
   }
 }
@@ -1031,10 +1036,6 @@ function renderTimeseriesChart() {
     timeseriesChart.destroy();
   }
 
-  if (timeseriesYAxisChart) {
-    timeseriesYAxisChart.destroy();
-  }
-
   const yScaleOptions = makeTimeseriesYScaleOptions(
     pollutantMeta,
     values,
@@ -1042,75 +1043,6 @@ function renderTimeseriesChart() {
       forceDomain: true
     }
   );
-
-  timeseriesYAxisChart = new Chart(els.timeseriesYAxisChart, {
-    type: "line",
-    data: {
-      labels,
-      datasets: [
-        {
-          data: values,
-          borderColor: "rgba(0, 0, 0, 0)",
-          backgroundColor: "rgba(0, 0, 0, 0)",
-          pointRadius: 0,
-          pointHoverRadius: 0,
-          borderWidth: 0
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      resizeDelay: 200,
-      animation: false,
-      events: [],
-      layout: {
-        padding: {
-          bottom: 34
-        }
-      },
-      plugins: {
-        legend: {
-          display: false
-        },
-        tooltip: {
-          enabled: false
-        }
-      },
-      scales: {
-        x: {
-          display: true,
-          ticks: {
-            maxTicksLimit: 12,
-            padding: 4,
-            color: "rgba(0, 0, 0, 0)"
-          },
-          grid: {
-            display: false,
-            drawTicks: false
-          },
-          border: {
-            display: false
-          }
-        },
-        y: {
-          ...yScaleOptions,
-          position: "left",
-          title: {
-            display: false
-          },
-          grid: {
-            display: false
-          },
-          ticks: {
-            ...yScaleOptions.ticks,
-            mirror: false,
-            padding: 4
-          }
-        }
-      }
-    }
-  });
 
   timeseriesChart = new Chart(els.timeseriesChart, {
     type: "line",
@@ -1204,14 +1136,14 @@ function renderTimeseriesChart() {
           },
           true
         );
-      
+
         if (chartPoints.length === 0) return;
-      
+
         const index = chartPoints[0].index;
         const point = timeseriesPoints[index];
-      
+
         if (!point) return;
-      
+
         selectHistoryPoint(point, {
           panMap: true,
           openPopup: true,
@@ -1219,7 +1151,7 @@ function renderTimeseriesChart() {
         });
       }
     },
-    plugins: [dayBoundaryChartPlugin, sunEventChartPlugin]
+    plugins: [dayBoundaryChartPlugin, sunEventChartPlugin, fixedYAxisPlugin]
   });
 
   updateVisibleYScale();
@@ -1400,7 +1332,7 @@ function requestVisibleYScaleUpdate() {
 }
 
 function updateVisibleYScale() {
-  if (!timeseriesChart || !timeseriesYAxisChart || !Array.isArray(timeseriesPoints)) {
+  if (!timeseriesChart || !Array.isArray(timeseriesPoints)) {
     return;
   }
 
@@ -1422,10 +1354,8 @@ function updateVisibleYScale() {
   );
 
   applyYScaleOptions(timeseriesChart, yScaleOptions);
-  applyYScaleOptions(timeseriesYAxisChart, yScaleOptions);
-
   timeseriesChart.update("none");
-  timeseriesYAxisChart.update("none");
+  drawFixedYAxis(timeseriesChart);
 }
 
 function getVisibleTimeseriesValues(values) {
@@ -1546,15 +1476,113 @@ function updateTimeseriesHighlight() {
   }
 
   timeseriesChart.update("none");
-
-  if (timeseriesYAxisChart) {
-    timeseriesYAxisChart.update("none");
-  }
+  drawFixedYAxis(timeseriesChart);
 }
 
 /* =========================================================
-   Day-boundary chart markers
+   Chart plugins
    ========================================================= */
+
+const fixedYAxisPlugin = {
+  id: "fixedYAxis",
+
+  afterDraw(chart) {
+    drawFixedYAxis(chart);
+  }
+};
+
+function drawFixedYAxis(chart) {
+  const canvas = els.timeseriesYAxisChart;
+
+  if (!canvas || !chart?.scales?.y || !chart.chartArea) return;
+
+  const rect = canvas.getBoundingClientRect();
+
+  if (rect.width <= 0 || rect.height <= 0) return;
+
+  const devicePixelRatio = window.devicePixelRatio || 1;
+  const targetWidth = Math.max(1, Math.round(rect.width * devicePixelRatio));
+  const targetHeight = Math.max(1, Math.round(rect.height * devicePixelRatio));
+
+  if (canvas.width !== targetWidth || canvas.height !== targetHeight) {
+    canvas.width = targetWidth;
+    canvas.height = targetHeight;
+  }
+
+  const ctx = canvas.getContext("2d");
+
+  ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+  ctx.clearRect(0, 0, rect.width, rect.height);
+
+  const yScale = chart.scales.y;
+  const chartArea = chart.chartArea;
+
+  const axisX = rect.width - 10;
+  const labelX = axisX - 7;
+
+  ctx.save();
+
+  ctx.strokeStyle = "rgba(100, 116, 139, 0.22)";
+  ctx.lineWidth = 1;
+
+  ctx.beginPath();
+  ctx.moveTo(axisX, chartArea.top);
+  ctx.lineTo(axisX, chartArea.bottom);
+  ctx.stroke();
+
+  ctx.font = "600 12px system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+  ctx.fillStyle = "rgba(15, 23, 42, 0.68)";
+  ctx.textAlign = "right";
+  ctx.textBaseline = "middle";
+
+  yScale.ticks.forEach((tick) => {
+    const value = Number(tick.value);
+
+    if (!Number.isFinite(value)) return;
+
+    const y = yScale.getPixelForValue(value);
+
+    if (y < chartArea.top - 1 || y > chartArea.bottom + 1) return;
+
+    ctx.strokeStyle = "rgba(100, 116, 139, 0.18)";
+    ctx.lineWidth = 1;
+
+    ctx.beginPath();
+    ctx.moveTo(axisX - 4, y);
+    ctx.lineTo(axisX, y);
+    ctx.stroke();
+
+    ctx.fillText(formatYAxisTick(value), labelX, y);
+  });
+
+  ctx.restore();
+}
+
+function formatYAxisTick(value) {
+  if (selectedPollutant === "AQHI") {
+    return String(Math.round(value));
+  }
+
+  const absoluteValue = Math.abs(value);
+
+  if (absoluteValue >= 100) {
+    return value.toFixed(0);
+  }
+
+  if (absoluteValue >= 10) {
+    return Number.isInteger(value) ? value.toFixed(0) : value.toFixed(1);
+  }
+
+  if (absoluteValue >= 1) {
+    return value.toFixed(1);
+  }
+
+  if (absoluteValue === 0) {
+    return "0";
+  }
+
+  return value.toPrecision(2);
+}
 
 const dayBoundaryChartPlugin = {
   id: "dayBoundaryMarkers",
@@ -1655,19 +1683,16 @@ function drawSunEventIcon(ctx, x, y, type) {
   ctx.strokeStyle = "#334155";
   ctx.fillStyle = isSunrise ? "#facc15" : "#fb923c";
 
-  // Horizon
   ctx.beginPath();
   ctx.moveTo(-9, 4);
   ctx.lineTo(9, 4);
   ctx.stroke();
 
-  // Sun half-circle
   ctx.beginPath();
   ctx.arc(0, 4, 5.5, Math.PI, 0, false);
   ctx.fill();
   ctx.stroke();
 
-  // Rays
   ctx.beginPath();
   ctx.moveTo(0, -7);
   ctx.lineTo(0, -4);
@@ -1681,7 +1706,6 @@ function drawSunEventIcon(ctx, x, y, type) {
   ctx.lineTo(7, 1);
   ctx.stroke();
 
-  // Direction arrow
   ctx.beginPath();
 
   if (isSunrise) {
@@ -2146,10 +2170,6 @@ function setLegendCollapsed(shouldCollapse) {
 function resizeCharts() {
   if (timeseriesChart) {
     timeseriesChart.resize();
-  }
-
-  if (timeseriesYAxisChart) {
-    timeseriesYAxisChart.resize();
   }
 
   requestVisibleYScaleUpdate();
