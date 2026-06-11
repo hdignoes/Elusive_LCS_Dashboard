@@ -10,18 +10,31 @@ let timeseriesYAxisChart;
 let selectedHistoryPointIndex = null;
 
 let legendControl;
+let mapControlsContainer;
 let legendContainer;
+let legendBodyContainer;
+let legendTitleContainer;
+let legendToggleButton;
+let floatingPollutantSelect;
+
+let routeLatLngs = [];
+let timeseriesPointsRaw = [];
+let timeseriesPoints = [];
+let timeseriesDecimationActive = false;
+let timeseriesRawCount = 0;
+let timeseriesDisplayCount = 0;
 
 let latestData = null;
 let historyData = null;
 let selectedPollutant = CONFIG.defaultPollutant;
-let timeseriesPoints = [];
 
 const els = {
   status: document.getElementById("status-pill"),
-  location: document.getElementById("current-location"),
   updated: document.getElementById("last-updated"),
-  pollutantSelect: document.getElementById("pollutant-select"),
+  selectedReadingName: document.getElementById("selected-reading-name"),
+  selectedReadingValue: document.getElementById("selected-reading-value"),
+  selectedReadingMeta: document.getElementById("selected-reading-meta"),
+  dataQualityList: document.getElementById("data-quality-list"),
   pollutantList: document.getElementById("pollutant-list"),
   timeseriesPanel: document.getElementById("timeseries-panel"),
   timeseriesToggle: document.getElementById("timeseries-toggle"),
@@ -37,7 +50,7 @@ document.addEventListener("DOMContentLoaded", init);
 
 function init() {
   initMap();
-  initPollutantSelect();
+  initPollutantControls();
   initTimeseriesPanel();
   applyResponsiveDefaults();
 
@@ -64,34 +77,152 @@ function initMap() {
   hitSegmentLayer = L.layerGroup().addTo(map);
   timeMarkerLayer = L.layerGroup().addTo(map);
 
-  initMapLegend();
+  initMapControls();
 }
 
-function initPollutantSelect() {
-  Object.entries(CONFIG.pollutants).forEach(([key, meta]) => {
-    const option = document.createElement("option");
+function initMapControls() {
+  legendControl = L.control({
+    position: "topright"
+  });
 
+  legendControl.onAdd = function () {
+    mapControlsContainer = L.DomUtil.create("div", "map-control-stack");
+
+    L.DomEvent.disableClickPropagation(mapControlsContainer);
+    L.DomEvent.disableScrollPropagation(mapControlsContainer);
+
+    const selectWrap = L.DomUtil.create("div", "map-select-control", mapControlsContainer);
+
+    const selectLabel = L.DomUtil.create("label", "map-select-label", selectWrap);
+    selectLabel.textContent = "Track pollutant";
+    selectLabel.setAttribute("for", "map-pollutant-select");
+
+    floatingPollutantSelect = L.DomUtil.create("select", "map-pollutant-select", selectWrap);
+    floatingPollutantSelect.id = "map-pollutant-select";
+
+    const buttonRow = L.DomUtil.create("div", "map-control-button-row", mapControlsContainer);
+
+    const latestButton = L.DomUtil.create("button", "map-button", buttonRow);
+    latestButton.type = "button";
+    latestButton.textContent = "Latest";
+    latestButton.setAttribute("aria-label", "Jump to latest vessel location");
+    latestButton.addEventListener("click", focusLatestPoint);
+
+    const fitButton = L.DomUtil.create("button", "map-button", buttonRow);
+    fitButton.type = "button";
+    fitButton.textContent = "Fit route";
+    fitButton.setAttribute("aria-label", "Fit the full vessel route on the map");
+    fitButton.addEventListener("click", fitRouteToMap);
+
+    legendContainer = L.DomUtil.create("div", "map-legend", mapControlsContainer);
+
+    const legendHeader = L.DomUtil.create("div", "map-legend-header", legendContainer);
+    legendHeader.setAttribute("role", "button");
+    legendHeader.setAttribute("tabindex", "0");
+    legendHeader.setAttribute("aria-expanded", "true");
+
+    legendTitleContainer = L.DomUtil.create("div", "map-legend-title", legendHeader);
+    legendTitleContainer.textContent = "Legend";
+
+    legendToggleButton = L.DomUtil.create("span", "map-legend-toggle", legendHeader);
+    legendToggleButton.textContent = "▾";
+
+    legendBodyContainer = L.DomUtil.create("div", "map-legend-body", legendContainer);
+
+    const toggleLegend = () => {
+      legendContainer.dataset.userToggled = "true";
+      setLegendCollapsed(!legendContainer.classList.contains("collapsed"));
+    };
+
+    legendHeader.addEventListener("click", toggleLegend);
+
+    legendHeader.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        toggleLegend();
+      }
+    });
+
+    return mapControlsContainer;
+  };
+
+  legendControl.addTo(map);
+}
+
+function initPollutantControls() {
+  if (!floatingPollutantSelect) return;
+
+  populatePollutantSelect(floatingPollutantSelect);
+
+  floatingPollutantSelect.addEventListener("change", (event) => {
+    setSelectedPollutant(event.target.value);
+  });
+}
+
+function populatePollutantSelect(selectElement) {
+  selectElement.innerHTML = "";
+
+  const usedKeys = new Set();
+
+  CONFIG.pollutantGroups.forEach((group) => {
+    const optgroup = document.createElement("optgroup");
+    optgroup.label = group.label;
+
+    group.keys.forEach((key) => {
+      const meta = CONFIG.pollutants[key];
+
+      if (!meta) return;
+
+      usedKeys.add(key);
+
+      const option = document.createElement("option");
+      option.value = key;
+      option.textContent = meta.unit
+        ? `${meta.label} (${meta.unit})`
+        : meta.label;
+      option.selected = key === selectedPollutant;
+
+      optgroup.appendChild(option);
+    });
+
+    selectElement.appendChild(optgroup);
+  });
+
+  Object.entries(CONFIG.pollutants).forEach(([key, meta]) => {
+    if (usedKeys.has(key)) return;
+
+    const option = document.createElement("option");
     option.value = key;
-    option.textContent = meta.label;
+    option.textContent = meta.unit
+      ? `${meta.label} (${meta.unit})`
+      : meta.label;
     option.selected = key === selectedPollutant;
 
-    els.pollutantSelect.appendChild(option);
+    selectElement.appendChild(option);
   });
+}
 
-  els.pollutantSelect.addEventListener("change", (event) => {
-    selectedPollutant = event.target.value;
+function setSelectedPollutant(key) {
+  if (!CONFIG.pollutants[key]) return;
 
-    renderTrack();
-    renderTimeMarkers();
-    renderLegend();
-    renderTimeseriesChart();
+  selectedPollutant = key;
 
-    if (selectedHistoryMarker && selectedHistoryMarker._selectedPoint) {
-      selectedHistoryMarker.bindPopup(
-        makePopup(selectedHistoryMarker._selectedPoint, selectedPollutant)
-      );
-    }
-  });
+  if (floatingPollutantSelect) {
+    floatingPollutantSelect.value = key;
+  }
+
+  renderTrack();
+  renderTimeMarkers();
+  renderCurrentMarker();
+  renderPanel();
+  renderLegend();
+  renderTimeseriesChart();
+
+  if (selectedHistoryMarker && selectedHistoryMarker._selectedPoint) {
+    selectedHistoryMarker.bindPopup(
+      makePopup(selectedHistoryMarker._selectedPoint, selectedPollutant)
+    );
+  }
 }
 
 function initTimeseriesPanel() {
@@ -104,31 +235,8 @@ function initTimeseriesPanel() {
     els.timeseriesToggle.textContent = isCollapsed ? "Show" : "Minimize";
     els.timeseriesToggle.setAttribute("aria-expanded", String(!isCollapsed));
 
-    requestAnimationFrame(() => {
-      if (timeseriesChart) {
-        timeseriesChart.resize();
-      }
-
-      if (timeseriesYAxisChart) {
-        timeseriesYAxisChart.resize();
-      }
-    });
+    requestAnimationFrame(resizeCharts);
   });
-}
-
-function initMapLegend() {
-  legendControl = L.control({
-    position: "topright"
-  });
-
-  legendControl.onAdd = function () {
-    legendContainer = L.DomUtil.create("div", "map-legend");
-    L.DomEvent.disableClickPropagation(legendContainer);
-    L.DomEvent.disableScrollPropagation(legendContainer);
-    return legendContainer;
-  };
-
-  legendControl.addTo(map);
 }
 
 /* =========================================================
@@ -160,7 +268,8 @@ async function loadAllData() {
     ["current vessel marker", renderCurrentMarker],
     ["side panel", renderPanel],
     ["legend", renderLegend],
-    ["time-series chart", renderTimeseriesChart]
+    ["time-series chart", renderTimeseriesChart],
+    ["data status", renderDataQuality]
   ];
 
   renderSteps.forEach(([label, fn]) => {
@@ -349,11 +458,12 @@ function renderTrack() {
   hitSegmentLayer.clearLayers();
 
   const points = getSortedHistoryPointsAscending();
-  const latLngs = points.map((point) => [point.lat, point.lon]);
 
-  if (latLngs.length === 0) return;
+  routeLatLngs = points.map((point) => [point.lat, point.lon]);
 
-  L.polyline(latLngs, {
+  if (routeLatLngs.length === 0) return;
+
+  L.polyline(routeLatLngs, {
     color: CONFIG.colors.trackBase,
     weight: 2,
     opacity: 0.28
@@ -361,11 +471,8 @@ function renderTrack() {
 
   renderPollutantTrackSegments(points);
 
-  if (latLngs.length > 1 && !map._hasFitInitialBounds) {
-    map.fitBounds(latLngs, {
-      padding: [30, 30]
-    });
-
+  if (routeLatLngs.length > 1 && !map._hasFitInitialBounds) {
+    fitRouteToMap();
     map._hasFitInitialBounds = true;
   }
 }
@@ -513,6 +620,47 @@ function renderCurrentMarker() {
   `);
 }
 
+function fitRouteToMap() {
+  if (!Array.isArray(routeLatLngs) || routeLatLngs.length === 0) return;
+
+  if (routeLatLngs.length === 1) {
+    map.setView(routeLatLngs[0], Math.max(map.getZoom(), 11), {
+      animate: true
+    });
+    return;
+  }
+
+  map.fitBounds(routeLatLngs, {
+    padding: [36, 36]
+  });
+}
+
+function focusLatestPoint() {
+  const lat = Number(latestData?.lat);
+  const lon = Number(latestData?.lon);
+
+  if (Number.isFinite(lat) && Number.isFinite(lon)) {
+    map.setView([lat, lon], Math.max(map.getZoom(), 11), {
+      animate: true
+    });
+
+    if (currentMarker) {
+      currentMarker.openPopup();
+    }
+
+    return;
+  }
+
+  const points = getSortedHistoryPointsAscending();
+
+  if (points.length > 0) {
+    selectHistoryPoint(points[points.length - 1], {
+      panMap: true,
+      openPopup: true
+    });
+  }
+}
+
 function focusHistoryPoint(point, options = {}) {
   if (!point) return;
 
@@ -565,14 +713,26 @@ function selectHistoryPoint(point, options = {}) {
 function renderPanel() {
   if (!latestData) return;
 
-  const lat = Number(latestData.lat);
-  const lon = Number(latestData.lon);
+  const pollutantMeta = CONFIG.pollutants[selectedPollutant];
+  const selectedValue = getLatestPollutantValue(selectedPollutant);
 
-  if (els.location) {
-    els.location.textContent =
-      Number.isFinite(lat) && Number.isFinite(lon)
-        ? `${lat.toFixed(5)}, ${lon.toFixed(5)}`
-        : "Unknown";
+  if (els.selectedReadingName) {
+    els.selectedReadingName.textContent = `Current ${pollutantMeta.label}`;
+  }
+
+  if (els.selectedReadingValue) {
+    els.selectedReadingValue.textContent = formatValue(
+      selectedValue,
+      pollutantMeta.unit,
+      selectedPollutant
+    );
+  }
+
+  if (els.selectedReadingMeta) {
+    const groupLabel = pollutantMeta.group || "Variable";
+    els.selectedReadingMeta.textContent = pollutantMeta.unit
+      ? `${groupLabel} · ${pollutantMeta.unit}`
+      : groupLabel;
   }
 
   els.updated.textContent = latestData?.timestamp
@@ -603,7 +763,7 @@ function renderPanel() {
 }
 
 function renderLegend() {
-  if (!legendContainer) return;
+  if (!legendBodyContainer || !legendTitleContainer || !legendContainer) return;
 
   const meta = CONFIG.pollutants[selectedPollutant];
 
@@ -611,9 +771,8 @@ function renderLegend() {
     ? `${meta.label} (${meta.unit})`
     : meta.label;
 
-  legendContainer.innerHTML = `
-    <div class="map-legend-title">${legendTitle}</div>
-  `;
+  legendTitleContainer.textContent = legendTitle;
+  legendBodyContainer.innerHTML = "";
 
   meta.breaks.forEach((bin) => {
     const row = document.createElement("div");
@@ -629,8 +788,58 @@ function renderLegend() {
     row.appendChild(swatch);
     row.appendChild(label);
 
-    legendContainer.appendChild(row);
+    legendBodyContainer.appendChild(row);
   });
+
+  applyLegendResponsiveDefault();
+}
+
+function renderDataQuality() {
+  if (!els.dataQualityList) return;
+
+  els.dataQualityList.innerHTML = "";
+
+  const lat = Number(latestData?.lat);
+  const lon = Number(latestData?.lon);
+  const points = getSortedHistoryPointsAscending();
+  const selectedValue = getLatestPollutantValue(selectedPollutant);
+  const ageInfo = getDataAgeInfo(latestData?.timestamp);
+
+  addDataChip(
+    Number.isFinite(lat) && Number.isFinite(lon) ? "GPS OK" : "No GPS",
+    Number.isFinite(lat) && Number.isFinite(lon) ? "good" : "bad"
+  );
+
+  addDataChip(
+    ageInfo.label,
+    ageInfo.status
+  );
+
+  addDataChip(
+    `${points.length} route points`,
+    points.length > 0 ? "info" : "warn"
+  );
+
+  addDataChip(
+    Number.isFinite(Number(selectedValue))
+      ? `${CONFIG.pollutants[selectedPollutant].label} OK`
+      : `${CONFIG.pollutants[selectedPollutant].label} missing`,
+    Number.isFinite(Number(selectedValue)) ? "good" : "warn"
+  );
+
+  if (timeseriesDecimationActive) {
+    addDataChip(
+      `Chart optimized: ${timeseriesDisplayCount}/${timeseriesRawCount}`,
+      "info"
+    );
+  }
+}
+
+function addDataChip(text, status) {
+  const chip = document.createElement("span");
+  chip.className = `data-chip ${status}`;
+  chip.textContent = text;
+  els.dataQualityList.appendChild(chip);
 }
 
 /* =========================================================
@@ -644,7 +853,17 @@ function renderTimeseriesChart() {
 
   const pollutantMeta = CONFIG.pollutants[selectedPollutant];
 
-  timeseriesPoints = getSortedHistoryPointsAscending();
+  timeseriesPointsRaw = getSortedHistoryPointsAscending();
+
+  const displayResult = makeDisplayTimeseriesPoints(
+    timeseriesPointsRaw,
+    selectedPollutant
+  );
+
+  timeseriesPoints = displayResult.points;
+  timeseriesDecimationActive = displayResult.decimated;
+  timeseriesRawCount = displayResult.rawCount;
+  timeseriesDisplayCount = displayResult.displayCount;
 
   if (els.timeseriesChartInner) {
     const chartWidth = Math.max(
@@ -695,10 +914,14 @@ function renderTimeseriesChart() {
   if (els.timeseriesUnitLabel) {
     els.timeseriesUnitLabel.textContent = pollutantMeta.unit || "";
   }
-  
+
   if (els.timeseriesSubtitle) {
+    const decimationText = timeseriesDecimationActive
+      ? ` Optimized long-route view: ${timeseriesDisplayCount} of ${timeseriesRawCount} points plotted; peaks are preserved.`
+      : "";
+
     els.timeseriesSubtitle.textContent =
-      `Showing ${pollutantMeta.label}. Scroll horizontally for long trips. Click a point to jump to the map.`;
+      `Showing ${pollutantMeta.label}. Scroll horizontally for long trips. Click a point to jump to the map.${decimationText}`;
   }
 
   if (timeseriesChart) {
@@ -729,6 +952,7 @@ function renderTimeseriesChart() {
     options: {
       responsive: true,
       maintainAspectRatio: false,
+      resizeDelay: 200,
       animation: false,
       events: [],
       plugins: {
@@ -874,6 +1098,100 @@ function renderTimeseriesChart() {
   updateTimeseriesHighlight();
 }
 
+function makeDisplayTimeseriesPoints(rawPoints, pollutantKey) {
+  const rawCount = rawPoints.length;
+  const decimationConfig = CONFIG.chartDecimation || {};
+
+  if (
+    !decimationConfig.enabled ||
+    rawCount <= decimationConfig.thresholdPoints ||
+    rawCount <= decimationConfig.targetPoints
+  ) {
+    return {
+      points: rawPoints,
+      decimated: false,
+      rawCount,
+      displayCount: rawCount
+    };
+  }
+
+  const targetPoints = Math.max(100, decimationConfig.targetPoints);
+  const bucketSize = Math.ceil(rawCount / targetPoints);
+  const keep = new Map();
+
+  function keepPoint(point) {
+    if (point) {
+      keep.set(point.index, point);
+    }
+  }
+
+  keepPoint(rawPoints[0]);
+  keepPoint(rawPoints[rawPoints.length - 1]);
+
+  if (selectedHistoryPointIndex !== null) {
+    keepPoint(rawPoints.find((point) => point.index === selectedHistoryPointIndex));
+  }
+
+  getMidnightBoundaryMarkers(rawPoints).forEach((marker) => {
+    keepPoint(marker.point);
+  });
+
+  getSunriseSunsetMarkers(rawPoints).forEach((marker) => {
+    keepPoint(marker.point);
+  });
+
+  for (let start = 0; start < rawPoints.length; start += bucketSize) {
+    const bucket = rawPoints.slice(start, start + bucketSize);
+
+    if (bucket.length === 0) continue;
+
+    keepPoint(bucket[0]);
+    keepPoint(bucket[bucket.length - 1]);
+
+    let minPoint = null;
+    let maxPoint = null;
+    let minValue = Infinity;
+    let maxValue = -Infinity;
+
+    bucket.forEach((point) => {
+      const value = Number(point.properties[pollutantKey]);
+
+      if (!Number.isFinite(value)) return;
+
+      if (value < minValue) {
+        minValue = value;
+        minPoint = point;
+      }
+
+      if (value > maxValue) {
+        maxValue = value;
+        maxPoint = point;
+      }
+    });
+
+    keepPoint(minPoint);
+    keepPoint(maxPoint);
+  }
+
+  const displayPoints = Array.from(keep.values()).sort((a, b) => {
+    const aTime = Date.parse(a.properties.timestamp);
+    const bTime = Date.parse(b.properties.timestamp);
+
+    if (Number.isFinite(aTime) && Number.isFinite(bTime) && aTime !== bTime) {
+      return aTime - bTime;
+    }
+
+    return a.index - b.index;
+  });
+
+  return {
+    points: displayPoints,
+    decimated: true,
+    rawCount,
+    displayCount: displayPoints.length
+  };
+}
+
 function makeTimeseriesYScaleOptions(pollutantMeta, values) {
   const numericValues = values.filter((value) => {
     return Number.isFinite(Number(value));
@@ -895,6 +1213,21 @@ function makeTimeseriesYScaleOptions(pollutantMeta, values) {
       ? Math.max(...finiteBreaks)
       : 1;
 
+  if (selectedPollutant === "AQHI") {
+    return {
+      suggestedMin: 0,
+      suggestedMax: Math.max(10, maxValue + 1),
+      ticks: {
+        precision: 0,
+        stepSize: 1,
+        maxTicksLimit: 6,
+        callback: (value) => {
+          return Math.round(value);
+        }
+      }
+    };
+  }
+
   if (minValue === maxValue) {
     minValue -= 1;
     maxValue += 1;
@@ -907,20 +1240,26 @@ function makeTimeseriesYScaleOptions(pollutantMeta, values) {
     suggestedMax: maxValue + padding,
     ticks: {
       precision: 0,
-      maxTicksLimit: 5,
-      callback: (value) => {
-        if (selectedPollutant === "AQHI") {
-          return Math.round(value);
-        }
-
-        return value;
-      }
+      maxTicksLimit: 5
     }
   };
 }
 
 function updateTimeseriesHighlight() {
   if (!timeseriesChart || !Array.isArray(timeseriesPoints)) return;
+
+  const selectedIsDisplayed = timeseriesPoints.some((point) => {
+    return point.index === selectedHistoryPointIndex;
+  });
+
+  if (
+    timeseriesDecimationActive &&
+    selectedHistoryPointIndex !== null &&
+    !selectedIsDisplayed
+  ) {
+    renderTimeseriesChart();
+    return;
+  }
 
   const dataset = timeseriesChart.data.datasets[0];
 
@@ -1350,34 +1689,53 @@ function getPollutantColor(value, pollutantMeta) {
    ========================================================= */
 
 function setStatusFromTimestamp(timestamp) {
+  const info = getDataAgeInfo(timestamp);
+
+  els.status.textContent = info.label;
+  els.status.className = `status-pill ${info.pillClass}`;
+}
+
+function getDataAgeInfo(timestamp) {
   if (!timestamp) {
-    els.status.textContent = "No timestamp";
-    els.status.className = "status-pill stale";
-    return;
+    return {
+      label: "No timestamp",
+      status: "warn",
+      pillClass: "stale"
+    };
   }
 
   const updated = new Date(timestamp);
   const ageMinutes = (Date.now() - updated.getTime()) / 60000;
 
   if (!Number.isFinite(ageMinutes)) {
-    els.status.textContent = "Invalid timestamp";
-    els.status.className = "status-pill stale";
-    return;
+    return {
+      label: "Invalid timestamp",
+      status: "warn",
+      pillClass: "stale"
+    };
   }
 
   if (ageMinutes < -5) {
-    els.status.textContent = "Sample route";
-    els.status.className = "status-pill stale";
-    return;
+    return {
+      label: "Sample route",
+      status: "warn",
+      pillClass: "stale"
+    };
   }
 
   if (ageMinutes > CONFIG.staleAfterMinutes) {
-    els.status.textContent = `Stale: ${Math.round(ageMinutes)} min old`;
-    els.status.className = "status-pill stale";
-  } else {
-    els.status.textContent = "Live";
-    els.status.className = "status-pill live";
+    return {
+      label: `Stale: ${Math.round(ageMinutes)} min old`,
+      status: "warn",
+      pillClass: "stale"
+    };
   }
+
+  return {
+    label: `Live · ${Math.max(0, Math.round(ageMinutes))} min old`,
+    status: "good",
+    pillClass: "live"
+  };
 }
 
 /* =========================================================
@@ -1395,31 +1753,62 @@ function applyResponsiveDefaults() {
     }
   }
 
-  if (!els.timeseriesPanel || !els.timeseriesToggle) return;
+  if (els.timeseriesPanel && els.timeseriesToggle) {
+    const userHasToggled = els.timeseriesPanel.dataset.userToggled === "true";
 
-  const userHasToggled = els.timeseriesPanel.dataset.userToggled === "true";
-
-  if (isMobile && !userHasToggled) {
-    els.timeseriesPanel.classList.add("collapsed");
-    els.timeseriesToggle.textContent = "Show";
-    els.timeseriesToggle.setAttribute("aria-expanded", "false");
-  }
-
-  if (!isMobile && !userHasToggled) {
-    els.timeseriesPanel.classList.remove("collapsed");
-    els.timeseriesToggle.textContent = "Minimize";
-    els.timeseriesToggle.setAttribute("aria-expanded", "true");
-  }
-
-  requestAnimationFrame(() => {
-    if (timeseriesChart) {
-      timeseriesChart.resize();
+    if (isMobile && !userHasToggled) {
+      els.timeseriesPanel.classList.add("collapsed");
+      els.timeseriesToggle.textContent = "Show";
+      els.timeseriesToggle.setAttribute("aria-expanded", "false");
     }
 
-    if (timeseriesYAxisChart) {
-      timeseriesYAxisChart.resize();
+    if (!isMobile && !userHasToggled) {
+      els.timeseriesPanel.classList.remove("collapsed");
+      els.timeseriesToggle.textContent = "Minimize";
+      els.timeseriesToggle.setAttribute("aria-expanded", "true");
     }
-  });
+  }
+
+  applyLegendResponsiveDefault();
+  requestAnimationFrame(resizeCharts);
+}
+
+function applyLegendResponsiveDefault() {
+  if (!legendContainer) return;
+
+  const userHasToggled = legendContainer.dataset.userToggled === "true";
+
+  if (userHasToggled) return;
+
+  const isMobile = window.innerWidth <= 800;
+  const shouldCollapse = isMobile
+    ? CONFIG.mapControls.legendCollapsedOnMobile
+    : CONFIG.mapControls.legendCollapsedOnDesktop;
+
+  setLegendCollapsed(shouldCollapse);
+}
+
+function setLegendCollapsed(shouldCollapse) {
+  if (!legendContainer || !legendToggleButton) return;
+
+  legendContainer.classList.toggle("collapsed", Boolean(shouldCollapse));
+  legendToggleButton.textContent = shouldCollapse ? "▸" : "▾";
+
+  const header = legendContainer.querySelector(".map-legend-header");
+
+  if (header) {
+    header.setAttribute("aria-expanded", String(!shouldCollapse));
+  }
+}
+
+function resizeCharts() {
+  if (timeseriesChart) {
+    timeseriesChart.resize();
+  }
+
+  if (timeseriesYAxisChart) {
+    timeseriesYAxisChart.resize();
+  }
 }
 
 /* =========================================================

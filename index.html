@@ -40,27 +40,26 @@
         <p id="status-pill" class="status-pill">Loading...</p>
       </header>
 
-      <!-- Optional location card. App.js safely handles this being absent.
-      <section class="card">
-        <h2>Current Location</h2>
-        <p id="current-location">—</p>
+      <section class="card current-reading-card">
+        <h2 id="selected-reading-name">Current reading</h2>
+        <p id="selected-reading-value" class="current-reading-value">—</p>
+        <p id="selected-reading-meta" class="current-reading-meta">—</p>
       </section>
-      -->
 
       <section class="card">
         <h2>Last Updated</h2>
         <p id="last-updated">—</p>
       </section>
 
-      <details class="card" id="current-pollutants-card" open>
-        <summary>Current Pollutants</summary>
+      <section class="card data-status-card">
+        <h2>Data Status</h2>
+        <div id="data-quality-list" class="data-quality-list"></div>
+      </section>
+
+      <details class="card" id="current-pollutants-card">
+        <summary>All Current Pollutants</summary>
         <div id="pollutant-list" class="pollutant-list"></div>
       </details>
-
-      <section class="card">
-        <label for="pollutant-select">Track pollutant</label>
-        <select id="pollutant-select"></select>
-      </section>
     </aside>
 
     <section id="timeseries-panel" class="timeseries-panel">
@@ -90,7 +89,7 @@
           <div class="timeseries-y-axis">
             <canvas id="timeseries-y-axis-chart"></canvas>
           </div>
-      
+
           <div class="timeseries-scroll">
             <div id="timeseries-chart-inner" class="timeseries-chart-inner">
               <canvas id="timeseries-chart"></canvas>

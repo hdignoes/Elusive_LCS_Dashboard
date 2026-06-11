@@ -32,6 +32,17 @@ const CONFIG = {
     pixelsPerPoint: 11
   },
 
+  chartDecimation: {
+    enabled: true,
+    thresholdPoints: 2000,
+    targetPoints: 1200
+  },
+
+  mapControls: {
+    legendCollapsedOnDesktop: false,
+    legendCollapsedOnMobile: true
+  },
+
   sunMarkers: {
     enabled: true,
     toleranceMinutes: 45
@@ -50,10 +61,22 @@ const CONFIG = {
     selected: "#ffffff"
   },
 
+  pollutantGroups: [
+    {
+      label: "Air pollutants",
+      keys: ["AQHI", "PM2_5", "PM1", "PM10", "O3", "NO2", "NO", "CO", "CO2"]
+    },
+    {
+      label: "Meteorology",
+      keys: ["T", "RH"]
+    }
+  ],
+
   pollutants: {
     CO: {
       label: "CO",
       unit: "ppm",
+      group: "Air pollutants",
       note: "Display bands loosely based on WHO CO guidance and regional CO objectives.",
       breaks: [
         { max: 1, color: AQHI_PLUS_COLORS.veryLow, label: "≤1" },
@@ -68,6 +91,7 @@ const CONFIG = {
     NO: {
       label: "NO",
       unit: "ppb",
+      group: "Air pollutants",
       note: "No common ambient objective; bands are exploratory for vessel/source indication.",
       breaks: [
         { max: 2, color: AQHI_PLUS_COLORS.veryLow, label: "≤2" },
@@ -82,6 +106,7 @@ const CONFIG = {
     NO2: {
       label: "NO₂",
       unit: "ppb",
+      group: "Air pollutants",
       note: "Bands use WHO lower reference levels and CAAQS/Metro Vancouver 1-hour context.",
       breaks: [
         { max: 5, color: AQHI_PLUS_COLORS.veryLow, label: "≤5" },
@@ -96,6 +121,7 @@ const CONFIG = {
     O3: {
       label: "O₃",
       unit: "ppb",
+      group: "Air pollutants",
       note: "Bands use WHO lower reference levels plus CAAQS/Metro Vancouver 8-hour and 1-hour context.",
       breaks: [
         { max: 30, color: AQHI_PLUS_COLORS.veryLow, label: "≤30" },
@@ -110,6 +136,7 @@ const CONFIG = {
     CO2: {
       label: "CO₂",
       unit: "ppm",
+      group: "Air pollutants",
       note: "Context bands only; CO₂ is not a CAAQS/WHO ambient criteria pollutant.",
       breaks: [
         { max: 420, color: AQHI_PLUS_COLORS.veryLow, label: "≤420" },
@@ -124,6 +151,7 @@ const CONFIG = {
     PM1: {
       label: "PM₁",
       unit: "µg/m³",
+      group: "Air pollutants",
       note: "No common ambient objective; bands are heuristic and aligned roughly below PM₂.₅ context.",
       breaks: [
         { max: 2.5, color: AQHI_PLUS_COLORS.veryLow, label: "≤2.5" },
@@ -138,6 +166,7 @@ const CONFIG = {
     PM2_5: {
       label: "PM₂.₅",
       unit: "µg/m³",
+      group: "Air pollutants",
       note: "Bands include WHO 24-hour guidance and Metro Vancouver/B.C./CAAQS 24-hour context.",
       breaks: [
         { max: 5, color: AQHI_PLUS_COLORS.veryLow, label: "≤5" },
@@ -152,6 +181,7 @@ const CONFIG = {
     PM10: {
       label: "PM₁₀",
       unit: "µg/m³",
+      group: "Air pollutants",
       note: "Bands include WHO 24-hour guidance and B.C./Metro Vancouver PM₁₀ context.",
       breaks: [
         { max: 15, color: AQHI_PLUS_COLORS.veryLow, label: "≤15" },
@@ -166,6 +196,7 @@ const CONFIG = {
     T: {
       label: "Temperature",
       unit: "°C",
+      group: "Meteorology",
       note: "Meteorological display bands only.",
       breaks: [
         { max: 0, color: AQHI_PLUS_COLORS.lowModerate, label: "≤0" },
@@ -180,6 +211,7 @@ const CONFIG = {
     RH: {
       label: "Relative humidity",
       unit: "%",
+      group: "Meteorology",
       note: "Meteorological display bands only.",
       breaks: [
         { max: 30, color: AQHI_PLUS_COLORS.high, label: "≤30" },
@@ -194,6 +226,7 @@ const CONFIG = {
     AQHI: {
       label: "AQHI",
       unit: "",
+      group: "Air pollutants",
       note: "Uses AQHI Plus-style display bands.",
       breaks: [
         { max: 1, color: AQHI_PLUS_COLORS.veryLow, label: "1" },
