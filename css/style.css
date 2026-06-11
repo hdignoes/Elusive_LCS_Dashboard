@@ -110,6 +110,29 @@ h2 {
 }
 
 /* =========================================================
+   Tracking link
+   ========================================================= */
+
+.tracking-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 800;
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.tracking-link:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+.tracking-link::after {
+  content: "↗";
+  font-size: 0.85em;
+}
+
+/* =========================================================
    Form controls
    ========================================================= */
 
@@ -238,11 +261,16 @@ summary {
    Map legend
    ========================================================= */
 
+.leaflet-top.leaflet-right {
+  top: 0.75rem;
+  right: calc(var(--panel-width) + 0.75rem);
+}
+
 .map-legend {
   min-width: 150px;
   max-width: 190px;
   padding: 0.65rem 0.75rem;
-  background: rgba(248, 250, 252, 0.72);
+  background: rgba(248, 250, 252, 0.78);
   border: 1px solid rgba(226, 232, 240, 0.7);
   border-radius: 0.8rem;
   box-shadow: 0 8px 24px rgba(15, 23, 42, 0.18);
@@ -267,8 +295,8 @@ summary {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.78rem;
   margin-bottom: 0.32rem;
+  font-size: 0.78rem;
 }
 
 .legend-swatch {
@@ -452,6 +480,23 @@ summary {
     gap: 0.25rem;
   }
 
+  .leaflet-top.leaflet-right {
+    top: auto;
+    right: 0.75rem;
+    bottom: calc(var(--timeseries-height) + 1rem);
+  }
+
+  .map-legend {
+    max-width: 140px;
+    max-height: 160px;
+    overflow-y: auto;
+    font-size: 0.72rem;
+  }
+
+  .map-legend-note {
+    display: none;
+  }
+
   .timeseries-panel {
     left: 0.5rem;
     right: 0.5rem;
@@ -477,15 +522,6 @@ summary {
   .timeseries-body {
     height: 145px;
     min-height: 145px;
-  }
-
-  .map-legend {
-    max-width: 140px;
-    font-size: 0.72rem;
-  }
-
-  .map-legend-note {
-    display: none;
   }
 
   .time-marker-wrap {

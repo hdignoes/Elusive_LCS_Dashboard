@@ -109,7 +109,7 @@ function initTimeseriesPanel() {
 
 function initMapLegend() {
   legendControl = L.control({
-    position: "bottomleft"
+    position: "topright"
   });
 
   legendControl.onAdd = function () {
