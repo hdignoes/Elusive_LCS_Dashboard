@@ -100,10 +100,11 @@ function initTimeseriesPanel() {
   els.timeseriesToggle.addEventListener("click", () => {
     const isCollapsed = els.timeseriesPanel.classList.toggle("collapsed");
 
+    els.timeseriesPanel.dataset.userToggled = "true";
     els.timeseriesToggle.textContent = isCollapsed ? "Show" : "Minimize";
     els.timeseriesToggle.setAttribute("aria-expanded", String(!isCollapsed));
 
-    setTimeout(() => {
+    requestAnimationFrame(() => {
       if (timeseriesChart) {
         timeseriesChart.resize();
       }
@@ -111,7 +112,7 @@ function initTimeseriesPanel() {
       if (timeseriesYAxisChart) {
         timeseriesYAxisChart.resize();
       }
-    }, 0);
+    });
   });
 }
 
@@ -790,7 +791,8 @@ function renderTimeseriesChart() {
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      resizeDelay: 100,
+      resizeDelay: 200,
+      animation: false,
       layout: {
         padding: {
           bottom: 10
@@ -1383,13 +1385,41 @@ function setStatusFromTimestamp(timestamp) {
    ========================================================= */
 
 function applyResponsiveDefaults() {
-  if (!els.currentPollutantsCard) return;
+  const isMobile = window.innerWidth <= 800;
 
-  if (window.innerWidth <= 800) {
-    els.currentPollutantsCard.removeAttribute("open");
-  } else {
-    els.currentPollutantsCard.setAttribute("open", "");
+  if (els.currentPollutantsCard) {
+    if (isMobile) {
+      els.currentPollutantsCard.removeAttribute("open");
+    } else {
+      els.currentPollutantsCard.setAttribute("open", "");
+    }
   }
+
+  if (!els.timeseriesPanel || !els.timeseriesToggle) return;
+
+  const userHasToggled = els.timeseriesPanel.dataset.userToggled === "true";
+
+  if (isMobile && !userHasToggled) {
+    els.timeseriesPanel.classList.add("collapsed");
+    els.timeseriesToggle.textContent = "Show";
+    els.timeseriesToggle.setAttribute("aria-expanded", "false");
+  }
+
+  if (!isMobile && !userHasToggled) {
+    els.timeseriesPanel.classList.remove("collapsed");
+    els.timeseriesToggle.textContent = "Minimize";
+    els.timeseriesToggle.setAttribute("aria-expanded", "true");
+  }
+
+  requestAnimationFrame(() => {
+    if (timeseriesChart) {
+      timeseriesChart.resize();
+    }
+
+    if (timeseriesYAxisChart) {
+      timeseriesYAxisChart.resize();
+    }
+  });
 }
 
 /* =========================================================
