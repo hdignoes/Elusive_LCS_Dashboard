@@ -26,30 +26,27 @@
         </p>
         <p id="status-pill" class="status-pill">Loading...</p>
       </header>
-<!--
+
+      <!-- Optional location card. App.js safely handles this being absent.
       <section class="card">
         <h2>Current Location</h2>
         <p id="current-location">—</p>
       </section>
--->
+      -->
+
       <section class="card">
         <h2>Last Updated</h2>
         <p id="last-updated">—</p>
       </section>
 
-      <details class="card" open>
+      <details class="card" id="current-pollutants-card" open>
         <summary>Current Pollutants</summary>
         <div id="pollutant-list" class="pollutant-list"></div>
       </details>
 
       <section class="card">
-        <label for="pollutant-select">Plume pollutant</label>
+        <label for="pollutant-select">Track pollutant</label>
         <select id="pollutant-select"></select>
-      </section>
-
-      <section class="card">
-        <h2>Legend</h2>
-        <div id="legend"></div>
       </section>
     </aside>
 
@@ -73,7 +70,11 @@
       </div>
 
       <div class="timeseries-body">
-        <canvas id="timeseries-chart"></canvas>
+        <div class="timeseries-scroll">
+          <div id="timeseries-chart-inner" class="timeseries-chart-inner">
+            <canvas id="timeseries-chart"></canvas>
+          </div>
+        </div>
       </div>
     </section>
   </main>

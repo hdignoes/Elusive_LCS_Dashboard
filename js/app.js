@@ -1,10 +1,15 @@
 let map;
-let trackLayer;
-let plumeLayer;
+let trackBaseLayer;
+let trackSegmentLayer;
+let hitSegmentLayer;
+let timeMarkerLayer;
 let currentMarker;
 let selectedHistoryMarker;
 let timeseriesChart;
 let selectedHistoryPointIndex = null;
+
+let legendControl;
+let legendContainer;
 
 let latestData = null;
 let historyData = null;
@@ -17,11 +22,12 @@ const els = {
   updated: document.getElementById("last-updated"),
   pollutantSelect: document.getElementById("pollutant-select"),
   pollutantList: document.getElementById("pollutant-list"),
-  legend: document.getElementById("legend"),
   timeseriesPanel: document.getElementById("timeseries-panel"),
   timeseriesToggle: document.getElementById("timeseries-toggle"),
   timeseriesSubtitle: document.getElementById("timeseries-subtitle"),
-  timeseriesChart: document.getElementById("timeseries-chart")
+  timeseriesChart: document.getElementById("timeseries-chart"),
+  timeseriesChartInner: document.getElementById("timeseries-chart-inner"),
+  currentPollutantsCard: document.getElementById("current-pollutants-card")
 };
 
 document.addEventListener("DOMContentLoaded", init);
@@ -30,8 +36,11 @@ function init() {
   initMap();
   initPollutantSelect();
   initTimeseriesPanel();
-  loadAllData();
+  applyResponsiveDefaults();
 
+  window.addEventListener("resize", applyResponsiveDefaults);
+
+  loadAllData();
   setInterval(loadAllData, CONFIG.refreshMs);
 }
 
@@ -47,8 +56,12 @@ function initMap() {
     attribution: "&copy; OpenStreetMap contributors"
   }).addTo(map);
 
-  trackLayer = L.layerGroup().addTo(map);
-  plumeLayer = L.layerGroup().addTo(map);
+  trackBaseLayer = L.layerGroup().addTo(map);
+  trackSegmentLayer = L.layerGroup().addTo(map);
+  hitSegmentLayer = L.layerGroup().addTo(map);
+  timeMarkerLayer = L.layerGroup().addTo(map);
+
+  initMapLegend();
 }
 
 function initPollutantSelect() {
@@ -65,7 +78,7 @@ function initPollutantSelect() {
   els.pollutantSelect.addEventListener("change", (event) => {
     selectedPollutant = event.target.value;
 
-    renderPlume();
+    renderTrack();
     renderLegend();
     renderTimeseriesChart();
 
@@ -75,8 +88,6 @@ function initPollutantSelect() {
       );
     }
   });
-
-  renderLegend();
 }
 
 function initTimeseriesPanel() {
@@ -94,6 +105,21 @@ function initTimeseriesPanel() {
       }
     }, 0);
   });
+}
+
+function initMapLegend() {
+  legendControl = L.control({
+    position: "bottomleft"
+  });
+
+  legendControl.onAdd = function () {
+    legendContainer = L.DomUtil.create("div", "map-legend");
+    L.DomEvent.disableClickPropagation(legendContainer);
+    L.DomEvent.disableScrollPropagation(legendContainer);
+    return legendContainer;
+  };
+
+  legendControl.addTo(map);
 }
 
 /* =========================================================
@@ -119,9 +145,10 @@ async function loadAllData() {
 
   try {
     renderTrack();
-    renderPlume();
+    renderTimeMarkers();
     renderCurrentMarker();
     renderPanel();
+    renderLegend();
     renderTimeseriesChart();
 
     setStatusFromTimestamp(latestData.timestamp);
@@ -134,15 +161,21 @@ async function loadAllData() {
 }
 
 async function fetchJson(url) {
-  const response = await fetch(`${url}?t=${Date.now()}`, {
+  const fullUrl = `${url}?t=${Date.now()}`;
+
+  const response = await fetch(fullUrl, {
     cache: "no-store"
   });
 
   if (!response.ok) {
-    throw new Error(`Failed to fetch ${url}: ${response.status}`);
+    throw new Error(`Failed to fetch ${fullUrl}: HTTP ${response.status}`);
   }
 
-  return response.json();
+  try {
+    return await response.json();
+  } catch (error) {
+    throw new Error(`Invalid JSON in ${url}: ${error.message}`);
+  }
 }
 
 /* =========================================================
@@ -199,10 +232,7 @@ function getSortedHistoryPointsAscending() {
 
 function getLatestBearing() {
   const points = getSortedHistoryPointsAscending().filter((point) => {
-    return (
-      Number.isFinite(point.lat) &&
-      Number.isFinite(point.lon)
-    );
+    return Number.isFinite(point.lat) && Number.isFinite(point.lon);
   });
 
   if (points.length < 2) {
@@ -224,7 +254,9 @@ function getLatestBearing() {
    ========================================================= */
 
 function renderTrack() {
-  trackLayer.clearLayers();
+  trackBaseLayer.clearLayers();
+  trackSegmentLayer.clearLayers();
+  hitSegmentLayer.clearLayers();
 
   const points = getSortedHistoryPointsAscending();
   const latLngs = points.map((point) => [point.lat, point.lon]);
@@ -232,10 +264,12 @@ function renderTrack() {
   if (latLngs.length === 0) return;
 
   L.polyline(latLngs, {
-    color: "#0f172a",
-    weight: 3,
-    opacity: 0.7
-  }).addTo(trackLayer);
+    color: CONFIG.colors.trackBase,
+    weight: 2,
+    opacity: 0.28
+  }).addTo(trackBaseLayer);
+
+  renderPollutantTrackSegments(points);
 
   if (latLngs.length > 1 && !map._hasFitInitialBounds) {
     map.fitBounds(latLngs, {
@@ -246,36 +280,115 @@ function renderTrack() {
   }
 }
 
-function renderPlume() {
-  plumeLayer.clearLayers();
-
-  const points = getSortedHistoryPointsAscending();
+function renderPollutantTrackSegments(points) {
   const pollutantMeta = CONFIG.pollutants[selectedPollutant];
 
-  points.forEach((point) => {
-    const value = Number(point.properties[selectedPollutant]);
+  for (let i = 1; i < points.length; i += 1) {
+    const from = points[i - 1];
+    const to = points[i];
 
-    if (!Number.isFinite(value)) return;
+    const fromValue = Number(from.properties[selectedPollutant]);
+    const toValue = Number(to.properties[selectedPollutant]);
 
-    const color = getPollutantColor(value, pollutantMeta.range);
+    const usableValue =
+      Number.isFinite(toValue)
+        ? toValue
+        : Number.isFinite(fromValue)
+          ? fromValue
+          : null;
 
-    const marker = L.circleMarker([point.lat, point.lon], {
-      radius: point.index === selectedHistoryPointIndex ? 9 : 6,
-      color: point.index === selectedHistoryPointIndex ? "#ffffff" : "#0f172a",
-      fillColor: color,
-      fillOpacity: point.index === selectedHistoryPointIndex ? 0.95 : 0.7,
-      weight: point.index === selectedHistoryPointIndex ? 3 : 1.5,
-      opacity: 1
-    });
+    if (usableValue === null) continue;
 
-    marker.on("click", () => {
-      selectHistoryPoint(point, {
+    const segmentColor = getPollutantColor(usableValue, pollutantMeta);
+    const isSelected =
+      from.index === selectedHistoryPointIndex ||
+      to.index === selectedHistoryPointIndex;
+
+    const visibleSegment = L.polyline(
+      [
+        [from.lat, from.lon],
+        [to.lat, to.lon]
+      ],
+      {
+        color: segmentColor,
+        weight: isSelected ? 9 : 6,
+        opacity: isSelected ? 1 : 0.88,
+        lineCap: "round",
+        lineJoin: "round"
+      }
+    );
+
+    visibleSegment.addTo(trackSegmentLayer);
+
+    const hitSegment = L.polyline(
+      [
+        [from.lat, from.lon],
+        [to.lat, to.lon]
+      ],
+      {
+        color: "#000000",
+        weight: 18,
+        opacity: 0,
+        interactive: true
+      }
+    );
+
+    hitSegment.on("click", () => {
+      selectHistoryPoint(to, {
         panMap: false,
         openPopup: true
       });
     });
 
-    marker.addTo(plumeLayer);
+    hitSegment.on("mouseover", () => {
+      visibleSegment.setStyle({
+        weight: isSelected ? 10 : 8,
+        opacity: 1
+      });
+    });
+
+    hitSegment.on("mouseout", () => {
+      visibleSegment.setStyle({
+        weight: isSelected ? 9 : 6,
+        opacity: isSelected ? 1 : 0.88
+      });
+    });
+
+    hitSegment.addTo(hitSegmentLayer);
+  }
+}
+
+function renderTimeMarkers() {
+  timeMarkerLayer.clearLayers();
+
+  if (!CONFIG.timeMarkers?.enabled) return;
+
+  const points = getSortedHistoryPointsAscending();
+  const markers = getNoonMidnightMarkers(points);
+
+  markers.forEach((marker) => {
+    const icon = makeTimeMarkerIcon(marker.type);
+
+    const leafletMarker = L.marker([marker.point.lat, marker.point.lon], {
+      icon
+    });
+
+    leafletMarker.on("click", () => {
+      selectHistoryPoint(marker.point, {
+        panMap: true,
+        openPopup: true
+      });
+    });
+
+    leafletMarker
+      .bindTooltip(
+        `${marker.type === "noon" ? "Noon" : "Midnight"} — ${formatTimestamp(marker.point.properties.timestamp)}`,
+        {
+          direction: "top",
+          offset: [0, -12]
+        }
+      )
+      .addTo(timeMarkerLayer);
   });
 }
 
@@ -326,9 +439,9 @@ function focusHistoryPoint(point, options = {}) {
     selectedHistoryMarker.setLatLng([point.lat, point.lon]);
   } else {
     selectedHistoryMarker = L.circleMarker([point.lat, point.lon], {
-      radius: 11,
-      color: "#ffffff",
-      fillColor: "#0f172a",
+      radius: 9,
+      color: "#0f172a",
+      fillColor: "#ffffff",
       fillOpacity: 0.95,
       weight: 3,
       opacity: 1
@@ -349,7 +462,7 @@ function selectHistoryPoint(point, options = {}) {
   selectedHistoryPointIndex = point.index;
 
   focusHistoryPoint(point, options);
-  renderPlume();
+  renderTrack();
   updateTimeseriesHighlight();
 }
 
@@ -398,35 +511,37 @@ function renderPanel() {
 }
 
 function renderLegend() {
+  if (!legendContainer) return;
+
   const meta = CONFIG.pollutants[selectedPollutant];
-  const [min, max] = meta.range;
 
-  const steps = [
-    min,
-    min + (max - min) * 0.25,
-    min + (max - min) * 0.5,
-    min + (max - min) * 0.75,
-    max
-  ];
+  legendContainer.innerHTML = `
+    <div class="map-legend-title">${meta.label}</div>
+  `;
 
-  els.legend.innerHTML = "";
-
-  steps.forEach((value) => {
+  meta.breaks.forEach((bin, index) => {
     const row = document.createElement("div");
     row.className = "legend-row";
 
     const swatch = document.createElement("span");
     swatch.className = "legend-swatch";
-    swatch.style.backgroundColor = getPollutantColor(value, meta.range);
+    swatch.style.backgroundColor = bin.color;
 
     const label = document.createElement("span");
-    label.textContent = `${roundValue(value)} ${meta.unit}`.trim();
+    label.textContent = `${bin.label} ${meta.unit}`.trim();
 
     row.appendChild(swatch);
     row.appendChild(label);
 
-    els.legend.appendChild(row);
+    legendContainer.appendChild(row);
   });
+
+  if (meta.note) {
+    const note = document.createElement("div");
+    note.className = "map-legend-note";
+    note.textContent = "Display bands; not compliance averaging.";
+    legendContainer.appendChild(note);
+  }
 }
 
 /* =========================================================
@@ -439,6 +554,15 @@ function renderTimeseriesChart() {
   const pollutantMeta = CONFIG.pollutants[selectedPollutant];
 
   timeseriesPoints = getSortedHistoryPointsAscending();
+
+  if (els.timeseriesChartInner) {
+    const chartWidth = Math.max(
+      CONFIG.chart.minWidthPx,
+      timeseriesPoints.length * CONFIG.chart.pixelsPerPoint
+    );
+
+    els.timeseriesChartInner.style.width = `${chartWidth}px`;
+  }
 
   const labels = timeseriesPoints.map((point) => {
     return point.properties.timestamp
@@ -455,22 +579,22 @@ function renderTimeseriesChart() {
     const value = Number(point.properties[selectedPollutant]);
 
     if (!Number.isFinite(value)) {
-      return "#94a3b8";
+      return CONFIG.colors.unavailable;
     }
 
-    return getPollutantColor(value, pollutantMeta.range);
+    return getPollutantColor(value, pollutantMeta);
   });
 
   const pointRadii = timeseriesPoints.map((point) => {
-    return point.index === selectedHistoryPointIndex ? 7 : 3;
+    return point.index === selectedHistoryPointIndex ? 7 : 2.5;
   });
 
   const pointHoverRadii = timeseriesPoints.map((point) => {
-    return point.index === selectedHistoryPointIndex ? 9 : 7;
+    return point.index === selectedHistoryPointIndex ? 9 : 6;
   });
 
-  const pointBorderColors = timeseriesPoints.map((point) => {
-    return point.index === selectedHistoryPointIndex ? "#ffffff" : "#0f172a";
+  const pointBorderColors = timeseriesPoints.map(() => {
+    return "#0f172a";
   });
 
   const pointBorderWidths = timeseriesPoints.map((point) => {
@@ -479,7 +603,7 @@ function renderTimeseriesChart() {
 
   if (els.timeseriesSubtitle) {
     els.timeseriesSubtitle.textContent =
-      `Showing ${pollutantMeta.label}. Click a point to jump to that location on the map.`;
+      `Showing ${pollutantMeta.label}. Scroll horizontally for long trips. Click a point to jump to the map.`;
   }
 
   if (timeseriesChart) {
@@ -512,6 +636,7 @@ function renderTimeseriesChart() {
     options: {
       responsive: true,
       maintainAspectRatio: false,
+      resizeDelay: 100,
       interaction: {
         mode: "nearest",
         intersect: true
@@ -546,7 +671,7 @@ function renderTimeseriesChart() {
       scales: {
         x: {
           ticks: {
-            maxTicksLimit: 8
+            maxTicksLimit: 12
           },
           grid: {
             display: false
@@ -584,7 +709,8 @@ function renderTimeseriesChart() {
           openPopup: true
         });
       }
-    }
+    },
+    plugins: [noonMidnightChartPlugin]
   });
 
   updateTimeseriesHighlight();
@@ -596,15 +722,15 @@ function updateTimeseriesHighlight() {
   const dataset = timeseriesChart.data.datasets[0];
 
   dataset.pointRadius = timeseriesPoints.map((point) => {
-    return point.index === selectedHistoryPointIndex ? 7 : 3;
+    return point.index === selectedHistoryPointIndex ? 7 : 2.5;
   });
 
   dataset.pointHoverRadius = timeseriesPoints.map((point) => {
-    return point.index === selectedHistoryPointIndex ? 9 : 7;
+    return point.index === selectedHistoryPointIndex ? 9 : 6;
   });
 
-  dataset.pointBorderColor = timeseriesPoints.map((point) => {
-    return point.index === selectedHistoryPointIndex ? "#ffffff" : "#0f172a";
+  dataset.pointBorderColor = timeseriesPoints.map(() => {
+    return "#0f172a";
   });
 
   dataset.pointBorderWidth = timeseriesPoints.map((point) => {
@@ -627,6 +753,152 @@ function updateTimeseriesHighlight() {
   }
 
   timeseriesChart.update("none");
+}
+
+/* =========================================================
+   Noon/midnight markers
+   ========================================================= */
+
+const noonMidnightChartPlugin = {
+  id: "noonMidnightMarkers",
+
+  afterDatasetsDraw(chart) {
+    if (!CONFIG.timeMarkers?.enabled) return;
+
+    const { ctx, chartArea, scales } = chart;
+    const xScale = scales.x;
+
+    if (!xScale || !chartArea) return;
+
+    const markers = getNoonMidnightMarkers(timeseriesPoints);
+
+    ctx.save();
+
+    markers.forEach((marker) => {
+      const chartIndex = timeseriesPoints.findIndex((point) => {
+        return point.index === marker.point.index;
+      });
+
+      if (chartIndex < 0) return;
+
+      const x = xScale.getPixelForValue(chartIndex);
+      const color =
+        marker.type === "noon"
+          ? CONFIG.timeMarkers.noonColor
+          : CONFIG.timeMarkers.midnightColor;
+
+      ctx.beginPath();
+      ctx.moveTo(x, chartArea.top);
+      ctx.lineTo(x, chartArea.bottom);
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash(marker.type === "noon" ? [5, 4] : []);
+      ctx.strokeStyle = color;
+      ctx.stroke();
+
+      ctx.setLineDash([]);
+      ctx.fillStyle = color;
+      ctx.font = "700 10px system-ui, sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText(marker.type === "noon" ? "Noon" : "Mid", x, chartArea.top + 10);
+    });
+
+    ctx.restore();
+  }
+};
+
+function getNoonMidnightMarkers(points) {
+  const toleranceMinutes = CONFIG.timeMarkers?.toleranceMinutes ?? 9;
+  const candidates = new Map();
+
+  points.forEach((point) => {
+    const timestamp = point.properties?.timestamp;
+    const parts = getLocalTimeParts(timestamp);
+
+    if (!parts) return;
+
+    const totalMinutes = parts.hour * 60 + parts.minute + parts.second / 60;
+
+    const noonOffset = Math.abs(totalMinutes - 720);
+    const midnightOffset = Math.min(totalMinutes, Math.abs(1440 - totalMinutes));
+
+    if (noonOffset <= toleranceMinutes) {
+      addBestTimeMarkerCandidate(candidates, {
+        key: `${parts.year}-${parts.month}-${parts.day}-noon`,
+        type: "noon",
+        offset: noonOffset,
+        point
+      });
+    }
+
+    if (midnightOffset <= toleranceMinutes) {
+      const midnightDateKey =
+        totalMinutes > 720
+          ? `${parts.year}-${parts.month}-${Number(parts.day) + 1}`
+          : `${parts.year}-${parts.month}-${parts.day}`;
+
+      addBestTimeMarkerCandidate(candidates, {
+        key: `${midnightDateKey}-midnight`,
+        type: "midnight",
+        offset: midnightOffset,
+        point
+      });
+    }
+  });
+
+  return Array.from(candidates.values()).sort((a, b) => {
+    const aTime = Date.parse(a.point.properties.timestamp);
+    const bTime = Date.parse(b.point.properties.timestamp);
+
+    return aTime - bTime;
+  });
+}
+
+function addBestTimeMarkerCandidate(candidates, candidate) {
+  const existing = candidates.get(candidate.key);
+
+  if (!existing || candidate.offset < existing.offset) {
+    candidates.set(candidate.key, candidate);
+  }
+}
+
+function getLocalTimeParts(timestamp) {
+  if (!timestamp) return null;
+
+  const date = new Date(timestamp);
+
+  if (Number.isNaN(date.getTime())) return null;
+
+  const formatter = new Intl.DateTimeFormat("en-CA", {
+    timeZone: CONFIG.displayTimeZone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false
+  });
+
+  const parts = Object.fromEntries(
+    formatter.formatToParts(date).map((part) => {
+      return [part.type, part.value];
+    })
+  );
+
+  let hour = Number(parts.hour);
+
+  if (hour === 24) {
+    hour = 0;
+  }
+
+  return {
+    year: parts.year,
+    month: parts.month,
+    day: parts.day,
+    hour,
+    minute: Number(parts.minute),
+    second: Number(parts.second)
+  };
 }
 
 /* =========================================================
@@ -665,19 +937,36 @@ function makeVesselArrowIcon(bearing) {
   });
 }
 
+function makeTimeMarkerIcon(type) {
+  const label = type === "noon" ? "12" : "00";
+
+  return L.divIcon({
+    className: "time-marker",
+    iconSize: [34, 34],
+    iconAnchor: [17, 17],
+    popupAnchor: [0, -16],
+    html: `
+      <div class="time-marker-wrap ${type}">
+        ${label}
+      </div>
+    `
+  });
+}
+
 /* =========================================================
    Visual encoding
    ========================================================= */
 
-function getPollutantColor(value, range) {
-  const [min, max] = range;
-  const ratio = Math.max(0, Math.min(1, (value - min) / (max - min)));
+function getPollutantColor(value, pollutantMeta) {
+  if (!Number.isFinite(value) || !pollutantMeta?.breaks) {
+    return CONFIG.colors.unavailable;
+  }
 
-  if (ratio < 0.25) return "#2c7bb6";
-  if (ratio < 0.5) return "#abd9e9";
-  if (ratio < 0.75) return "#fdae61";
+  const bin = pollutantMeta.breaks.find((item) => {
+    return value <= item.max;
+  });
 
-  return "#d7191c";
+  return bin?.color || CONFIG.colors.unavailable;
 }
 
 /* =========================================================
@@ -716,6 +1005,20 @@ function setStatusFromTimestamp(timestamp) {
 }
 
 /* =========================================================
+   Responsive defaults
+   ========================================================= */
+
+function applyResponsiveDefaults() {
+  if (!els.currentPollutantsCard) return;
+
+  if (window.innerWidth <= 800) {
+    els.currentPollutantsCard.removeAttribute("open");
+  } else {
+    els.currentPollutantsCard.setAttribute("open", "");
+  }
+}
+
+/* =========================================================
    Formatting helpers
    ========================================================= */
 
@@ -727,6 +1030,7 @@ function formatTimestamp(timestamp) {
   }
 
   return date.toLocaleString([], {
+    timeZone: CONFIG.displayTimeZone,
     dateStyle: "medium",
     timeStyle: "short"
   });
@@ -740,6 +1044,7 @@ function formatTimestampShort(timestamp) {
   }
 
   return date.toLocaleString([], {
+    timeZone: CONFIG.displayTimeZone,
     month: "short",
     day: "numeric",
     hour: "2-digit",
