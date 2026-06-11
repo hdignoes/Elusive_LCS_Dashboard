@@ -1,13 +1,14 @@
-let map;
 let trackBaseLayer;
 let trackSegmentLayer;
 let hitSegmentLayer;
+let historyPointLayer;
 let timeMarkerLayer;
 let currentMarker;
 let selectedHistoryMarker;
 let timeseriesChart;
 let timeseriesYAxisChart;
 let selectedHistoryPointIndex = null;
+let hasCenteredOnInitialLatest = false;
 
 let legendControl;
 let mapControlsContainer;
@@ -75,6 +76,7 @@ function initMap() {
   trackBaseLayer = L.layerGroup().addTo(map);
   trackSegmentLayer = L.layerGroup().addTo(map);
   hitSegmentLayer = L.layerGroup().addTo(map);
+  historyPointLayer = L.layerGroup().addTo(map);
   timeMarkerLayer = L.layerGroup().addTo(map);
 
   initMapControls();
@@ -456,6 +458,7 @@ function renderTrack() {
   trackBaseLayer.clearLayers();
   trackSegmentLayer.clearLayers();
   hitSegmentLayer.clearLayers();
+  historyPointLayer.clearLayers();
 
   const points = getSortedHistoryPointsAscending();
 
@@ -470,10 +473,10 @@ function renderTrack() {
   }).addTo(trackBaseLayer);
 
   renderPollutantTrackSegments(points);
+  renderHistoryPointMarkers(points);
 
-  if (routeLatLngs.length > 1 && !map._hasFitInitialBounds) {
-    fitRouteToMap();
-    map._hasFitInitialBounds = true;
+  if (!hasCenteredOnInitialLatest) {
+    centerMapOnLatestPoint();
   }
 }
 
@@ -661,39 +664,82 @@ function focusLatestPoint() {
   }
 }
 
-function focusHistoryPoint(point, options = {}) {
-  if (!point) return;
+function centerMapOnLatestPoint() {
+  const lat = Number(latestData?.lat);
+  const lon = Number(latestData?.lon);
 
-  const shouldPanMap = options.panMap !== false;
-  const shouldOpenPopup = options.openPopup !== false;
-
-  if (shouldPanMap) {
-    map.setView([point.lat, point.lon], Math.max(map.getZoom(), 11), {
-      animate: true
+  if (Number.isFinite(lat) && Number.isFinite(lon)) {
+    map.setView([lat, lon], Math.max(map.getZoom(), 11), {
+      animate: false
     });
+
+    hasCenteredOnInitialLatest = true;
+    return;
   }
 
-  if (selectedHistoryMarker) {
-    selectedHistoryMarker.setLatLng([point.lat, point.lon]);
-  } else {
-    selectedHistoryMarker = L.circleMarker([point.lat, point.lon], {
-      radius: 9,
+  const points = getSortedHistoryPointsAscending();
+
+  if (points.length > 0) {
+    const latestPoint = points[points.length - 1];
+
+    map.setView([latestPoint.lat, latestPoint.lon], Math.max(map.getZoom(), 11), {
+      animate: false
+    });
+
+    hasCenteredOnInitialLatest = true;
+  }
+}
+
+function renderHistoryPointMarkers(points) {
+  const pollutantMeta = CONFIG.pollutants[selectedPollutant];
+
+  points.forEach((point) => {
+    const value = Number(point.properties[selectedPollutant]);
+
+    const markerColor = Number.isFinite(value)
+      ? getPollutantColor(value, pollutantMeta)
+      : CONFIG.colors.unavailable;
+
+    const isSelected = point.index === selectedHistoryPointIndex;
+
+    const marker = L.circleMarker([point.lat, point.lon], {
+      radius: isSelected ? 5 : 3,
       color: "#0f172a",
-      fillColor: "#ffffff",
-      fillOpacity: 0.95,
-      weight: 3,
-      opacity: 1
-    }).addTo(map);
-  }
+      weight: isSelected ? 2 : 1,
+      opacity: 0.85,
+      fillColor: markerColor,
+      fillOpacity: isSelected ? 1 : 0.75,
+      interactive: true
+    });
 
-  selectedHistoryMarker._selectedPoint = point;
-  selectedHistoryMarker.bindPopup(makePopup(point, selectedPollutant));
+    marker.on("click", () => {
+      selectHistoryPoint(point, {
+        panMap: false,
+        openPopup: true
+      });
+    });
 
-  if (shouldOpenPopup) {
-    selectedHistoryMarker.openPopup();
-  }
+    marker.on("mouseover", () => {
+      marker.setStyle({
+        radius: isSelected ? 6 : 4,
+        fillOpacity: 1
+      });
+    });
 
-  selectedHistoryMarker.bringToFront();
+    marker.on("mouseout", () => {
+      marker.setStyle({
+        radius: isSelected ? 5 : 3,
+        fillOpacity: isSelected ? 1 : 0.75
+      });
+    });
+
+    marker.bindTooltip(formatTimestamp(point.properties.timestamp), {
+      direction: "top",
+      offset: [0, -8]
+    });
+
+    marker.addTo(historyPointLayer);
+  });
 }
 
 function selectHistoryPoint(point, options = {}) {
