@@ -591,7 +591,7 @@ function renderPanel() {
 
     const number = document.createElement("span");
     number.className = "pollutant-value";
-    number.textContent = formatValue(value, meta.unit);
+    number.textContent = formatValue(value, meta.unit, key);
 
     row.appendChild(name);
     row.appendChild(number);
@@ -691,8 +691,12 @@ function renderTimeseriesChart() {
   });
 
   if (els.timeseriesSubtitle) {
+    const subtitleLabel = pollutantMeta.unit
+      ? `${pollutantMeta.label} (${pollutantMeta.unit})`
+      : pollutantMeta.label;
+
     els.timeseriesSubtitle.textContent =
-      `Showing ${pollutantMeta.label}. Scroll horizontally for long trips. Click a point to jump to the map.`;
+      `Showing ${subtitleLabel}. Scroll horizontally for long trips. Click a point to jump to the map.`;
   }
 
   if (timeseriesChart) {
@@ -744,12 +748,7 @@ function renderTimeseriesChart() {
           ...yScaleOptions,
           position: "left",
           title: {
-            display: Boolean(pollutantMeta.unit),
-            text: pollutantMeta.unit || "",
-            padding: {
-              top: 0,
-              bottom: 4
-            }
+            display: false
           },
           grid: {
             display: false
@@ -815,7 +814,7 @@ function renderTimeseriesChart() {
                 : "Unknown time";
             },
             label: (item) => {
-              return `${pollutantMeta.label}: ${formatValue(item.raw, pollutantMeta.unit)}`;
+              return `${pollutantMeta.label}: ${formatValue(item.raw, pollutantMeta.unit, selectedPollutant)}`;
             },
             afterLabel: (item) => {
               const point = timeseriesPoints[item.dataIndex];
@@ -905,7 +904,14 @@ function makeTimeseriesYScaleOptions(pollutantMeta, values) {
     suggestedMax: maxValue + padding,
     ticks: {
       precision: 0,
-      maxTicksLimit: 5
+      maxTicksLimit: 5,
+      callback: (value) => {
+        if (selectedPollutant === "AQHI") {
+          return Math.round(value);
+        }
+
+        return value;
+      }
     }
   };
 }
@@ -1252,7 +1258,7 @@ function makePopup(point, pollutantKey) {
   const timestamp = point.properties.timestamp;
 
   return `
-    <strong>${meta.label}</strong>: ${formatValue(value, meta.unit)}<br>
+    <strong>${meta.label}</strong>: ${formatValue(value, meta.unit, pollutantKey)}<br>
     <strong>Time</strong>: ${timestamp ? formatTimestamp(timestamp) : "Unknown"}<br>
     <strong>Location</strong>: ${point.lat.toFixed(5)}, ${point.lon.toFixed(5)}
   `;
@@ -1459,14 +1465,25 @@ function formatTimestampShort(timestamp) {
   });
 }
 
-function formatValue(value, unit) {
+function formatValue(value, unit, pollutantKey = null) {
   const numeric = Number(value);
 
   if (!Number.isFinite(numeric)) {
     return "—";
   }
 
+  if (pollutantKey === "AQHI") {
+    const aqhi = Math.round(numeric);
+    return `${aqhi} (${getAqhiCategory(aqhi)})`;
+  }
+
   return `${roundValue(numeric)} ${unit}`.trim();
+}
+
+function getAqhiCategory(aqhi) {
+  if (aqhi <= 3) return "Low";
+  if (aqhi <= 6) return "Med";
+  return "High";
 }
 
 function roundValue(value) {
