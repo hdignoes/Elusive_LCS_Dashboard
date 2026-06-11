@@ -113,6 +113,15 @@ h2 {
   margin: 0;
 }
 
+.metadata-card h2 {
+  color: var(--muted);
+}
+
+.metadata-card p,
+.metadata-card .data-quality-list {
+  font-size: 0.86rem;
+}
+
 /* =========================================================
    Tracking link
    ========================================================= */

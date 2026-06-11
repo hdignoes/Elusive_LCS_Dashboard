@@ -1746,11 +1746,7 @@ function applyResponsiveDefaults() {
   const isMobile = window.innerWidth <= 800;
 
   if (els.currentPollutantsCard) {
-    if (isMobile) {
-      els.currentPollutantsCard.removeAttribute("open");
-    } else {
-      els.currentPollutantsCard.setAttribute("open", "");
-    }
+    els.currentPollutantsCard.removeAttribute("open");
   }
 
   if (els.timeseriesPanel && els.timeseriesToggle) {
