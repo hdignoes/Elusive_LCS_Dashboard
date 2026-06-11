@@ -25,6 +25,7 @@ let timeseriesPoints = [];
 let timeseriesDecimationActive = false;
 let timeseriesRawCount = 0;
 let timeseriesDisplayCount = 0;
+let visibleYScaleAnimationFrame = null;
 
 let latestData = null;
 let historyData = null;
@@ -45,6 +46,7 @@ const els = {
   timeseriesChart: document.getElementById("timeseries-chart"),
   timeseriesYAxisChart: document.getElementById("timeseries-y-axis-chart"),
   timeseriesChartInner: document.getElementById("timeseries-chart-inner"),
+  timeseriesScroll: document.querySelector(".timeseries-scroll"),
   currentPollutantsCard: document.getElementById("current-pollutants-card")
 };
 
@@ -240,6 +242,13 @@ function initTimeseriesPanel() {
 
     requestAnimationFrame(resizeCharts);
   });
+  if (els.timeseriesScroll) {
+    els.timeseriesScroll.addEventListener(
+      "scroll",
+      requestVisibleYScaleUpdate,
+      { passive: true }
+    );
+  }
 }
 
 /* =========================================================
@@ -779,7 +788,9 @@ function focusHistoryPoint(point, options = {}) {
   }
 
   selectedHistoryMarker._selectedPoint = point;
-  selectedHistoryMarker.bindPopup(makePopup(point, selectedPollutant));
+  selectedHistoryMarker.bindPopup(makePopup(point, selectedPollutant), {
+    autoPan: false
+  });
 
   if (shouldOpenPopup) {
     selectedHistoryMarker.openPopup();
@@ -1024,7 +1035,13 @@ function renderTimeseriesChart() {
     timeseriesYAxisChart.destroy();
   }
 
-  const yScaleOptions = makeTimeseriesYScaleOptions(pollutantMeta, values);
+  const yScaleOptions = makeTimeseriesYScaleOptions(
+    pollutantMeta,
+    values,
+    {
+      forceDomain: true
+    }
+  );
 
   timeseriesYAxisChart = new Chart(els.timeseriesYAxisChart, {
     type: "line",
@@ -1047,6 +1064,11 @@ function renderTimeseriesChart() {
       resizeDelay: 200,
       animation: false,
       events: [],
+      layout: {
+        padding: {
+          bottom: 34
+        }
+      },
       plugins: {
         legend: {
           display: false
@@ -1057,8 +1079,17 @@ function renderTimeseriesChart() {
       },
       scales: {
         x: {
-          display: false,
+          display: true,
+          ticks: {
+            maxTicksLimit: 12,
+            padding: 4,
+            color: "rgba(0, 0, 0, 0)"
+          },
           grid: {
+            display: false,
+            drawTicks: false
+          },
+          border: {
             display: false
           }
         },
@@ -1191,6 +1222,7 @@ function renderTimeseriesChart() {
     plugins: [dayBoundaryChartPlugin, sunEventChartPlugin]
   });
 
+  updateVisibleYScale();
   updateTimeseriesHighlight();
 }
 
@@ -1288,7 +1320,9 @@ function makeDisplayTimeseriesPoints(rawPoints, pollutantKey) {
   };
 }
 
-function makeTimeseriesYScaleOptions(pollutantMeta, values) {
+function makeTimeseriesYScaleOptions(pollutantMeta, values, options = {}) {
+  const forceDomain = options.forceDomain === true;
+
   const numericValues = values.filter((value) => {
     return Number.isFinite(Number(value));
   });
@@ -1310,9 +1344,17 @@ function makeTimeseriesYScaleOptions(pollutantMeta, values) {
       : 1;
 
   if (selectedPollutant === "AQHI") {
+    if (minValue === maxValue) {
+      minValue -= 1;
+      maxValue += 1;
+    }
+
+    const minAqhi = Math.max(0, Math.floor(minValue - 0.5));
+    const maxAqhi = Math.max(minAqhi + 1, Math.ceil(maxValue + 0.5));
+
     return {
-      suggestedMin: 0,
-      suggestedMax: Math.max(10, maxValue + 1),
+      [forceDomain ? "min" : "suggestedMin"]: minAqhi,
+      [forceDomain ? "max" : "suggestedMax"]: maxAqhi,
       ticks: {
         precision: 0,
         stepSize: 1,
@@ -1330,14 +1372,127 @@ function makeTimeseriesYScaleOptions(pollutantMeta, values) {
   }
 
   const padding = (maxValue - minValue) * 0.12;
+  const allowNegative = selectedPollutant === "T";
+
+  const lowerBound = allowNegative
+    ? minValue - padding
+    : Math.max(0, minValue - padding);
+
+  const upperBound = maxValue + padding;
 
   return {
-    suggestedMin: Math.max(0, minValue - padding),
-    suggestedMax: maxValue + padding,
+    [forceDomain ? "min" : "suggestedMin"]: lowerBound,
+    [forceDomain ? "max" : "suggestedMax"]: upperBound,
     ticks: {
       precision: 0,
       maxTicksLimit: 5
     }
+  };
+}
+
+function requestVisibleYScaleUpdate() {
+  if (visibleYScaleAnimationFrame !== null) return;
+
+  visibleYScaleAnimationFrame = requestAnimationFrame(() => {
+    visibleYScaleAnimationFrame = null;
+    updateVisibleYScale();
+  });
+}
+
+function updateVisibleYScale() {
+  if (!timeseriesChart || !timeseriesYAxisChart || !Array.isArray(timeseriesPoints)) {
+    return;
+  }
+
+  const pollutantMeta = CONFIG.pollutants[selectedPollutant];
+
+  const allValues = timeseriesPoints.map((point) => {
+    const value = Number(point.properties[selectedPollutant]);
+    return Number.isFinite(value) ? value : null;
+  });
+
+  const visibleValues = getVisibleTimeseriesValues(allValues);
+
+  const yScaleOptions = makeTimeseriesYScaleOptions(
+    pollutantMeta,
+    visibleValues,
+    {
+      forceDomain: true
+    }
+  );
+
+  applyYScaleOptions(timeseriesChart, yScaleOptions);
+  applyYScaleOptions(timeseriesYAxisChart, yScaleOptions);
+
+  timeseriesChart.update("none");
+  timeseriesYAxisChart.update("none");
+}
+
+function getVisibleTimeseriesValues(values) {
+  if (!timeseriesChart || !els.timeseriesScroll || !Array.isArray(timeseriesPoints)) {
+    return values;
+  }
+
+  const xScale = timeseriesChart.scales.x;
+
+  if (!xScale) {
+    return values;
+  }
+
+  const visibleLeft = els.timeseriesScroll.scrollLeft;
+  const visibleRight = visibleLeft + els.timeseriesScroll.clientWidth;
+
+  const bufferPx = 40;
+  const visibleValues = [];
+
+  timeseriesPoints.forEach((point, index) => {
+    const x = xScale.getPixelForValue(index);
+
+    if (x >= visibleLeft - bufferPx && x <= visibleRight + bufferPx) {
+      const value = Number(point.properties[selectedPollutant]);
+
+      if (Number.isFinite(value)) {
+        visibleValues.push(value);
+      }
+    }
+  });
+
+  if (visibleValues.length > 0) {
+    return visibleValues;
+  }
+
+  return values;
+}
+
+function applyYScaleOptions(chart, yScaleOptions) {
+  if (!chart?.options?.scales?.y) return;
+
+  const yScale = chart.options.scales.y;
+
+  delete yScale.min;
+  delete yScale.max;
+  delete yScale.suggestedMin;
+  delete yScale.suggestedMax;
+
+  if (yScaleOptions.min !== undefined) {
+    yScale.min = yScaleOptions.min;
+  }
+
+  if (yScaleOptions.max !== undefined) {
+    yScale.max = yScaleOptions.max;
+  }
+
+  if (yScaleOptions.suggestedMin !== undefined) {
+    yScale.suggestedMin = yScaleOptions.suggestedMin;
+  }
+
+  if (yScaleOptions.suggestedMax !== undefined) {
+    yScale.suggestedMax = yScaleOptions.suggestedMax;
+  }
+
+  yScale.ticks = {
+    ...yScale.ticks,
+    ...yScaleOptions.ticks
   };
 }
 
@@ -1996,6 +2151,8 @@ function resizeCharts() {
   if (timeseriesYAxisChart) {
     timeseriesYAxisChart.resize();
   }
+
+  requestVisibleYScaleUpdate();
 }
 
 /* =========================================================
