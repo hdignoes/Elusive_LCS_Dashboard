@@ -742,6 +742,46 @@ function renderHistoryPointMarkers(points) {
   });
 }
 
+function focusHistoryPoint(point, options = {}) {
+  if (!point) return;
+
+  const shouldPanMap = options.panMap !== false;
+  const shouldOpenPopup = options.openPopup !== false;
+  const shouldZoomToPoint = options.zoomToPoint === true;
+
+  if (shouldPanMap) {
+    const targetZoom = shouldZoomToPoint
+      ? Math.max(map.getZoom(), 12)
+      : Math.max(map.getZoom(), 11);
+
+    map.setView([point.lat, point.lon], targetZoom, {
+      animate: true
+    });
+  }
+
+  if (selectedHistoryMarker) {
+    selectedHistoryMarker.setLatLng([point.lat, point.lon]);
+  } else {
+    selectedHistoryMarker = L.circleMarker([point.lat, point.lon], {
+      radius: 9,
+      color: "#0f172a",
+      fillColor: "#ffffff",
+      fillOpacity: 0.95,
+      weight: 3,
+      opacity: 1
+    }).addTo(map);
+  }
+
+  selectedHistoryMarker._selectedPoint = point;
+  selectedHistoryMarker.bindPopup(makePopup(point, selectedPollutant));
+
+  if (shouldOpenPopup) {
+    selectedHistoryMarker.openPopup();
+  }
+
+  selectedHistoryMarker.bringToFront();
+}
+
 function selectHistoryPoint(point, options = {}) {
   if (!point) return;
 
@@ -1065,7 +1105,7 @@ function renderTimeseriesChart() {
       animation: false,
       layout: {
         padding: {
-          bottom: 10
+          bottom: 34
         }
       },
       interaction: {
@@ -1103,7 +1143,7 @@ function renderTimeseriesChart() {
         x: {
           ticks: {
             maxTicksLimit: 12,
-            padding: 8
+            padding: 4
           },
           grid: {
             display: false
@@ -1122,23 +1162,27 @@ function renderTimeseriesChart() {
           event,
           "nearest",
           {
-            intersect: true
+            intersect: false,
+            axis: "x"
           },
           true
         );
-
+      
         if (chartPoints.length === 0) return;
-
+      
         const index = chartPoints[0].index;
         const point = timeseriesPoints[index];
-
+      
+        if (!point) return;
+      
         selectHistoryPoint(point, {
           panMap: true,
-          openPopup: true
+          openPopup: true,
+          zoomToPoint: true
         });
       }
     },
-    plugins: [dayBoundaryChartPlugin]
+    plugins: [dayBoundaryChartPlugin, sunEventChartPlugin]
   });
 
   updateTimeseriesHighlight();
@@ -1401,6 +1445,101 @@ const dayBoundaryChartPlugin = {
     ctx.restore();
   }
 };
+
+const sunEventChartPlugin = {
+  id: "sunEventMarkers",
+
+  afterDraw(chart) {
+    if (!CONFIG.sunMarkers?.enabled) return;
+
+    const { ctx, chartArea, scales } = chart;
+    const xScale = scales.x;
+
+    if (!xScale || !chartArea) return;
+
+    const markers = getSunriseSunsetMarkers(timeseriesPoints);
+
+    if (!markers.length) return;
+
+    ctx.save();
+
+    markers.forEach((marker) => {
+      const chartIndex = timeseriesPoints.findIndex((point) => {
+        return point.index === marker.point.index;
+      });
+
+      if (chartIndex < 0) return;
+
+      const x = xScale.getPixelForValue(chartIndex);
+      const y = chartArea.bottom + 22;
+
+      if (x < chartArea.left || x > chartArea.right) return;
+
+      drawSunEventIcon(ctx, x, y, marker.type);
+    });
+
+    ctx.restore();
+  }
+};
+
+function drawSunEventIcon(ctx, x, y, type) {
+  const isSunrise = type === "sunrise";
+
+  ctx.save();
+  ctx.translate(x, y);
+
+  ctx.lineWidth = 1.6;
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+  ctx.strokeStyle = "#334155";
+  ctx.fillStyle = isSunrise ? "#facc15" : "#fb923c";
+
+  // Horizon
+  ctx.beginPath();
+  ctx.moveTo(-9, 4);
+  ctx.lineTo(9, 4);
+  ctx.stroke();
+
+  // Sun half-circle
+  ctx.beginPath();
+  ctx.arc(0, 4, 5.5, Math.PI, 0, false);
+  ctx.fill();
+  ctx.stroke();
+
+  // Rays
+  ctx.beginPath();
+  ctx.moveTo(0, -7);
+  ctx.lineTo(0, -4);
+  ctx.moveTo(-7, -4);
+  ctx.lineTo(-5, -2);
+  ctx.moveTo(7, -4);
+  ctx.lineTo(5, -2);
+  ctx.moveTo(-10, 0);
+  ctx.lineTo(-7, 1);
+  ctx.moveTo(10, 0);
+  ctx.lineTo(7, 1);
+  ctx.stroke();
+
+  // Direction arrow
+  ctx.beginPath();
+
+  if (isSunrise) {
+    ctx.moveTo(0, 10);
+    ctx.lineTo(0, 6);
+    ctx.moveTo(-3, 8);
+    ctx.lineTo(0, 5);
+    ctx.lineTo(3, 8);
+  } else {
+    ctx.moveTo(0, 6);
+    ctx.lineTo(0, 10);
+    ctx.moveTo(-3, 8);
+    ctx.lineTo(0, 11);
+    ctx.lineTo(3, 8);
+  }
+
+  ctx.stroke();
+  ctx.restore();
+}
 
 /* =========================================================
    Sunrise / sunset and day-boundary helpers
