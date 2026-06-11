@@ -106,7 +106,7 @@ function initTimeseriesPanel() {
       if (timeseriesChart) {
         timeseriesChart.resize();
       }
-    
+
       if (timeseriesYAxisChart) {
         timeseriesYAxisChart.resize();
       }
@@ -605,8 +605,12 @@ function renderLegend() {
 
   const meta = CONFIG.pollutants[selectedPollutant];
 
+  const legendTitle = meta.unit
+    ? `${meta.label} (${meta.unit})`
+    : meta.label;
+
   legendContainer.innerHTML = `
-    <div class="map-legend-title">${meta.label}</div>
+    <div class="map-legend-title">${legendTitle}</div>
   `;
 
   meta.breaks.forEach((bin) => {
@@ -618,20 +622,13 @@ function renderLegend() {
     swatch.style.backgroundColor = bin.color;
 
     const label = document.createElement("span");
-    label.textContent = `${bin.label} ${meta.unit}`.trim();
+    label.textContent = bin.label;
 
     row.appendChild(swatch);
     row.appendChild(label);
 
     legendContainer.appendChild(row);
   });
-
-  if (meta.note) {
-    const note = document.createElement("div");
-    note.className = "map-legend-note";
-    note.textContent = "Display bands; not compliance averaging.";
-    legendContainer.appendChild(note);
-  }
 }
 
 /* =========================================================
@@ -639,7 +636,9 @@ function renderLegend() {
    ========================================================= */
 
 function renderTimeseriesChart() {
-  if (!els.timeseriesChart || typeof Chart === "undefined") return;
+  if (!els.timeseriesChart || !els.timeseriesYAxisChart || typeof Chart === "undefined") {
+    return;
+  }
 
   const pollutantMeta = CONFIG.pollutants[selectedPollutant];
 
@@ -745,7 +744,12 @@ function renderTimeseriesChart() {
           ...yScaleOptions,
           position: "left",
           title: {
-            display: false
+            display: Boolean(pollutantMeta.unit),
+            text: pollutantMeta.unit || "",
+            padding: {
+              top: 0,
+              bottom: 4
+            }
           },
           grid: {
             display: false
@@ -943,9 +947,10 @@ function updateTimeseriesHighlight() {
   }
 
   timeseriesChart.update("none");
+
   if (timeseriesYAxisChart) {
     timeseriesYAxisChart.update("none");
-}
+  }
 }
 
 /* =========================================================
