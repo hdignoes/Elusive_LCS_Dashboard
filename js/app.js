@@ -1,3 +1,4 @@
+let map;
 let trackBaseLayer;
 let trackSegmentLayer;
 let hitSegmentLayer;
@@ -535,8 +536,9 @@ function renderPollutantTrackSegments(points) {
 
     hitSegment.on("click", () => {
       selectHistoryPoint(to, {
-        panMap: false,
-        openPopup: true
+        panMap: true,
+        openPopup: true,
+        zoomToPoint: true
       });
     });
 
@@ -714,8 +716,9 @@ function renderHistoryPointMarkers(points) {
 
     marker.on("click", () => {
       selectHistoryPoint(point, {
-        panMap: false,
-        openPopup: true
+        panMap: true,
+        openPopup: true,
+        zoomToPoint: true
       });
     });
 
@@ -755,7 +758,10 @@ function focusHistoryPoint(point, options = {}) {
       : Math.max(map.getZoom(), 11);
 
     map.setView([point.lat, point.lon], targetZoom, {
-      animate: true
+      animate: true,
+      pan: {
+        duration: 0.45
+      }
     });
   }
 
