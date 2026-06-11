@@ -6,6 +6,7 @@ let timeMarkerLayer;
 let currentMarker;
 let selectedHistoryMarker;
 let timeseriesChart;
+let timeseriesYAxisChart;
 let selectedHistoryPointIndex = null;
 
 let legendControl;
@@ -26,6 +27,7 @@ const els = {
   timeseriesToggle: document.getElementById("timeseries-toggle"),
   timeseriesSubtitle: document.getElementById("timeseries-subtitle"),
   timeseriesChart: document.getElementById("timeseries-chart"),
+  timeseriesYAxisChart: document.getElementById("timeseries-y-axis-chart"),
   timeseriesChartInner: document.getElementById("timeseries-chart-inner"),
   currentPollutantsCard: document.getElementById("current-pollutants-card")
 };
@@ -103,6 +105,10 @@ function initTimeseriesPanel() {
     setTimeout(() => {
       if (timeseriesChart) {
         timeseriesChart.resize();
+      }
+    
+      if (timeseriesYAxisChart) {
+        timeseriesYAxisChart.resize();
       }
     }, 0);
   });
@@ -694,6 +700,66 @@ function renderTimeseriesChart() {
     timeseriesChart.destroy();
   }
 
+  if (timeseriesYAxisChart) {
+    timeseriesYAxisChart.destroy();
+  }
+
+  const yScaleOptions = makeTimeseriesYScaleOptions(pollutantMeta, values);
+
+  timeseriesYAxisChart = new Chart(els.timeseriesYAxisChart, {
+    type: "line",
+    data: {
+      labels,
+      datasets: [
+        {
+          data: values,
+          borderColor: "rgba(0, 0, 0, 0)",
+          backgroundColor: "rgba(0, 0, 0, 0)",
+          pointRadius: 0,
+          pointHoverRadius: 0,
+          borderWidth: 0
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: false,
+      events: [],
+      plugins: {
+        legend: {
+          display: false
+        },
+        tooltip: {
+          enabled: false
+        }
+      },
+      scales: {
+        x: {
+          display: false,
+          grid: {
+            display: false
+          }
+        },
+        y: {
+          ...yScaleOptions,
+          position: "left",
+          title: {
+            display: false
+          },
+          grid: {
+            display: false
+          },
+          ticks: {
+            ...yScaleOptions.ticks,
+            mirror: false,
+            padding: 4
+          }
+        }
+      }
+    }
+  });
+
   timeseriesChart = new Chart(els.timeseriesChart, {
     type: "line",
     data: {
@@ -721,6 +787,11 @@ function renderTimeseriesChart() {
       responsive: true,
       maintainAspectRatio: false,
       resizeDelay: 100,
+      layout: {
+        padding: {
+          bottom: 10
+        }
+      },
       interaction: {
         mode: "nearest",
         intersect: true
@@ -755,21 +826,18 @@ function renderTimeseriesChart() {
       scales: {
         x: {
           ticks: {
-            maxTicksLimit: 12
+            maxTicksLimit: 12,
+            padding: 8
           },
           grid: {
             display: false
           }
         },
         y: {
-          title: {
-            display: true,
-            text: pollutantMeta.unit
-              ? `${pollutantMeta.label} (${pollutantMeta.unit})`
-              : pollutantMeta.label
-          },
-          ticks: {
-            precision: 0
+          ...yScaleOptions,
+          display: false,
+          grid: {
+            display: false
           }
         }
       },
@@ -798,6 +866,44 @@ function renderTimeseriesChart() {
   });
 
   updateTimeseriesHighlight();
+}
+
+function makeTimeseriesYScaleOptions(pollutantMeta, values) {
+  const numericValues = values.filter((value) => {
+    return Number.isFinite(Number(value));
+  });
+
+  const finiteBreaks = pollutantMeta.breaks
+    .map((item) => item.max)
+    .filter((value) => Number.isFinite(value));
+
+  let minValue = numericValues.length > 0
+    ? Math.min(...numericValues)
+    : finiteBreaks.length > 0
+      ? Math.min(...finiteBreaks)
+      : 0;
+
+  let maxValue = numericValues.length > 0
+    ? Math.max(...numericValues)
+    : finiteBreaks.length > 0
+      ? Math.max(...finiteBreaks)
+      : 1;
+
+  if (minValue === maxValue) {
+    minValue -= 1;
+    maxValue += 1;
+  }
+
+  const padding = (maxValue - minValue) * 0.12;
+
+  return {
+    suggestedMin: Math.max(0, minValue - padding),
+    suggestedMax: maxValue + padding,
+    ticks: {
+      precision: 0,
+      maxTicksLimit: 5
+    }
+  };
 }
 
 function updateTimeseriesHighlight() {
@@ -837,6 +943,9 @@ function updateTimeseriesHighlight() {
   }
 
   timeseriesChart.update("none");
+  if (timeseriesYAxisChart) {
+    timeseriesYAxisChart.update("none");
+}
 }
 
 /* =========================================================
