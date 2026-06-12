@@ -1236,11 +1236,195 @@ function renderDataQuality() {
 
   els.dataQualityList.innerHTML = "";
 
-  const airQualityStatus = getCurrentAirQualitySensorStatus();
-  const gpsStatus = getCurrentGpsStatus();
+  const statuses = [
+    getCurrentGpsStatus(),
+    ...getCurrentSensorStatuses()
+  ];
 
-  addDataChip(airQualityStatus.label, airQualityStatus.status);
-  addDataChip(gpsStatus.label, gpsStatus.status);
+  statuses.forEach((item) => {
+    addDataChip(item.label, item.status);
+  });
+}
+
+function getCurrentSensorStatuses() {
+  return getStatusSensorKeys().map((key) => {
+    return getCurrentSensorStatus(key);
+  });
+}
+
+function getStatusSensorKeys() {
+  const orderedKeys = [];
+
+  CONFIG.pollutantGroups.forEach((group) => {
+    group.keys.forEach((key) => {
+      if (!CONFIG.pollutants[key]) return;
+      if (key === "AQHI") return;
+
+      if (!orderedKeys.includes(key)) {
+        orderedKeys.push(key);
+      }
+    });
+  });
+
+  return orderedKeys;
+}
+
+function getCurrentSensorStatus(key) {
+  const meta = CONFIG.pollutants[key];
+  const label = meta?.label || key;
+
+  if (!latestData) {
+    return {
+      label: `${label} offline`,
+      status: "bad"
+    };
+  }
+
+  const value = getLatestPollutantValue(key);
+  const numericValue = Number(value);
+  const ageStatus = getPacketAgeStatus(latestData.timestamp);
+
+  if (ageStatus.status === "bad") {
+    return {
+      label: `${label} offline`,
+      status: "bad"
+    };
+  }
+
+  if (!Number.isFinite(numericValue)) {
+    return {
+      label: `${label} problem`,
+      status: "bad"
+    };
+  }
+
+  if (numericValue === 0) {
+    return {
+      label: `${label} problem`,
+      status: "bad"
+    };
+  }
+
+  if (ageStatus.status === "warn") {
+    return {
+      label: `${label} stale`,
+      status: "warn"
+    };
+  }
+
+  return {
+    label: `${label} OK`,
+    status: "good"
+  };
+}
+
+function getCurrentGpsStatus() {
+  if (!latestData) {
+    return {
+      label: "GPS offline",
+      status: "bad"
+    };
+  }
+
+  const ageStatus = getPacketAgeStatus(latestData.timestamp);
+
+  if (ageStatus.status === "bad") {
+    return {
+      label: "GPS offline",
+      status: "bad"
+    };
+  }
+
+  const lat = Number(latestData.lat);
+  const lon = Number(latestData.lon);
+
+  if (!Number.isFinite(lat) || !Number.isFinite(lon)) {
+    return {
+      label: "GPS problem",
+      status: "bad"
+    };
+  }
+
+  const points = getSortedHistoryPointsAscending();
+  const latestPoint = points.length > 0
+    ? points[points.length - 1]
+    : null;
+
+  if (latestPoint?.gpsQuality?.invalidJumpFromPrevious) {
+    return {
+      label: "GPS problem",
+      status: "bad"
+    };
+  }
+
+  if (
+    ageStatus.status === "warn" ||
+    latestPoint?.gpsQuality?.coordinateStale
+  ) {
+    return {
+      label: "GPS stale",
+      status: "warn"
+    };
+  }
+
+  return {
+    label: "GPS OK",
+    status: "good"
+  };
+}
+
+function getPacketAgeStatus(timestamp) {
+  const ageMinutes = getTimestampAgeMinutes(timestamp);
+  const config = getStatusAgeConfig();
+
+  if (!Number.isFinite(ageMinutes)) {
+    return {
+      status: "bad",
+      ageMinutes
+    };
+  }
+
+  if (ageMinutes > config.problemAfterMinutes) {
+    return {
+      status: "bad",
+      ageMinutes
+    };
+  }
+
+  if (ageMinutes > config.staleAfterMinutes) {
+    return {
+      status: "warn",
+      ageMinutes
+    };
+  }
+
+  return {
+    status: "good",
+    ageMinutes
+  };
+}
+
+function getStatusAgeConfig() {
+  return {
+    staleAfterMinutes:
+      CONFIG.sensorStatus?.staleAfterMinutes ??
+      CONFIG.staleAfterMinutes ??
+      30,
+
+    problemAfterMinutes:
+      CONFIG.sensorStatus?.problemAfterMinutes ??
+      120
+  };
+}
+
+function getTimestampAgeMinutes(timestamp) {
+  const parsedTime = Date.parse(timestamp);
+
+  if (!Number.isFinite(parsedTime)) {
+    return Infinity;
+  }
+
+  return (Date.now() - parsedTime) / 60000;
 }
 
 function getCurrentAirQualitySensorStatus() {
@@ -2819,9 +3003,19 @@ function getPollutantColor(value, pollutantMeta) {
 
 function setStatusFromTimestamp(timestamp) {
   const info = getDataAgeInfo(timestamp);
+  const gpsStatus = getCurrentGpsStatus();
 
-  els.status.textContent = info.label;
-  els.status.className = `status-pill ${info.pillClass}`;
+  const gpsSuffix = gpsStatus.status === "good"
+    ? ""
+    : ` · ${gpsStatus.label.replace("Current ", "")}`;
+
+  els.status.textContent = `${info.label}${gpsSuffix}`;
+
+  const shouldShowWarning = info.status !== "good" || gpsStatus.status !== "good";
+
+  els.status.className = shouldShowWarning
+    ? "status-pill stale"
+    : "status-pill live";
 }
 
 function getDataAgeInfo(timestamp) {
