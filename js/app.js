@@ -874,6 +874,61 @@ function renderTimeMarkers() {
   });
 }
 
+function renderCurrentMarker() {
+  const points = getSortedHistoryPointsAscending();
+  const latestPoint = points.length > 0
+    ? points[points.length - 1]
+    : null;
+
+  const fallbackLat = Number(latestData?.lat);
+  const fallbackLon = Number(latestData?.lon);
+
+  const lat = latestPoint
+    ? latestPoint.lat
+    : fallbackLat;
+
+  const lon = latestPoint
+    ? latestPoint.lon
+    : fallbackLon;
+
+  if (!Number.isFinite(lat) || !Number.isFinite(lon)) return;
+
+  const isGpsStale = latestPoint
+    ? !isPointGpsUsable(latestPoint)
+    : false;
+
+  const bearing = getLatestBearing();
+
+  const arrowIcon = makeVesselArrowIcon(bearing, {
+    stale: isGpsStale
+  });
+
+  if (currentMarker) {
+    currentMarker.setLatLng([lat, lon]);
+    currentMarker.setIcon(arrowIcon);
+  } else {
+    currentMarker = L.marker([lat, lon], {
+      icon: arrowIcon
+    }).addTo(map);
+  }
+
+  const headingText = Number.isFinite(bearing)
+    ? `${Math.round(bearing)}°`
+    : "Unknown";
+
+  const timestamp = latestPoint?.properties?.timestamp || latestData?.timestamp;
+
+  const staleBadge = isGpsStale
+    ? ` <span class="popup-stale-badge">GPS stale</span>`
+    : "";
+
+  currentMarker.bindPopup(`
+    <strong>Current vessel location</strong>${staleBadge}<br>
+    <strong>Heading</strong>: ${headingText}<br>
+    <strong>Time</strong>: ${timestamp ? formatTimestamp(timestamp) : "Unknown"}<br>
+    <strong>Location</strong>: ${lat.toFixed(5)}, ${lon.toFixed(5)}
+  `);
+}
 
 function makeVesselArrowIcon(bearing, options = {}) {
   const rotation = Number.isFinite(bearing) ? bearing : 0;
