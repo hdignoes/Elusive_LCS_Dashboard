@@ -2142,10 +2142,6 @@ const hoverGuidePlugin = {
     if (!activeElements || activeElements.length === 0) return;
 
     const active = activeElements[0];
-    const point = timeseriesPoints[active.index];
-
-    if (!point) return;
-
     const { ctx, chartArea, scales } = chart;
     const xScale = scales.x;
 
@@ -2154,19 +2150,6 @@ const hoverGuidePlugin = {
     const x = xScale.getPixelForValue(active.index);
 
     if (x < chartArea.left || x > chartArea.right) return;
-
-    const meta = CONFIG.pollutants[selectedPollutant];
-    const rawValue = Number(point.properties[selectedPollutant]);
-
-    const reading = Number.isFinite(rawValue)
-      ? formatValue(rawValue, meta.unit, selectedPollutant)
-      : "—";
-
-    const timestamp = point.properties.timestamp
-      ? formatTimestampShort(point.properties.timestamp)
-      : "Unknown time";
-
-    const text = `${timestamp} · ${meta.label}: ${reading}`;
 
     ctx.save();
 
@@ -2178,38 +2161,6 @@ const hoverGuidePlugin = {
     ctx.moveTo(x, chartArea.top);
     ctx.lineTo(x, chartArea.bottom);
     ctx.stroke();
-
-    ctx.setLineDash([]);
-
-    ctx.font = "700 11px system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
-
-    const paddingX = 7;
-    const boxHeight = 22;
-    const textWidth = ctx.measureText(text).width;
-    const boxWidth = textWidth + paddingX * 2;
-
-    let boxX = x + 8;
-
-    if (boxX + boxWidth > chartArea.right) {
-      boxX = x - boxWidth - 8;
-    }
-
-    boxX = Math.max(chartArea.left + 2, boxX);
-
-    const boxY = chartArea.top + 8;
-
-    ctx.fillStyle = "rgba(248, 250, 252, 0.94)";
-    ctx.strokeStyle = "rgba(100, 116, 139, 0.45)";
-    ctx.lineWidth = 1;
-
-    drawRoundedRect(ctx, boxX, boxY, boxWidth, boxHeight, 7);
-    ctx.fill();
-    ctx.stroke();
-
-    ctx.fillStyle = "#0f172a";
-    ctx.textBaseline = "middle";
-    ctx.textAlign = "left";
-    ctx.fillText(text, boxX + paddingX, boxY + boxHeight / 2);
 
     ctx.restore();
   }
