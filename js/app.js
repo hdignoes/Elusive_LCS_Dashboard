@@ -25,6 +25,9 @@ let timeseriesDecimationActive = false;
 let timeseriesRawCount = 0;
 let timeseriesDisplayCount = 0;
 let visibleYScaleAnimationFrame = null;
+let shouldScrollTimeseriesToLatest = true;
+let lastYAxisDomain = null;
+let gpsQualitySummary = makeEmptyGpsQualitySummary();
 
 let latestData = null;
 let historyData = null;
@@ -220,6 +223,10 @@ function setSelectedPollutant(key) {
   renderCurrentMarker();
   renderPanel();
   renderLegend();
+
+  lastYAxisDomain = null;
+  shouldScrollTimeseriesToLatest = true;
+
   renderTimeseriesChart();
 
   if (selectedHistoryMarker && selectedHistoryMarker._selectedPoint) {
@@ -250,6 +257,23 @@ function initTimeseriesPanel() {
       "scroll",
       requestVisibleYScaleUpdate,
       { passive: true }
+    );
+
+    els.timeseriesScroll.addEventListener(
+      "wheel",
+      disableTimeseriesAutoFollow,
+      { passive: true }
+    );
+
+    els.timeseriesScroll.addEventListener(
+      "touchstart",
+      disableTimeseriesAutoFollow,
+      { passive: true }
+    );
+
+    els.timeseriesScroll.addEventListener(
+      "mousedown",
+      disableTimeseriesAutoFollow
     );
   }
 }
@@ -424,8 +448,9 @@ function getHistoryPoints() {
     });
 }
 
+
 function getSortedHistoryPointsAscending() {
-  return getHistoryPoints()
+  const sortedPoints = getHistoryPoints()
     .map((point) => {
       return {
         ...point,
@@ -442,30 +467,252 @@ function getSortedHistoryPointsAscending() {
 
       return a.index - b.index;
     });
+
+  return annotateGpsQuality(sortedPoints);
+}
+
+function makeEmptyGpsQualitySummary() {
+  return {
+    totalPoints: 0,
+    usablePoints: 0,
+    staleCoordinatePoints: 0,
+    invalidJumpSegments: 0,
+    longStationaryRuns: 0,
+    latestPointIsStale: false,
+    latestUsableTimestamp: null
+  };
+}
+
+function getGpsQualityConfig() {
+  return {
+    repeatedCoordinateStaleAfterMinutes: 45,
+    stationaryDistanceToleranceMeters: 5,
+    maxReasonableSpeedKnots: 35,
+    ...(CONFIG.gpsQuality || {})
+  };
+}
+
+function annotateGpsQuality(points) {
+  const config = getGpsQualityConfig();
+  const summary = makeEmptyGpsQualitySummary();
+
+  const annotatedPoints = points.map((point) => {
+    return {
+      ...point,
+      gpsQuality: {
+        coordinateStale: false,
+        invalidJumpFromPrevious: false,
+        staleReason: null,
+        stationaryRunMinutes: 0,
+        speedFromPreviousKnots: null
+      }
+    };
+  });
+
+  if (annotatedPoints.length === 0) {
+    gpsQualitySummary = summary;
+    return annotatedPoints;
+  }
+
+  let stationaryRunStartIndex = 0;
+  let countedCurrentRunAsLong = false;
+
+  for (let i = 0; i < annotatedPoints.length; i += 1) {
+    const point = annotatedPoints[i];
+
+    if (i > 0) {
+      const previous = annotatedPoints[i - 1];
+      const elapsedHours = (point.time - previous.time) / 3600000;
+
+      if (Number.isFinite(elapsedHours) && elapsedHours > 0) {
+        const distanceNm = calculateDistanceMeters(
+          previous.lat,
+          previous.lon,
+          point.lat,
+          point.lon
+        ) / 1852;
+
+        const speedKnots = distanceNm / elapsedHours;
+        point.gpsQuality.speedFromPreviousKnots = speedKnots;
+
+        if (speedKnots > config.maxReasonableSpeedKnots) {
+          point.gpsQuality.invalidJumpFromPrevious = true;
+          summary.invalidJumpSegments += 1;
+        }
+      }
+
+      const stationaryRunStart = annotatedPoints[stationaryRunStartIndex];
+      const runDriftMeters = calculateDistanceMeters(
+        stationaryRunStart.lat,
+        stationaryRunStart.lon,
+        point.lat,
+        point.lon
+      );
+
+      if (runDriftMeters > config.stationaryDistanceToleranceMeters) {
+        stationaryRunStartIndex = i;
+        countedCurrentRunAsLong = false;
+      }
+    }
+
+    const stationaryRunStart = annotatedPoints[stationaryRunStartIndex];
+    const runMinutes = (point.time - stationaryRunStart.time) / 60000;
+
+    if (Number.isFinite(runMinutes) && runMinutes >= 0) {
+      point.gpsQuality.stationaryRunMinutes = runMinutes;
+    }
+
+    if (
+      Number.isFinite(runMinutes) &&
+      runMinutes >= config.repeatedCoordinateStaleAfterMinutes
+    ) {
+      point.gpsQuality.coordinateStale = true;
+      point.gpsQuality.staleReason =
+        `GPS coordinate repeated for ${Math.round(runMinutes)} min`;
+
+      if (!countedCurrentRunAsLong) {
+        summary.longStationaryRuns += 1;
+        countedCurrentRunAsLong = true;
+      }
+    }
+  }
+
+  summary.totalPoints = annotatedPoints.length;
+  summary.staleCoordinatePoints = annotatedPoints.filter((point) => {
+    return point.gpsQuality.coordinateStale;
+  }).length;
+  summary.usablePoints = annotatedPoints.filter(isPointGpsUsable).length;
+  summary.latestPointIsStale = annotatedPoints.length > 0
+    ? !isPointGpsUsable(annotatedPoints[annotatedPoints.length - 1])
+    : false;
+
+  const latestUsablePoint = [...annotatedPoints]
+    .reverse()
+    .find(isPointGpsUsable);
+
+  summary.latestUsableTimestamp = latestUsablePoint?.properties?.timestamp || null;
+
+  gpsQualitySummary = summary;
+  return annotatedPoints;
+}
+
+function isPointGpsUsable(point) {
+  return (
+    point &&
+    Number.isFinite(point.lat) &&
+    Number.isFinite(point.lon) &&
+    !point.gpsQuality?.coordinateStale
+  );
+}
+
+function isRouteSegmentUsable(from, to) {
+  return (
+    isPointGpsUsable(from) &&
+    isPointGpsUsable(to) &&
+    !to.gpsQuality?.invalidJumpFromPrevious
+  );
+}
+
+function getRouteChunks(points) {
+  const chunks = [];
+  let currentChunk = [];
+
+  points.forEach((point) => {
+    if (!isPointGpsUsable(point)) {
+      if (currentChunk.length > 0) {
+        chunks.push(currentChunk);
+        currentChunk = [];
+      }
+
+      return;
+    }
+
+    if (currentChunk.length === 0) {
+      currentChunk.push(point);
+      return;
+    }
+
+    const previous = currentChunk[currentChunk.length - 1];
+
+    if (isRouteSegmentUsable(previous, point)) {
+      currentChunk.push(point);
+      return;
+    }
+
+    chunks.push(currentChunk);
+    currentChunk = [point];
+  });
+
+  if (currentChunk.length > 0) {
+    chunks.push(currentChunk);
+  }
+
+  return chunks;
+}
+
+function getLatestUsableHistoryPoint() {
+  const points = getSortedHistoryPointsAscending();
+
+  for (let i = points.length - 1; i >= 0; i -= 1) {
+    if (isPointGpsUsable(points[i])) {
+      return points[i];
+    }
+  }
+
+  return null;
+}
+
+function getNearestUsableHistoryPoint(point) {
+  if (!point) return null;
+
+  const points = getSortedHistoryPointsAscending();
+  const targetTime = Number.isFinite(point.time)
+    ? point.time
+    : Date.parse(point.properties?.timestamp);
+
+  let bestPoint = null;
+  let bestOffset = Infinity;
+
+  points.forEach((candidate) => {
+    if (!isPointGpsUsable(candidate)) return;
+
+    const candidateTime = Number.isFinite(candidate.time)
+      ? candidate.time
+      : Date.parse(candidate.properties?.timestamp);
+
+    if (!Number.isFinite(candidateTime) || !Number.isFinite(targetTime)) return;
+
+    const offset = Math.abs(candidateTime - targetTime);
+
+    if (offset < bestOffset) {
+      bestOffset = offset;
+      bestPoint = candidate;
+    }
+  });
+
+  return bestPoint;
 }
 
 function getLatestBearing() {
-  const points = getSortedHistoryPointsAscending().filter((point) => {
-    return Number.isFinite(point.lat) && Number.isFinite(point.lon);
-  });
+  const points = getSortedHistoryPointsAscending();
 
-  if (points.length < 2) {
-    return null;
+  for (let i = points.length - 1; i > 0; i -= 1) {
+    const from = points[i - 1];
+    const to = points[i];
+
+    if (!isRouteSegmentUsable(from, to)) continue;
+    if (from.lat === to.lat && from.lon === to.lon) continue;
+
+    return calculateBearing(from.lat, from.lon, to.lat, to.lon);
   }
 
-  const from = points[points.length - 2];
-  const to = points[points.length - 1];
-
-  if (from.lat === to.lat && from.lon === to.lon) {
-    return null;
-  }
-
-  return calculateBearing(from.lat, from.lon, to.lat, to.lon);
+  return null;
 }
 
 /* =========================================================
    Map rendering
    ========================================================= */
+
 
 function renderTrack() {
   trackBaseLayer.clearLayers();
@@ -474,16 +721,24 @@ function renderTrack() {
   historyPointLayer.clearLayers();
 
   const points = getSortedHistoryPointsAscending();
+  const routeChunks = getRouteChunks(points);
 
-  routeLatLngs = points.map((point) => [point.lat, point.lon]);
+  routeLatLngs = routeChunks.flatMap((chunk) => {
+    return chunk.map((point) => [point.lat, point.lon]);
+  });
 
-  if (routeLatLngs.length === 0) return;
+  routeChunks.forEach((chunk) => {
+    if (chunk.length < 2) return;
 
-  L.polyline(routeLatLngs, {
-    color: CONFIG.colors.trackBase,
-    weight: 2,
-    opacity: 0.28
-  }).addTo(trackBaseLayer);
+    L.polyline(
+      chunk.map((point) => [point.lat, point.lon]),
+      {
+        color: CONFIG.colors.trackBase,
+        weight: 2,
+        opacity: 0.28
+      }
+    ).addTo(trackBaseLayer);
+  });
 
   renderPollutantTrackSegments(points);
   renderHistoryPointMarkers(points);
@@ -500,19 +755,26 @@ function renderPollutantTrackSegments(points) {
     const from = points[i - 1];
     const to = points[i];
 
+    if (!isRouteSegmentUsable(from, to)) continue;
+
     const fromValue = Number(from.properties[selectedPollutant]);
     const toValue = Number(to.properties[selectedPollutant]);
 
-    const usableValue =
-      Number.isFinite(toValue)
-        ? toValue
-        : Number.isFinite(fromValue)
-          ? fromValue
-          : null;
+    const hasFromValue = Number.isFinite(fromValue);
+    const hasToValue = Number.isFinite(toValue);
 
-    if (usableValue === null) continue;
+    const usableValue = hasToValue
+      ? toValue
+      : hasFromValue
+        ? fromValue
+        : null;
 
-    const segmentColor = getPollutantColor(usableValue, pollutantMeta);
+    const hasPollutantData = usableValue !== null;
+
+    const segmentColor = hasPollutantData
+      ? getPollutantColor(usableValue, pollutantMeta)
+      : CONFIG.colors.unavailable;
+
     const isSelected =
       from.index === selectedHistoryPointIndex ||
       to.index === selectedHistoryPointIndex;
@@ -525,7 +787,9 @@ function renderPollutantTrackSegments(points) {
       {
         color: segmentColor,
         weight: isSelected ? 9 : 6,
-        opacity: isSelected ? 1 : 0.88,
+        opacity: hasPollutantData
+          ? isSelected ? 1 : 0.88
+          : 0.42,
         lineCap: "round",
         lineJoin: "round"
       }
@@ -557,14 +821,16 @@ function renderPollutantTrackSegments(points) {
     hitSegment.on("mouseover", () => {
       visibleSegment.setStyle({
         weight: isSelected ? 10 : 8,
-        opacity: 1
+        opacity: hasPollutantData ? 1 : 0.65
       });
     });
 
     hitSegment.on("mouseout", () => {
       visibleSegment.setStyle({
         weight: isSelected ? 9 : 6,
-        opacity: isSelected ? 1 : 0.88
+        opacity: hasPollutantData
+          ? isSelected ? 1 : 0.88
+          : 0.42
       });
     });
 
@@ -577,7 +843,7 @@ function renderTimeMarkers() {
 
   if (!CONFIG.sunMarkers?.enabled) return;
 
-  const points = getSortedHistoryPointsAscending();
+  const points = getSortedHistoryPointsAscending().filter(isPointGpsUsable);
   const markers = getSunriseSunsetMarkers(points);
 
   markers.forEach((marker) => {
@@ -607,11 +873,20 @@ function renderTimeMarkers() {
   });
 }
 
-function renderCurrentMarker() {
-  if (!latestData) return;
 
-  const lat = Number(latestData.lat);
-  const lon = Number(latestData.lon);
+function renderCurrentMarker() {
+  const latestUsablePoint = getLatestUsableHistoryPoint();
+
+  const fallbackLat = Number(latestData?.lat);
+  const fallbackLon = Number(latestData?.lon);
+
+  const lat = latestUsablePoint
+    ? latestUsablePoint.lat
+    : fallbackLat;
+
+  const lon = latestUsablePoint
+    ? latestUsablePoint.lon
+    : fallbackLon;
 
   if (!Number.isFinite(lat) || !Number.isFinite(lon)) return;
 
@@ -631,10 +906,21 @@ function renderCurrentMarker() {
     ? `${Math.round(bearing)}°`
     : "Unknown";
 
+  const latestPoint = getSortedHistoryPointsAscending().at(-1);
+  const isShowingLastValidFix = latestUsablePoint && latestPoint && latestUsablePoint.index !== latestPoint.index;
+  const timestamp = latestUsablePoint?.properties?.timestamp || latestData?.timestamp;
+  const gpsLabel = isShowingLastValidFix
+    ? "Last valid GPS fix"
+    : "Current vessel location";
+  const gpsNote = isShowingLastValidFix
+    ? "<br><strong>GPS status</strong>: latest coordinates are flagged as stale"
+    : "";
+
   currentMarker.bindPopup(`
-    <strong>Current vessel location</strong><br>
+    <strong>${gpsLabel}</strong><br>
     <strong>Heading</strong>: ${headingText}<br>
-    <strong>Location</strong>: ${lat.toFixed(5)}, ${lon.toFixed(5)}
+    <strong>Time</strong>: ${timestamp ? formatTimestamp(timestamp) : "Unknown"}<br>
+    <strong>Location</strong>: ${lat.toFixed(5)}, ${lon.toFixed(5)}${gpsNote}
   `);
 }
 
@@ -653,7 +939,22 @@ function fitRouteToMap() {
   });
 }
 
+
 function focusLatestPoint() {
+  const latestUsablePoint = getLatestUsableHistoryPoint();
+
+  if (latestUsablePoint) {
+    map.setView([latestUsablePoint.lat, latestUsablePoint.lon], Math.max(map.getZoom(), 11), {
+      animate: true
+    });
+
+    if (currentMarker) {
+      currentMarker.openPopup();
+    }
+
+    return;
+  }
+
   const lat = Number(latestData?.lat);
   const lon = Number(latestData?.lon);
 
@@ -665,22 +966,21 @@ function focusLatestPoint() {
     if (currentMarker) {
       currentMarker.openPopup();
     }
-
-    return;
-  }
-
-  const points = getSortedHistoryPointsAscending();
-
-  if (points.length > 0) {
-    selectHistoryPoint(points[points.length - 1], {
-      panMap: true,
-      openPopup: true,
-      zoomToPoint: true
-    });
   }
 }
 
 function centerMapOnLatestPoint() {
+  const latestUsablePoint = getLatestUsableHistoryPoint();
+
+  if (latestUsablePoint) {
+    map.setView([latestUsablePoint.lat, latestUsablePoint.lon], Math.max(map.getZoom(), 11), {
+      animate: false
+    });
+
+    hasCenteredOnInitialLatest = true;
+    return;
+  }
+
   const lat = Number(latestData?.lat);
   const lon = Number(latestData?.lon);
 
@@ -690,26 +990,16 @@ function centerMapOnLatestPoint() {
     });
 
     hasCenteredOnInitialLatest = true;
-    return;
-  }
-
-  const points = getSortedHistoryPointsAscending();
-
-  if (points.length > 0) {
-    const latestPoint = points[points.length - 1];
-
-    map.setView([latestPoint.lat, latestPoint.lon], Math.max(map.getZoom(), 11), {
-      animate: false
-    });
-
-    hasCenteredOnInitialLatest = true;
   }
 }
+
 
 function renderHistoryPointMarkers(points) {
   const pollutantMeta = CONFIG.pollutants[selectedPollutant];
 
   points.forEach((point) => {
+    if (!isPointGpsUsable(point)) return;
+
     const value = Number(point.properties[selectedPollutant]);
 
     const markerColor = Number.isFinite(value)
@@ -759,8 +1049,9 @@ function renderHistoryPointMarkers(points) {
   });
 }
 
-function focusHistoryPoint(point, options = {}) {
-  if (!point) return;
+
+function focusHistoryPoint(locationPoint, options = {}, sourcePoint = locationPoint) {
+  if (!locationPoint) return;
 
   const shouldPanMap = options.panMap !== false;
   const shouldOpenPopup = options.openPopup !== false;
@@ -771,7 +1062,7 @@ function focusHistoryPoint(point, options = {}) {
       ? Math.max(map.getZoom(), 12)
       : Math.max(map.getZoom(), 11);
 
-    map.setView([point.lat, point.lon], targetZoom, {
+    map.setView([locationPoint.lat, locationPoint.lon], targetZoom, {
       animate: true,
       pan: {
         duration: 0.45
@@ -780,9 +1071,9 @@ function focusHistoryPoint(point, options = {}) {
   }
 
   if (selectedHistoryMarker) {
-    selectedHistoryMarker.setLatLng([point.lat, point.lon]);
+    selectedHistoryMarker.setLatLng([locationPoint.lat, locationPoint.lon]);
   } else {
-    selectedHistoryMarker = L.circleMarker([point.lat, point.lon], {
+    selectedHistoryMarker = L.circleMarker([locationPoint.lat, locationPoint.lon], {
       radius: 9,
       color: "#0f172a",
       fillColor: "#ffffff",
@@ -792,8 +1083,8 @@ function focusHistoryPoint(point, options = {}) {
     }).addTo(map);
   }
 
-  selectedHistoryMarker._selectedPoint = point;
-  selectedHistoryMarker.bindPopup(makePopup(point, selectedPollutant), {
+  selectedHistoryMarker._selectedPoint = sourcePoint;
+  selectedHistoryMarker.bindPopup(makePopup(sourcePoint, selectedPollutant, locationPoint), {
     autoPan: false
   });
 
@@ -810,7 +1101,15 @@ function selectHistoryPoint(point, options = {}) {
   selectedHistoryPointIndex = point.index;
 
   renderTrack();
-  focusHistoryPoint(point, options);
+
+  const locationPoint = isPointGpsUsable(point)
+    ? point
+    : getNearestUsableHistoryPoint(point);
+
+  if (locationPoint) {
+    focusHistoryPoint(locationPoint, options, point);
+  }
+
   updateTimeseriesHighlight();
 }
 
@@ -902,21 +1201,37 @@ function renderLegend() {
   applyLegendResponsiveDefault();
 }
 
+
 function renderDataQuality() {
   if (!els.dataQualityList) return;
 
   els.dataQualityList.innerHTML = "";
 
-  const lat = Number(latestData?.lat);
-  const lon = Number(latestData?.lon);
   const points = getSortedHistoryPointsAscending();
   const selectedValue = getLatestPollutantValue(selectedPollutant);
   const ageInfo = getDataAgeInfo(latestData?.timestamp);
+  const summary = gpsQualitySummary || makeEmptyGpsQualitySummary();
 
   addDataChip(
-    Number.isFinite(lat) && Number.isFinite(lon) ? "GPS OK" : "No GPS",
-    Number.isFinite(lat) && Number.isFinite(lon) ? "good" : "bad"
+    summary.staleCoordinatePoints > 0
+      ? `GPS stale: ${summary.staleCoordinatePoints} points suppressed`
+      : "GPS OK",
+    summary.staleCoordinatePoints > 0 ? "warn" : "good"
   );
+
+  if (summary.invalidJumpSegments > 0) {
+    addDataChip(
+      `GPS jumps hidden: ${summary.invalidJumpSegments}`,
+      "warn"
+    );
+  }
+
+  if (summary.latestPointIsStale && summary.latestUsableTimestamp) {
+    addDataChip(
+      `Last valid GPS: ${formatTimestampShort(summary.latestUsableTimestamp)}`,
+      "warn"
+    );
+  }
 
   addDataChip(
     ageInfo.label,
@@ -924,8 +1239,8 @@ function renderDataQuality() {
   );
 
   addDataChip(
-    `${points.length} route points`,
-    points.length > 0 ? "info" : "warn"
+    `${summary.usablePoints}/${points.length} map points`,
+    summary.usablePoints > 0 ? "info" : "warn"
   );
 
   addDataChip(
@@ -1079,7 +1394,8 @@ function renderTimeseriesChart() {
       },
       interaction: {
         mode: "nearest",
-        intersect: true
+        intersect: false,
+        axis: "x"
       },
       plugins: {
         legend: {
@@ -1151,11 +1467,18 @@ function renderTimeseriesChart() {
         });
       }
     },
-    plugins: [dayBoundaryChartPlugin, sunEventChartPlugin, fixedYAxisPlugin]
+    plugins: [dayBoundaryChartPlugin, sunEventChartPlugin, hoverGuidePlugin, fixedYAxisPlugin]
   });
 
-  updateVisibleYScale();
-  updateTimeseriesHighlight();
+  requestAnimationFrame(() => {
+    if (shouldScrollTimeseriesToLatest) {
+      scrollTimeseriesToLatest();
+    } else {
+      updateVisibleYScale();
+    }
+
+    updateTimeseriesHighlight();
+  });
 }
 
 function makeDisplayTimeseriesPoints(rawPoints, pollutantKey) {
@@ -1255,71 +1578,105 @@ function makeDisplayTimeseriesPoints(rawPoints, pollutantKey) {
 function makeTimeseriesYScaleOptions(pollutantMeta, values, options = {}) {
   const forceDomain = options.forceDomain === true;
 
-  const numericValues = values.filter((value) => {
-    return Number.isFinite(Number(value));
-  });
-
-  const finiteBreaks = pollutantMeta.breaks
-    .map((item) => item.max)
+  const numericValues = values
+    .map((value) => Number(value))
     .filter((value) => Number.isFinite(value));
 
-  let minValue = numericValues.length > 0
+  const observedMin = numericValues.length > 0
     ? Math.min(...numericValues)
-    : finiteBreaks.length > 0
-      ? Math.min(...finiteBreaks)
-      : 0;
+    : 0;
 
-  let maxValue = numericValues.length > 0
+  const observedMax = numericValues.length > 0
     ? Math.max(...numericValues)
-    : finiteBreaks.length > 0
-      ? Math.max(...finiteBreaks)
-      : 1;
+    : 1;
 
-  if (selectedPollutant === "AQHI") {
-    if (minValue === maxValue) {
-      minValue -= 1;
-      maxValue += 1;
+  let axisMin;
+  let axisMax;
+
+  if (selectedPollutant === "T") {
+    const padding = Math.max((observedMax - observedMin) * 0.2, 1);
+    axisMin = niceAxisFloor(observedMin - padding);
+    axisMax = niceAxisCeiling(observedMax + padding);
+
+    if (axisMin === axisMax) {
+      axisMin -= 1;
+      axisMax += 1;
     }
-
-    const minAqhi = Math.max(0, Math.floor(minValue - 0.5));
-    const maxAqhi = Math.max(minAqhi + 1, Math.ceil(maxValue + 0.5));
-
-    return {
-      [forceDomain ? "min" : "suggestedMin"]: minAqhi,
-      [forceDomain ? "max" : "suggestedMax"]: maxAqhi,
-      ticks: {
-        precision: 0,
-        stepSize: 1,
-        maxTicksLimit: 6,
-        callback: (value) => {
-          return Math.round(value);
-        }
-      }
-    };
+  } else if (selectedPollutant === "AQHI") {
+    axisMin = 0;
+    axisMax = Math.max(10, Math.ceil(observedMax + 0.5));
+  } else if (selectedPollutant === "RH") {
+    axisMin = 0;
+    axisMax = 100;
+  } else {
+    axisMin = 0;
+    axisMax = niceAxisCeiling(observedMax * 1.18);
   }
 
-  if (minValue === maxValue) {
-    minValue -= 1;
-    maxValue += 1;
-  }
-
-  const padding = (maxValue - minValue) * 0.12;
-  const allowNegative = selectedPollutant === "T";
-
-  const lowerBound = allowNegative
-    ? minValue - padding
-    : Math.max(0, minValue - padding);
-
-  const upperBound = maxValue + padding;
+  axisMax = Math.max(axisMax, axisMin + 1);
 
   return {
-    [forceDomain ? "min" : "suggestedMin"]: lowerBound,
-    [forceDomain ? "max" : "suggestedMax"]: upperBound,
+    [forceDomain ? "min" : "suggestedMin"]: axisMin,
+    [forceDomain ? "max" : "suggestedMax"]: axisMax,
     ticks: {
       precision: 0,
-      maxTicksLimit: 5
+      maxTicksLimit: selectedPollutant === "AQHI" ? 6 : 5,
+      callback: (value) => {
+        if (selectedPollutant === "AQHI") {
+          return Math.round(value);
+        }
+
+        return formatYAxisTick(Number(value));
+      }
     }
   };
+}
+
+function niceAxisCeiling(value) {
+  if (!Number.isFinite(value) || value <= 0) {
+    return 1;
+  }
+
+  const exponent = Math.floor(Math.log10(value));
+  const magnitude = 10 ** exponent;
+  const normalized = value / magnitude;
+
+  let niceNormalized;
+
+  if (normalized <= 1) {
+    niceNormalized = 1;
+  } else if (normalized <= 2) {
+    niceNormalized = 2;
+  } else if (normalized <= 2.5) {
+    niceNormalized = 2.5;
+  } else if (normalized <= 5) {
+    niceNormalized = 5;
+  } else {
+    niceNormalized = 10;
+  }
+
+  return niceNormalized * magnitude;
+}
+
+function niceAxisFloor(value) {
+  if (!Number.isFinite(value)) {
+    return 0;
+  }
+
+  if (value === 0) {
+    return 0;
+  }
+
+  const sign = Math.sign(value);
+  const absoluteValue = Math.abs(value);
+  const exponent = Math.floor(Math.log10(absoluteValue));
+  const magnitude = 10 ** exponent;
+
+  if (sign < 0) {
+    return Math.floor(value / magnitude) * magnitude;
+  }
+
+  return Math.floor(value / magnitude) * magnitude;
 }
 
 function requestVisibleYScaleUpdate() {
@@ -1343,19 +1700,65 @@ function updateVisibleYScale() {
     return Number.isFinite(value) ? value : null;
   });
 
-  const visibleValues = getVisibleTimeseriesValues(allValues);
+  const scaledWindowValues = getVisibleTimeseriesValues(allValues);
 
-  const yScaleOptions = makeTimeseriesYScaleOptions(
+  const proposedYScaleOptions = makeTimeseriesYScaleOptions(
     pollutantMeta,
-    visibleValues,
+    scaledWindowValues,
     {
       forceDomain: true
     }
   );
 
-  applyYScaleOptions(timeseriesChart, yScaleOptions);
+  const stabilizedYScaleOptions = stabilizeYAxisDomain(proposedYScaleOptions);
+
+  applyYScaleOptions(timeseriesChart, stabilizedYScaleOptions);
   timeseriesChart.update("none");
   drawFixedYAxis(timeseriesChart);
+}
+
+function stabilizeYAxisDomain(yScaleOptions) {
+  const nextMin = Number(yScaleOptions.min);
+  const nextMax = Number(yScaleOptions.max);
+
+  if (!Number.isFinite(nextMin) || !Number.isFinite(nextMax)) {
+    return yScaleOptions;
+  }
+
+  if (!lastYAxisDomain) {
+    lastYAxisDomain = {
+      min: nextMin,
+      max: nextMax
+    };
+
+    return yScaleOptions;
+  }
+
+  const currentRange = Math.max(lastYAxisDomain.max - lastYAxisDomain.min, 1);
+  const minChange = Math.abs(nextMin - lastYAxisDomain.min);
+  const maxChange = Math.abs(nextMax - lastYAxisDomain.max);
+  const changeThreshold = currentRange * 0.12;
+
+  const shouldExpand =
+    nextMax > lastYAxisDomain.max ||
+    nextMin < lastYAxisDomain.min;
+
+  const shouldContract =
+    minChange > changeThreshold ||
+    maxChange > changeThreshold;
+
+  if (shouldExpand || shouldContract) {
+    lastYAxisDomain = {
+      min: nextMin,
+      max: nextMax
+    };
+  }
+
+  return {
+    ...yScaleOptions,
+    min: lastYAxisDomain.min,
+    max: lastYAxisDomain.max
+  };
 }
 
 function getVisibleTimeseriesValues(values) {
@@ -1370,15 +1773,20 @@ function getVisibleTimeseriesValues(values) {
   }
 
   const visibleLeft = els.timeseriesScroll.scrollLeft;
-  const visibleRight = visibleLeft + els.timeseriesScroll.clientWidth;
+  const visibleWidth = els.timeseriesScroll.clientWidth;
+  const visibleRight = visibleLeft + visibleWidth;
 
-  const bufferPx = 40;
+  const scaleMultiplier = 1.5;
+  const extraWidth = visibleWidth * (scaleMultiplier - 1);
+  const scaledLeft = visibleLeft - extraWidth / 2;
+  const scaledRight = visibleRight + extraWidth / 2;
+
   const visibleValues = [];
 
   timeseriesPoints.forEach((point, index) => {
     const x = xScale.getPixelForValue(index);
 
-    if (x >= visibleLeft - bufferPx && x <= visibleRight + bufferPx) {
+    if (x >= scaledLeft && x <= scaledRight) {
       const value = Number(point.properties[selectedPollutant]);
 
       if (Number.isFinite(value)) {
@@ -1392,6 +1800,21 @@ function getVisibleTimeseriesValues(values) {
   }
 
   return values;
+}
+
+function scrollTimeseriesToLatest() {
+  if (!els.timeseriesScroll) return;
+
+  els.timeseriesScroll.scrollLeft = Math.max(
+    0,
+    els.timeseriesScroll.scrollWidth - els.timeseriesScroll.clientWidth
+  );
+
+  updateVisibleYScale();
+}
+
+function disableTimeseriesAutoFollow() {
+  shouldScrollTimeseriesToLatest = false;
 }
 
 function applyYScaleOptions(chart, yScaleOptions) {
@@ -1482,6 +1905,108 @@ function updateTimeseriesHighlight() {
 /* =========================================================
    Chart plugins
    ========================================================= */
+
+const hoverGuidePlugin = {
+  id: "hoverGuide",
+
+  afterDraw(chart) {
+    const tooltip = chart.tooltip;
+
+    if (!tooltip || !tooltip.getActiveElements) return;
+
+    const activeElements = tooltip.getActiveElements();
+
+    if (!activeElements || activeElements.length === 0) return;
+
+    const active = activeElements[0];
+    const point = timeseriesPoints[active.index];
+
+    if (!point) return;
+
+    const { ctx, chartArea, scales } = chart;
+    const xScale = scales.x;
+
+    if (!xScale || !chartArea) return;
+
+    const x = xScale.getPixelForValue(active.index);
+
+    if (x < chartArea.left || x > chartArea.right) return;
+
+    const meta = CONFIG.pollutants[selectedPollutant];
+    const rawValue = Number(point.properties[selectedPollutant]);
+
+    const reading = Number.isFinite(rawValue)
+      ? formatValue(rawValue, meta.unit, selectedPollutant)
+      : "—";
+
+    const timestamp = point.properties.timestamp
+      ? formatTimestampShort(point.properties.timestamp)
+      : "Unknown time";
+
+    const text = `${timestamp} · ${meta.label}: ${reading}`;
+
+    ctx.save();
+
+    ctx.strokeStyle = "rgba(15, 23, 42, 0.45)";
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([4, 4]);
+
+    ctx.beginPath();
+    ctx.moveTo(x, chartArea.top);
+    ctx.lineTo(x, chartArea.bottom);
+    ctx.stroke();
+
+    ctx.setLineDash([]);
+
+    ctx.font = "700 11px system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+
+    const paddingX = 7;
+    const boxHeight = 22;
+    const textWidth = ctx.measureText(text).width;
+    const boxWidth = textWidth + paddingX * 2;
+
+    let boxX = x + 8;
+
+    if (boxX + boxWidth > chartArea.right) {
+      boxX = x - boxWidth - 8;
+    }
+
+    boxX = Math.max(chartArea.left + 2, boxX);
+
+    const boxY = chartArea.top + 8;
+
+    ctx.fillStyle = "rgba(248, 250, 252, 0.94)";
+    ctx.strokeStyle = "rgba(100, 116, 139, 0.45)";
+    ctx.lineWidth = 1;
+
+    drawRoundedRect(ctx, boxX, boxY, boxWidth, boxHeight, 7);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.fillStyle = "#0f172a";
+    ctx.textBaseline = "middle";
+    ctx.textAlign = "left";
+    ctx.fillText(text, boxX + paddingX, boxY + boxHeight / 2);
+
+    ctx.restore();
+  }
+};
+
+function drawRoundedRect(ctx, x, y, width, height, radius) {
+  const r = Math.min(radius, width / 2, height / 2);
+
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + width - r, y);
+  ctx.quadraticCurveTo(x + width, y, x + width, y + r);
+  ctx.lineTo(x + width, y + height - r);
+  ctx.quadraticCurveTo(x + width, y + height, x + width - r, y + height);
+  ctx.lineTo(x + r, y + height);
+  ctx.quadraticCurveTo(x, y + height, x, y + height - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+}
 
 const fixedYAxisPlugin = {
   id: "fixedYAxis",
@@ -1964,15 +2489,26 @@ function formatBoundaryDate(timestamp) {
    Popup and marker helpers
    ========================================================= */
 
-function makePopup(point, pollutantKey) {
+
+function makePopup(point, pollutantKey, locationPoint = point) {
   const meta = CONFIG.pollutants[pollutantKey];
   const value = point.properties[pollutantKey];
   const timestamp = point.properties.timestamp;
+  const usingFallbackLocation = locationPoint && locationPoint.index !== point.index;
+
+  const gpsLine = usingFallbackLocation
+    ? "<br><strong>GPS</strong>: coordinate at selected time was flagged stale; showing nearest valid GPS fix"
+    : point.gpsQuality?.coordinateStale
+      ? `<br><strong>GPS</strong>: ${point.gpsQuality.staleReason || "coordinate flagged stale"}`
+      : "";
+
+  const lat = Number(locationPoint?.lat ?? point.lat);
+  const lon = Number(locationPoint?.lon ?? point.lon);
 
   return `
     <strong>${meta.label}</strong>: ${formatValue(value, meta.unit, pollutantKey)}<br>
     <strong>Time</strong>: ${timestamp ? formatTimestamp(timestamp) : "Unknown"}<br>
-    <strong>Location</strong>: ${point.lat.toFixed(5)}, ${point.lon.toFixed(5)}
+    <strong>Location</strong>: ${lat.toFixed(5)}, ${lon.toFixed(5)}${gpsLine}
   `;
 }
 
@@ -2280,6 +2816,23 @@ function roundValue(value) {
 /* =========================================================
    Geometry helpers
    ========================================================= */
+
+
+function calculateDistanceMeters(lat1, lon1, lat2, lon2) {
+  const earthRadiusMeters = 6371000;
+  const phi1 = degreesToRadians(lat1);
+  const phi2 = degreesToRadians(lat2);
+  const deltaPhi = degreesToRadians(lat2 - lat1);
+  const deltaLambda = degreesToRadians(lon2 - lon1);
+
+  const a =
+    Math.sin(deltaPhi / 2) ** 2 +
+    Math.cos(phi1) * Math.cos(phi2) * Math.sin(deltaLambda / 2) ** 2;
+
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+  return earthRadiusMeters * c;
+}
 
 function calculateBearing(lat1, lon1, lat2, lon2) {
   const phi1 = degreesToRadians(lat1);
