@@ -1625,26 +1625,7 @@ function renderTimeseriesChart() {
           display: false
         },
         tooltip: {
-          callbacks: {
-            title: (items) => {
-              const index = items[0].dataIndex;
-              const point = timeseriesPoints[index];
-
-              return point?.properties?.timestamp
-                ? formatTimestamp(point.properties.timestamp)
-                : "Unknown time";
-            },
-            label: (item) => {
-              return `${pollutantMeta.label}: ${formatValue(item.raw, pollutantMeta.unit, selectedPollutant)}`;
-            },
-            afterLabel: (item) => {
-              const point = timeseriesPoints[item.dataIndex];
-
-              if (!point) return "";
-
-              return `Location: ${point.lat.toFixed(5)}, ${point.lon.toFixed(5)}`;
-            }
-          }
+          enabled: false
         }
       },
       scales: {
@@ -2133,15 +2114,15 @@ const hoverGuidePlugin = {
   id: "hoverGuide",
 
   afterDraw(chart) {
-    const tooltip = chart.tooltip;
-
-    if (!tooltip || !tooltip.getActiveElements) return;
-
-    const activeElements = tooltip.getActiveElements();
+    const activeElements = chart.getActiveElements();
 
     if (!activeElements || activeElements.length === 0) return;
 
     const active = activeElements[0];
+    const point = timeseriesPoints[active.index];
+
+    if (!point) return;
+
     const { ctx, chartArea, scales } = chart;
     const xScale = scales.x;
 
@@ -2150,6 +2131,19 @@ const hoverGuidePlugin = {
     const x = xScale.getPixelForValue(active.index);
 
     if (x < chartArea.left || x > chartArea.right) return;
+
+    const meta = CONFIG.pollutants[selectedPollutant];
+    const rawValue = Number(point.properties[selectedPollutant]);
+
+    const reading = Number.isFinite(rawValue)
+      ? formatValue(rawValue, meta.unit, selectedPollutant)
+      : "—";
+
+    const timestamp = point.properties.timestamp
+      ? formatTimestampShort(point.properties.timestamp)
+      : "Unknown time";
+
+    const text = `${timestamp} · ${meta.label}: ${reading}`;
 
     ctx.save();
 
@@ -2161,6 +2155,61 @@ const hoverGuidePlugin = {
     ctx.moveTo(x, chartArea.top);
     ctx.lineTo(x, chartArea.bottom);
     ctx.stroke();
+
+    ctx.setLineDash([]);
+
+    ctx.font = "700 11px system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+
+    const paddingX = 7;
+    const boxHeight = 22;
+    const gap = 8;
+
+    const scrollLeft = els.timeseriesScroll
+      ? els.timeseriesScroll.scrollLeft
+      : 0;
+
+    const viewportWidth = els.timeseriesScroll
+      ? els.timeseriesScroll.clientWidth
+      : chartArea.right - chartArea.left;
+
+    const visibleLeft = Math.max(chartArea.left, scrollLeft);
+    const visibleRight = Math.min(chartArea.right, scrollLeft + viewportWidth);
+    const visibleMidpoint = visibleLeft + (visibleRight - visibleLeft) / 2;
+
+    const textWidth = ctx.measureText(text).width;
+    const boxWidth = textWidth + paddingX * 2;
+
+    const shouldPlaceLeft = x > visibleMidpoint;
+
+    let boxX = shouldPlaceLeft
+      ? x - boxWidth - gap
+      : x + gap;
+
+    const minBoxX = visibleLeft + 4;
+    const maxBoxX = visibleRight - boxWidth - 4;
+
+    if (boxX < minBoxX) {
+      boxX = minBoxX;
+    }
+
+    if (boxX > maxBoxX) {
+      boxX = maxBoxX;
+    }
+
+    const boxY = chartArea.top + 8;
+
+    ctx.fillStyle = "rgba(248, 250, 252, 0.96)";
+    ctx.strokeStyle = "rgba(100, 116, 139, 0.45)";
+    ctx.lineWidth = 1;
+
+    drawRoundedRect(ctx, boxX, boxY, boxWidth, boxHeight, 7);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.fillStyle = "#0f172a";
+    ctx.textBaseline = "middle";
+    ctx.textAlign = "left";
+    ctx.fillText(text, boxX + paddingX, boxY + boxHeight / 2);
 
     ctx.restore();
   }
