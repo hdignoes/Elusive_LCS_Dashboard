@@ -601,7 +601,8 @@ function isPointGpsUsable(point) {
     point &&
     Number.isFinite(point.lat) &&
     Number.isFinite(point.lon) &&
-    !point.gpsQuality?.coordinateStale
+    !point.gpsQuality?.coordinateStale &&
+    !point.gpsQuality?.invalidJumpFromPrevious
   );
 }
 
@@ -1207,55 +1208,249 @@ function renderDataQuality() {
 
   els.dataQualityList.innerHTML = "";
 
+  const airQualityStatus = getCurrentAirQualitySensorStatus();
+  const gpsStatus = getCurrentGpsStatus();
+
+  addDataChip(airQualityStatus.label, airQualityStatus.status);
+  addDataChip(gpsStatus.label, gpsStatus.status);
+}
+
+function getCurrentAirQualitySensorStatus() {
+  if (!latestData) {
+    return {
+      label: "Air quality data missing",
+      status: "bad"
+    };
+  }
+
+  const airQualityKeys = getAirQualitySensorKeys();
+
+  const missingKeys = airQualityKeys.filter((key) => {
+    const value = getLatestPollutantValue(key);
+    return !Number.isFinite(Number(value));
+  });
+
+  if (missingKeys.length === 0) {
+    return {
+      label: "Air quality sensors OK",
+      status: "good"
+    };
+  }
+
+  const missingLabels = missingKeys.map((key) => {
+    return CONFIG.pollutants[key]?.label || key;
+  });
+
+  return {
+    label: `Sensor issue: ${missingLabels.join(", ")} missing`,
+    status: "warn"
+  };
+}
+
+function getAirQualitySensorKeys() {
+  const configuredAirKeys = CONFIG.pollutantGroups
+    ?.find((group) => group.label === "Air pollutants")
+    ?.keys || [];
+
+  return configuredAirKeys.filter((key) => {
+    return key !== "AQHI" && CONFIG.pollutants[key];
+  });
+}
+
+function getCurrentGpsStatus() {
+  if (!latestData) {
+    return {
+      label: "Current GPS missing",
+      status: "bad"
+    };
+  }
+
+  const lat = Number(latestData.lat);
+  const lon = Number(latestData.lon);
+
+  if (!Number.isFinite(lat) || !Number.isFinite(lon)) {
+    return {
+      label: "Current GPS missing",
+      status: "bad"
+    };
+  }
+
+  const ageInfo = getDataAgeInfo(latestData.timestamp);
+
+  if (ageInfo.status !== "good") {
+    return {
+      label: "Current GPS timestamp stale",
+      status: "warn"
+    };
+  }
+
   const points = getSortedHistoryPointsAscending();
-  const selectedValue = getLatestPollutantValue(selectedPollutant);
-  const ageInfo = getDataAgeInfo(latestData?.timestamp);
-  const summary = gpsQualitySummary || makeEmptyGpsQualitySummary();
 
-  addDataChip(
-    summary.staleCoordinatePoints > 0
-      ? `GPS stale: ${summary.staleCoordinatePoints} points suppressed`
-      : "GPS OK",
-    summary.staleCoordinatePoints > 0 ? "warn" : "good"
-  );
-
-  if (summary.invalidJumpSegments > 0) {
-    addDataChip(
-      `GPS jumps hidden: ${summary.invalidJumpSegments}`,
-      "warn"
-    );
+  if (points.length < 2) {
+    return {
+      label: "Current GPS OK",
+      status: "good"
+    };
   }
 
-  if (summary.latestPointIsStale && summary.latestUsableTimestamp) {
-    addDataChip(
-      `Last valid GPS: ${formatTimestampShort(summary.latestUsableTimestamp)}`,
-      "warn"
-    );
+  const latestPoint = points[points.length - 1];
+  const previousPoint = findPreviousDistinctGpsPoint(points, latestPoint);
+
+  if (!previousPoint) {
+    return {
+      label: "Current GPS stale",
+      status: "warn"
+    };
   }
 
-  addDataChip(
-    ageInfo.label,
-    ageInfo.status
-  );
+  const staleCoordinateStatus = getRepeatedCoordinateStatus(points, latestPoint);
 
-  addDataChip(
-    `${summary.usablePoints}/${points.length} map points`,
-    summary.usablePoints > 0 ? "info" : "warn"
-  );
-
-  addDataChip(
-    Number.isFinite(Number(selectedValue))
-      ? `${CONFIG.pollutants[selectedPollutant].label} OK`
-      : `${CONFIG.pollutants[selectedPollutant].label} missing`,
-    Number.isFinite(Number(selectedValue)) ? "good" : "warn"
-  );
-
-  if (timeseriesDecimationActive) {
-    addDataChip(
-      `Chart optimized: ${timeseriesDisplayCount}/${timeseriesRawCount}`,
-      "info"
-    );
+  if (!staleCoordinateStatus.ok) {
+    return {
+      label: "Current GPS stale",
+      status: "warn"
+    };
   }
+
+  const jumpStatus = getGpsJumpStatus(previousPoint, latestPoint);
+
+  if (!jumpStatus.ok) {
+    return {
+      label: "Current GPS jump detected",
+      status: "warn"
+    };
+  }
+
+  return {
+    label: "Current GPS OK",
+    status: "good"
+  };
+}
+
+function findPreviousDistinctGpsPoint(points, latestPoint) {
+  const toleranceMeters = CONFIG.gpsQuality?.sameCoordinateToleranceMeters ?? 5;
+
+  for (let i = points.length - 2; i >= 0; i -= 1) {
+    const point = points[i];
+
+    const distanceMeters = calculateStatusDistanceMeters(
+      point.lat,
+      point.lon,
+      latestPoint.lat,
+      latestPoint.lon
+    );
+
+    if (Number.isFinite(distanceMeters) && distanceMeters > toleranceMeters) {
+      return point;
+    }
+  }
+
+  return null;
+}
+
+function getRepeatedCoordinateStatus(points, latestPoint) {
+  const toleranceMeters = CONFIG.gpsQuality?.sameCoordinateToleranceMeters ?? 5;
+  const staleAfterMinutes = CONFIG.gpsQuality?.staleCoordinateAfterMinutes ?? 45;
+
+  const latestTime = Date.parse(latestPoint.properties.timestamp);
+
+  if (!Number.isFinite(latestTime)) {
+    return {
+      ok: false
+    };
+  }
+
+  let firstRepeatedTime = latestTime;
+
+  for (let i = points.length - 2; i >= 0; i -= 1) {
+    const point = points[i];
+
+    const distanceMeters = calculateStatusDistanceMeters(
+      point.lat,
+      point.lon,
+      latestPoint.lat,
+      latestPoint.lon
+    );
+
+    if (!Number.isFinite(distanceMeters) || distanceMeters > toleranceMeters) {
+      break;
+    }
+
+    const pointTime = Date.parse(point.properties.timestamp);
+
+    if (Number.isFinite(pointTime)) {
+      firstRepeatedTime = pointTime;
+    }
+  }
+
+  const repeatedMinutes = (latestTime - firstRepeatedTime) / 60000;
+
+  return {
+    ok: repeatedMinutes < staleAfterMinutes
+  };
+}
+
+function getGpsJumpStatus(previousPoint, latestPoint) {
+  const maxSpeedKnots = CONFIG.gpsQuality?.maxReasonableSpeedKnots ?? 35;
+
+  const previousTime = Date.parse(previousPoint.properties.timestamp);
+  const latestTime = Date.parse(latestPoint.properties.timestamp);
+
+  if (!Number.isFinite(previousTime) || !Number.isFinite(latestTime)) {
+    return {
+      ok: false
+    };
+  }
+
+  const elapsedHours = (latestTime - previousTime) / 3600000;
+
+  if (elapsedHours <= 0) {
+    return {
+      ok: false
+    };
+  }
+
+  const distanceMeters = calculateStatusDistanceMeters(
+    previousPoint.lat,
+    previousPoint.lon,
+    latestPoint.lat,
+    latestPoint.lon
+  );
+
+  const distanceNauticalMiles = distanceMeters / 1852;
+  const speedKnots = distanceNauticalMiles / elapsedHours;
+
+  return {
+    ok: speedKnots <= maxSpeedKnots
+  };
+}
+
+function calculateStatusDistanceMeters(lat1, lon1, lat2, lon2) {
+  const radiusMeters = 6371000;
+
+  const phi1 = degreesToRadians(Number(lat1));
+  const phi2 = degreesToRadians(Number(lat2));
+  const deltaPhi = degreesToRadians(Number(lat2) - Number(lat1));
+  const deltaLambda = degreesToRadians(Number(lon2) - Number(lon1));
+
+  if (
+    !Number.isFinite(phi1) ||
+    !Number.isFinite(phi2) ||
+    !Number.isFinite(deltaPhi) ||
+    !Number.isFinite(deltaLambda)
+  ) {
+    return NaN;
+  }
+
+  const a =
+    Math.sin(deltaPhi / 2) ** 2 +
+    Math.cos(phi1) *
+      Math.cos(phi2) *
+      Math.sin(deltaLambda / 2) ** 2;
+
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+  return radiusMeters * c;
 }
 
 function addDataChip(text, status) {
