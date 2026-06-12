@@ -37,6 +37,12 @@ const CONFIG = {
     thresholdPoints: 2000,
     targetPoints: 1200
   },
+  
+  gpsQuality: {
+    repeatedCoordinateStaleAfterMinutes: 45,
+    stationaryDistanceToleranceMeters: 10,
+    maxReasonableSpeedKnots: 20
+  },
 
   mapControls: {
     legendCollapsedOnDesktop: false,
