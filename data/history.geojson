@@ -6924,6 +6924,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T00:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.142,
         "NO": 1.908,
         "NO2": 2.163,
@@ -6948,6 +6949,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T00:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.145,
         "NO": 1.741,
         "NO2": 2.635,
@@ -6972,6 +6974,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T00:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.146,
         "NO": 1.688,
         "NO2": 2.615,
@@ -6996,6 +6999,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T00:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.144,
         "NO": 1.75,
         "NO2": 2.668,
@@ -7020,6 +7024,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T00:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.144,
         "NO": 1.78,
         "NO2": 2.847,
@@ -7044,6 +7049,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T00:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.146,
         "NO": 1.739,
         "NO2": 2.896,
@@ -7068,6 +7074,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T00:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.143,
         "NO": 1.542,
         "NO2": 2.629,
@@ -7092,6 +7099,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T00:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.133,
         "NO": 1.132,
         "NO2": 2.248,
@@ -7116,6 +7124,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T00:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.139,
         "NO": 1.523,
         "NO2": 3.245,
@@ -7140,6 +7149,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T00:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.15,
         "NO": 3.3,
         "NO2": 4.386,
@@ -7164,6 +7174,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T00:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.157,
         "NO": 4.783,
         "NO2": 5.03,
@@ -7188,6 +7199,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T00:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.143,
         "NO": 1.826,
         "NO2": 3.551,
@@ -7212,6 +7224,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T01:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.142,
         "NO": 1.694,
         "NO2": 3.454,
@@ -7236,6 +7249,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T01:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.138,
         "NO": 1.503,
         "NO2": 2.863,
@@ -7260,6 +7274,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T01:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.129,
         "NO": 1.048,
         "NO2": 1.667,
@@ -7284,6 +7299,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T01:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.13,
         "NO": 1.231,
         "NO2": 2.095,
@@ -7308,6 +7324,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T01:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.134,
         "NO": 1.129,
         "NO2": 2.176,
@@ -7332,6 +7349,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T01:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.13,
         "NO": 1.036,
         "NO2": 2.387,
@@ -7356,6 +7374,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T01:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.132,
         "NO": 1.176,
         "NO2": 2.302,
@@ -7380,6 +7399,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T01:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.132,
         "NO": 1.085,
         "NO2": 2.16,
@@ -7404,6 +7424,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T01:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.135,
         "NO": 1.31,
         "NO2": 2.854,
@@ -7428,6 +7449,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T01:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.134,
         "NO": 1.272,
         "NO2": 2.632,
@@ -7452,6 +7474,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T01:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.134,
         "NO": 1.315,
         "NO2": 3.002,
@@ -7476,6 +7499,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T01:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.141,
         "NO": 1.956,
         "NO2": 3.617,
@@ -7500,6 +7524,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T02:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.151,
         "NO": 3.356,
         "NO2": 6.326,
@@ -7524,6 +7549,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T02:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.141,
         "NO": 2.154,
         "NO2": 4.863,
@@ -7548,6 +7574,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T02:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.131,
         "NO": 1.296,
         "NO2": 2.382,
@@ -7572,6 +7599,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T02:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.131,
         "NO": 1.239,
         "NO2": 2.476,
@@ -7596,6 +7624,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T02:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.131,
         "NO": 1.166,
         "NO2": 2.435,
@@ -7620,6 +7649,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T02:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.135,
         "NO": 1.379,
         "NO2": 3.039,
@@ -7644,6 +7674,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T02:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.132,
         "NO": 1.32,
         "NO2": 3.022,
@@ -7668,6 +7699,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T02:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.131,
         "NO": 1.192,
         "NO2": 2.68,
@@ -7692,6 +7724,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T02:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.134,
         "NO": 1.451,
         "NO2": 3.258,
@@ -7716,6 +7749,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T02:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.137,
         "NO": 1.8,
         "NO2": 3.797,
@@ -7740,6 +7774,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T02:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.134,
         "NO": 1.79,
         "NO2": 3.614,
@@ -7764,6 +7799,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T02:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.132,
         "NO": 1.399,
         "NO2": 3.208,
@@ -7788,6 +7824,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T03:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.133,
         "NO": 1.444,
         "NO2": 3.559,
@@ -7812,6 +7849,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T03:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.134,
         "NO": 2.116,
         "NO2": 3.824,
@@ -7836,6 +7874,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T03:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.131,
         "NO": 1.288,
         "NO2": 3.228,
@@ -7860,6 +7899,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T03:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.13,
         "NO": 1.3,
         "NO2": 3.258,
@@ -7884,6 +7924,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T03:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.135,
         "NO": 2.191,
         "NO2": 3.936,
@@ -7908,6 +7949,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T03:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.138,
         "NO": 2.166,
         "NO2": 3.937,
@@ -7932,6 +7974,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T03:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.135,
         "NO": 2.123,
         "NO2": 3.804,
@@ -7956,6 +7999,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T03:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.142,
         "NO": 2.345,
         "NO2": 4.117,
@@ -7980,6 +8024,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T03:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.142,
         "NO": 2.231,
         "NO2": 4.321,
@@ -8004,6 +8049,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T03:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.144,
         "NO": 1.986,
         "NO2": 4.129,
@@ -8028,6 +8074,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T03:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.139,
         "NO": 1.97,
         "NO2": 4.085,
@@ -8052,6 +8099,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T03:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.139,
         "NO": 2.018,
         "NO2": 4.047,
@@ -8076,6 +8124,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T04:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.136,
         "NO": 2.107,
         "NO2": 4.034,
@@ -8100,6 +8149,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T04:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.141,
         "NO": 1.881,
         "NO2": 4.24,
@@ -8124,6 +8174,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T04:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.138,
         "NO": 1.81,
         "NO2": 4.144,
@@ -8148,6 +8199,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T04:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.142,
         "NO": 1.825,
         "NO2": 4.134,
@@ -8172,6 +8224,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T04:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.134,
         "NO": 1.296,
         "NO2": 3.73,
@@ -8196,6 +8249,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T04:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.137,
         "NO": 1.542,
         "NO2": 4.32,
@@ -8220,6 +8274,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T04:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.126,
         "NO": 1.13,
         "NO2": 2.698,
@@ -8244,6 +8299,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T04:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.104,
         "NO": 0.826,
         "NO2": 2.196,
@@ -8268,6 +8324,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T04:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.104,
         "NO": 0.815,
         "NO2": 2.226,
@@ -8292,6 +8349,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T04:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.129,
         "NO": 1.162,
         "NO2": 3.38,
@@ -8316,6 +8374,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T04:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.129,
         "NO": 1.163,
         "NO2": 3.546,
@@ -8340,6 +8399,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T04:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.129,
         "NO": 1.149,
         "NO2": 3.601,
@@ -8364,6 +8424,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T05:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.128,
         "NO": 1.077,
         "NO2": 3.864,
@@ -8388,6 +8449,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T05:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.137,
         "NO": 1.564,
         "NO2": 4.238,
@@ -8412,6 +8474,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T05:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.137,
         "NO": 1.288,
         "NO2": 4.573,
@@ -8436,6 +8499,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T05:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.137,
         "NO": 1.358,
         "NO2": 5.006,
@@ -8460,6 +8524,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T05:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.135,
         "NO": 1.281,
         "NO2": 4.628,
@@ -8484,6 +8549,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T05:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.134,
         "NO": 1.474,
         "NO2": 4.394,
@@ -8508,6 +8574,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T05:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.133,
         "NO": 1.464,
         "NO2": 4.311,
@@ -8532,6 +8599,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T05:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.135,
         "NO": 1.911,
         "NO2": 4.438,
@@ -8556,6 +8624,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T05:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.135,
         "NO": 1.549,
         "NO2": 4.253,
@@ -8580,6 +8649,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T05:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.136,
         "NO": 1.73,
         "NO2": 4.27,
@@ -8604,6 +8674,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T05:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.138,
         "NO": 1.767,
         "NO2": 4.189,
@@ -8628,6 +8699,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T05:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.137,
         "NO": 1.707,
         "NO2": 4.197,
@@ -8652,6 +8724,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T06:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.137,
         "NO": 2.002,
         "NO2": 4.171,
@@ -8676,6 +8749,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T06:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.14,
         "NO": 2.075,
         "NO2": 4.079,
@@ -8700,6 +8774,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T06:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.135,
         "NO": 1.934,
         "NO2": 4.224,
@@ -8724,6 +8799,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T06:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.135,
         "NO": 1.979,
         "NO2": 4.42,
@@ -8748,6 +8824,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T06:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.133,
         "NO": 1.99,
         "NO2": 4.274,
@@ -8772,6 +8849,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T06:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.137,
         "NO": 1.94,
         "NO2": 4.075,
@@ -8796,6 +8874,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T06:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.134,
         "NO": 2.072,
         "NO2": 4.186,
@@ -8820,6 +8899,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T06:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.134,
         "NO": 2.007,
         "NO2": 4.194,
@@ -8844,6 +8924,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T06:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.133,
         "NO": 2.034,
         "NO2": 4.136,
@@ -8868,6 +8949,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T06:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.161,
         "NO": 2.288,
         "NO2": 4.928,
@@ -8892,6 +8974,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T06:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.141,
         "NO": 1.547,
         "NO2": 4.28,
@@ -8916,6 +8999,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T06:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.133,
         "NO": 1.989,
         "NO2": 4.04,
@@ -8940,6 +9024,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T07:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.133,
         "NO": 2.027,
         "NO2": 4.057,
@@ -8964,6 +9049,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T07:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.132,
         "NO": 2.029,
         "NO2": 3.69,
@@ -8988,6 +9074,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T07:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.134,
         "NO": 2.016,
         "NO2": 3.819,
@@ -9012,6 +9099,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T07:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.135,
         "NO": 1.992,
         "NO2": 3.801,
@@ -9036,6 +9124,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T07:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.135,
         "NO": 1.983,
         "NO2": 3.831,
@@ -9060,6 +9149,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T07:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.135,
         "NO": 1.975,
         "NO2": 3.822,
@@ -9084,6 +9174,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T07:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.136,
         "NO": 2.004,
         "NO2": 3.943,
@@ -9108,6 +9199,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T07:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.136,
         "NO": 2.046,
         "NO2": 3.856,
@@ -9132,6 +9224,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T07:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.137,
         "NO": 2.029,
         "NO2": 3.86,
@@ -9156,6 +9249,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T07:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.137,
         "NO": 2.242,
         "NO2": 4.0,
@@ -9180,6 +9274,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T07:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.137,
         "NO": 2.112,
         "NO2": 3.854,
@@ -9204,6 +9299,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T07:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.137,
         "NO": 2.096,
         "NO2": 3.727,
@@ -9228,6 +9324,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T08:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.137,
         "NO": 2.01,
         "NO2": 3.78,
@@ -9252,6 +9349,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T08:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.14,
         "NO": 2.232,
         "NO2": 3.81,
@@ -9276,6 +9374,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T08:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.137,
         "NO": 2.194,
         "NO2": 4.023,
@@ -9300,6 +9399,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T08:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.139,
         "NO": 2.281,
         "NO2": 3.794,
@@ -9324,6 +9424,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T08:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.137,
         "NO": 1.997,
         "NO2": 3.726,
@@ -9348,6 +9449,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T08:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.136,
         "NO": 2.039,
         "NO2": 3.754,
@@ -9372,6 +9474,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T08:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.14,
         "NO": 2.291,
         "NO2": 3.559,
@@ -9396,6 +9499,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T08:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.136,
         "NO": 2.269,
         "NO2": 3.863,
@@ -9420,6 +9524,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T08:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.137,
         "NO": 2.131,
         "NO2": 3.717,
@@ -9444,6 +9549,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T08:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.136,
         "NO": 2.014,
         "NO2": 3.621,
@@ -9468,6 +9574,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T08:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.139,
         "NO": 2.442,
         "NO2": 4.046,
@@ -9492,6 +9599,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T08:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.139,
         "NO": 2.619,
         "NO2": 3.67,
@@ -9516,6 +9624,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T09:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.141,
         "NO": 2.672,
         "NO2": 3.566,
@@ -9540,6 +9649,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T09:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.141,
         "NO": 2.732,
         "NO2": 3.817,
@@ -9564,6 +9674,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T09:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.14,
         "NO": 2.681,
         "NO2": 3.618,
@@ -9588,6 +9699,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T09:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.139,
         "NO": 2.622,
         "NO2": 3.579,
@@ -9612,6 +9724,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T09:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.141,
         "NO": 2.422,
         "NO2": 3.486,
@@ -9636,6 +9749,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T09:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.141,
         "NO": 2.372,
         "NO2": 3.538,
@@ -9660,6 +9774,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T09:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.144,
         "NO": 2.851,
         "NO2": 4.096,
@@ -9684,6 +9799,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T09:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.141,
         "NO": 2.533,
         "NO2": 3.69,
@@ -9708,6 +9824,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T09:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.139,
         "NO": 2.714,
         "NO2": 3.712,
@@ -9732,6 +9849,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T09:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.141,
         "NO": 3.908,
         "NO2": 4.08,
@@ -9756,6 +9874,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T09:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.142,
         "NO": 2.924,
         "NO2": 3.683,
@@ -9780,6 +9899,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T09:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.148,
         "NO": 2.669,
         "NO2": 3.955,
@@ -9804,6 +9924,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T10:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.159,
         "NO": 2.958,
         "NO2": 4.544,
@@ -9828,6 +9949,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T10:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.151,
         "NO": 2.802,
         "NO2": 3.99,
@@ -9852,6 +9974,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T10:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.15,
         "NO": 2.871,
         "NO2": 4.213,
@@ -9876,6 +9999,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T10:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.142,
         "NO": 2.647,
         "NO2": 3.804,
@@ -9900,6 +10024,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T10:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.152,
         "NO": 2.637,
         "NO2": 4.688,
@@ -9924,6 +10049,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T10:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.147,
         "NO": 2.517,
         "NO2": 4.065,
@@ -9948,6 +10074,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T10:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.15,
         "NO": 3.971,
         "NO2": 4.455,
@@ -9972,6 +10099,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T10:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.149,
         "NO": 2.61,
         "NO2": 3.935,
@@ -9996,6 +10124,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T10:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.154,
         "NO": 2.926,
         "NO2": 4.261,
@@ -10020,6 +10149,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T10:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.15,
         "NO": 3.029,
         "NO2": 4.174,
@@ -10044,6 +10174,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T10:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.148,
         "NO": 3.446,
         "NO2": 4.393,
@@ -10068,6 +10199,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T10:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.148,
         "NO": 3.484,
         "NO2": 4.388,
@@ -10092,6 +10224,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T11:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.15,
         "NO": 3.949,
         "NO2": 4.588,
@@ -10116,6 +10249,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T11:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.147,
         "NO": 3.738,
         "NO2": 4.432,
@@ -10140,6 +10274,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T11:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.151,
         "NO": 2.743,
         "NO2": 4.306,
@@ -10164,6 +10299,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T11:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.195,
         "NO": 3.63,
         "NO2": 5.065,
@@ -10188,6 +10324,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T11:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.19,
         "NO": 3.726,
         "NO2": 5.129,
@@ -10212,6 +10349,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T11:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.172,
         "NO": 3.389,
         "NO2": 4.978,
@@ -10236,6 +10374,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T11:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.184,
         "NO": 3.512,
         "NO2": 4.951,
@@ -10260,6 +10399,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T11:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.157,
         "NO": 3.072,
         "NO2": 4.741,
@@ -10284,6 +10424,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T11:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.156,
         "NO": 4.009,
         "NO2": 4.936,
@@ -10308,6 +10449,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T11:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.151,
         "NO": 2.958,
         "NO2": 4.341,
@@ -10332,6 +10474,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T11:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.155,
         "NO": 3.947,
         "NO2": 4.908,
@@ -10356,6 +10499,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T11:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.148,
         "NO": 2.659,
         "NO2": 4.102,
@@ -10380,6 +10524,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T12:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.167,
         "NO": 2.899,
         "NO2": 4.37,
@@ -10404,6 +10549,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T12:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.145,
         "NO": 2.698,
         "NO2": 4.052,
@@ -10428,6 +10574,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T12:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.147,
         "NO": 2.599,
         "NO2": 3.957,
@@ -10452,6 +10599,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T12:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.152,
         "NO": 2.935,
         "NO2": 4.217,
@@ -10476,6 +10624,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T12:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.162,
         "NO": 3.234,
         "NO2": 4.651,
@@ -10500,6 +10649,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T12:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.184,
         "NO": 3.448,
         "NO2": 4.755,
@@ -10524,6 +10674,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T12:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.154,
         "NO": 3.98,
         "NO2": 4.92,
@@ -10548,6 +10699,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T12:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.153,
         "NO": 3.337,
         "NO2": 4.693,
@@ -10572,6 +10724,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T12:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.224,
         "NO": 3.811,
         "NO2": 5.476,
@@ -10596,6 +10749,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T12:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.183,
         "NO": 3.494,
         "NO2": 4.679,
@@ -10620,6 +10774,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T12:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.159,
         "NO": 3.883,
         "NO2": 4.98,
@@ -10644,6 +10799,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T12:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.155,
         "NO": 3.808,
         "NO2": 4.57,
@@ -10668,6 +10824,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T13:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.207,
         "NO": 5.716,
         "NO2": 6.493,
@@ -10692,6 +10849,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T13:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.208,
         "NO": 5.758,
         "NO2": 6.521,
@@ -10716,6 +10874,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T13:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.199,
         "NO": 5.837,
         "NO2": 6.16,
@@ -10740,6 +10899,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T13:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.195,
         "NO": 5.449,
         "NO2": 5.84,
@@ -10764,6 +10924,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T13:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.203,
         "NO": 4.739,
         "NO2": 5.357,
@@ -10788,6 +10949,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T13:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.203,
         "NO": 4.735,
         "NO2": 5.394,
@@ -10812,6 +10974,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T13:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.235,
         "NO": 4.4,
         "NO2": 4.716,
@@ -10836,6 +10999,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T13:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.183,
         "NO": 4.13,
         "NO2": 5.16,
@@ -10860,6 +11024,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T13:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.215,
         "NO": 4.532,
         "NO2": 5.098,
@@ -10884,6 +11049,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T13:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.168,
         "NO": 4.373,
         "NO2": 5.214,
@@ -10908,6 +11074,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T13:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.193,
         "NO": 4.004,
         "NO2": 5.198,
@@ -10932,6 +11099,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T13:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.204,
         "NO": 4.103,
         "NO2": 4.82,
@@ -10956,6 +11124,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T14:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.218,
         "NO": 4.191,
         "NO2": 5.015,
@@ -10980,6 +11149,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T14:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.219,
         "NO": 3.892,
         "NO2": 4.856,
@@ -11004,6 +11174,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T14:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.215,
         "NO": 4.279,
         "NO2": 4.943,
@@ -11028,6 +11199,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T14:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.216,
         "NO": 5.844,
         "NO2": 5.436,
@@ -11052,6 +11224,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T14:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.216,
         "NO": 5.495,
         "NO2": 5.372,
@@ -11076,6 +11249,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T14:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.203,
         "NO": 3.9,
         "NO2": 4.716,
@@ -11100,6 +11274,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T14:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.203,
         "NO": 3.968,
         "NO2": 4.697,
@@ -11124,6 +11299,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T14:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.218,
         "NO": 5.281,
         "NO2": 5.524,
@@ -11148,6 +11324,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T14:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.217,
         "NO": 5.048,
         "NO2": 5.374,
@@ -11172,6 +11349,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T14:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.208,
         "NO": 4.454,
         "NO2": 5.26,
@@ -11196,6 +11374,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T14:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.207,
         "NO": 3.794,
         "NO2": 5.015,
@@ -11220,6 +11399,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T14:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.209,
         "NO": 3.898,
         "NO2": 4.991,
@@ -11244,6 +11424,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T15:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.211,
         "NO": 7.694,
         "NO2": 4.78,
@@ -11268,6 +11449,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T15:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.212,
         "NO": 3.736,
         "NO2": 4.794,
@@ -11292,6 +11474,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T15:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.212,
         "NO": 3.662,
         "NO2": 4.726,
@@ -11316,6 +11499,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T15:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.211,
         "NO": 4.602,
         "NO2": 4.944,
@@ -11340,6 +11524,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T15:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.204,
         "NO": 4.915,
         "NO2": 5.049,
@@ -11364,6 +11549,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T15:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.203,
         "NO": 8.491,
         "NO2": 5.223,
@@ -11388,6 +11574,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T15:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.202,
         "NO": 8.864,
         "NO2": 5.197,
@@ -11412,6 +11599,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T15:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.207,
         "NO": 10.491,
         "NO2": 5.266,
@@ -11436,6 +11624,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T15:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.208,
         "NO": 9.732,
         "NO2": 5.207,
@@ -11460,6 +11649,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T15:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.204,
         "NO": 8.215,
         "NO2": 5.134,
@@ -11484,6 +11674,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T15:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.181,
         "NO": 8.647,
         "NO2": 5.206,
@@ -11508,6 +11699,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T15:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.179,
         "NO": 8.655,
         "NO2": 5.059,
@@ -11532,6 +11724,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T16:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.18,
         "NO": 8.588,
         "NO2": 5.161,
@@ -11556,6 +11749,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T16:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.181,
         "NO": 8.626,
         "NO2": 5.306,
@@ -11580,6 +11774,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T16:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.19,
         "NO": 8.969,
         "NO2": 5.484,
@@ -11604,6 +11799,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T16:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.175,
         "NO": 8.739,
         "NO2": 5.529,
@@ -11628,6 +11824,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T16:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.174,
         "NO": 8.706,
         "NO2": 4.871,
@@ -11652,6 +11849,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T16:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.176,
         "NO": 8.741,
         "NO2": 5.477,
@@ -11676,6 +11874,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T16:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.177,
         "NO": 7.937,
         "NO2": 5.743,
@@ -11700,6 +11899,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T16:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.188,
         "NO": 9.451,
         "NO2": 5.97,
@@ -11724,6 +11924,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T16:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.182,
         "NO": 9.29,
         "NO2": 5.764,
@@ -11748,6 +11949,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T16:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.175,
         "NO": 9.566,
         "NO2": 5.54,
@@ -11772,6 +11974,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T16:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.185,
         "NO": 9.618,
         "NO2": 6.023,
@@ -11796,6 +11999,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T16:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.18,
         "NO": 4.954,
         "NO2": 6.052,
@@ -11820,6 +12024,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T17:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.186,
         "NO": 10.407,
         "NO2": 6.194,
@@ -11844,6 +12049,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T17:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.187,
         "NO": 10.935,
         "NO2": 6.185,
@@ -11868,6 +12074,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T17:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.187,
         "NO": 10.855,
         "NO2": 5.995,
@@ -11892,6 +12099,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T17:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.184,
         "NO": 11.123,
         "NO2": 5.774,
@@ -11916,6 +12124,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T17:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.183,
         "NO": 11.228,
         "NO2": 5.766,
@@ -11940,6 +12149,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T17:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.184,
         "NO": 9.91,
         "NO2": 5.38,
@@ -11964,6 +12174,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T17:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.184,
         "NO": 11.362,
         "NO2": 5.77,
@@ -11988,6 +12199,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T17:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.183,
         "NO": 11.545,
         "NO2": 5.799,
@@ -12012,6 +12224,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T17:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.187,
         "NO": 11.746,
         "NO2": 6.097,
@@ -12036,6 +12249,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T17:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.18,
         "NO": 6.567,
         "NO2": 5.905,
@@ -12060,6 +12274,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T17:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.18,
         "NO": 6.853,
         "NO2": 5.835,
@@ -12084,6 +12299,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T17:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.187,
         "NO": 11.521,
         "NO2": 5.952,
@@ -12108,6 +12324,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T18:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.181,
         "NO": 5.386,
         "NO2": 5.382,
@@ -12132,6 +12349,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T18:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.181,
         "NO": 9.52,
         "NO2": 5.81,
@@ -12156,6 +12374,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T18:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.179,
         "NO": 4.829,
         "NO2": 5.255,
@@ -12180,6 +12399,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T18:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.178,
         "NO": 4.946,
         "NO2": 5.288,
@@ -12204,6 +12424,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T18:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.18,
         "NO": 8.915,
         "NO2": 5.599,
@@ -12228,6 +12449,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T18:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.167,
         "NO": 4.76,
         "NO2": 5.221,
@@ -12252,6 +12474,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T18:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.178,
         "NO": 5.048,
         "NO2": 5.352,
@@ -12276,6 +12499,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T18:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.178,
         "NO": 5.11,
         "NO2": 5.312,
@@ -12300,6 +12524,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T18:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.179,
         "NO": 8.151,
         "NO2": 5.134,
@@ -12324,6 +12549,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T18:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.176,
         "NO": 4.77,
         "NO2": 5.152,
@@ -12348,6 +12574,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T18:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.154,
         "NO": 4.099,
         "NO2": 4.574,
@@ -12372,6 +12599,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T18:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.162,
         "NO": 4.625,
         "NO2": 5.026,
@@ -12396,6 +12624,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T19:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.173,
         "NO": 4.697,
         "NO2": 5.058,
@@ -12420,6 +12649,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T19:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.174,
         "NO": 4.715,
         "NO2": 4.998,
@@ -12444,6 +12674,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T19:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.19,
         "NO": 11.62,
         "NO2": 5.813,
@@ -12468,6 +12699,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T19:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.168,
         "NO": 4.878,
         "NO2": 5.234,
@@ -12492,6 +12724,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T19:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.161,
         "NO": 4.853,
         "NO2": 5.173,
@@ -12516,6 +12749,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T19:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.159,
         "NO": 4.763,
         "NO2": 5.016,
@@ -12540,6 +12774,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T19:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.16,
         "NO": 5.024,
         "NO2": 5.114,
@@ -12564,6 +12799,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T19:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.156,
         "NO": 4.217,
         "NO2": 4.909,
@@ -12588,6 +12824,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T19:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.154,
         "NO": 3.735,
         "NO2": 4.676,
@@ -12612,6 +12849,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T19:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.16,
         "NO": 4.868,
         "NO2": 4.959,
@@ -12636,6 +12874,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T19:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.159,
         "NO": 4.559,
         "NO2": 4.946,
@@ -12660,6 +12899,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T19:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.156,
         "NO": 4.509,
         "NO2": 4.899,
@@ -12684,6 +12924,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T20:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.155,
         "NO": 4.172,
         "NO2": 4.845,
@@ -12708,6 +12949,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T20:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.158,
         "NO": 4.437,
         "NO2": 4.891,
@@ -12732,6 +12974,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T20:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.159,
         "NO": 4.181,
         "NO2": 4.974,
@@ -12756,6 +12999,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T20:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.159,
         "NO": 3.983,
         "NO2": 5.327,
@@ -12780,6 +13024,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T20:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.163,
         "NO": 4.364,
         "NO2": 5.03,
@@ -12804,6 +13049,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T20:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.164,
         "NO": 4.867,
         "NO2": 5.141,
@@ -12828,6 +13074,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T20:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.163,
         "NO": 4.654,
         "NO2": 4.942,
@@ -12852,6 +13099,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T20:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.159,
         "NO": 4.518,
         "NO2": 4.731,
@@ -12876,6 +13124,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T20:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.16,
         "NO": 3.744,
         "NO2": 4.586,
@@ -12900,6 +13149,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T20:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.183,
         "NO": 10.695,
         "NO2": 5.058,
@@ -12924,6 +13174,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T20:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.166,
         "NO": 4.903,
         "NO2": 4.828,
@@ -12948,6 +13199,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T20:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.158,
         "NO": 4.158,
         "NO2": 4.436,
@@ -12972,6 +13224,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T21:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.153,
         "NO": 2.828,
         "NO2": 4.01,
@@ -12996,6 +13249,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T21:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.152,
         "NO": 2.627,
         "NO2": 3.918,
@@ -13020,6 +13274,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T21:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.15,
         "NO": 2.084,
         "NO2": 3.688,
@@ -13044,6 +13299,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T21:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.168,
         "NO": 6.492,
         "NO2": 3.312,
@@ -13068,6 +13324,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T21:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.141,
         "NO": 1.59,
         "NO2": 2.707,
@@ -13092,6 +13349,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T21:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.145,
         "NO": 1.583,
         "NO2": 3.198,
@@ -13116,6 +13374,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T21:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.168,
         "NO": 4.594,
         "NO2": 4.846,
@@ -13140,6 +13399,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T21:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.155,
         "NO": 3.88,
         "NO2": 4.434,
@@ -13164,6 +13424,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T21:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.15,
         "NO": 2.662,
         "NO2": 4.058,
@@ -13188,6 +13449,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T21:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.146,
         "NO": 1.66,
         "NO2": 3.283,
@@ -13212,6 +13474,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T21:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.141,
         "NO": 1.47,
         "NO2": 2.55,
@@ -13236,6 +13499,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T21:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.141,
         "NO": 1.34,
         "NO2": 2.391,
@@ -13260,6 +13524,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T22:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.141,
         "NO": 1.383,
         "NO2": 2.768,
@@ -13284,6 +13549,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T22:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.139,
         "NO": 1.445,
         "NO2": 2.748,
@@ -13308,6 +13574,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T22:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.137,
         "NO": 1.106,
         "NO2": 2.455,
@@ -13332,6 +13599,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T22:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.138,
         "NO": 1.289,
         "NO2": 2.585,
@@ -13356,6 +13624,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T22:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.178,
         "NO": 10.131,
         "NO2": 4.833,
@@ -13380,6 +13649,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T22:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.142,
         "NO": 1.535,
         "NO2": 2.946,
@@ -13404,6 +13674,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T22:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.142,
         "NO": 1.577,
         "NO2": 3.125,
@@ -13428,6 +13699,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T22:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.14,
         "NO": 1.426,
         "NO2": 2.634,
@@ -13452,6 +13724,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T22:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.138,
         "NO": 1.178,
         "NO2": 2.606,
@@ -13476,6 +13749,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T22:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.139,
         "NO": 1.172,
         "NO2": 2.663,
@@ -13500,6 +13774,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T22:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.138,
         "NO": 1.157,
         "NO2": 2.129,
@@ -13524,6 +13799,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T22:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.136,
         "NO": 1.062,
         "NO2": 2.281,
@@ -13548,6 +13824,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T23:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.139,
         "NO": 1.325,
         "NO2": 2.63,
@@ -13572,6 +13849,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T23:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.139,
         "NO": 1.495,
         "NO2": 2.932,
@@ -13596,6 +13874,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T23:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.134,
         "NO": 1.092,
         "NO2": 2.413,
@@ -13620,6 +13899,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T23:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.137,
         "NO": 1.211,
         "NO2": 2.671,
@@ -13644,6 +13924,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T23:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.146,
         "NO": 1.765,
         "NO2": 3.424,
@@ -13668,6 +13949,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T23:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.14,
         "NO": 1.294,
         "NO2": 2.716,
@@ -13692,6 +13974,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T23:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.137,
         "NO": 1.151,
         "NO2": 2.462,
@@ -13716,6 +13999,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T23:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.14,
         "NO": 1.386,
         "NO2": 2.685,
@@ -13740,6 +14024,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T23:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.14,
         "NO": 1.362,
         "NO2": 2.678,
@@ -13764,6 +14049,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T23:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.139,
         "NO": 1.196,
         "NO2": 2.614,
@@ -13788,6 +14074,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T23:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.14,
         "NO": 1.366,
         "NO2": 3.038,
@@ -13812,6 +14099,7 @@
       },
       "properties": {
         "timestamp": "2026-06-10T23:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.138,
         "NO": 1.092,
         "NO2": 2.465,
@@ -13836,6 +14124,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T00:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.136,
         "NO": 1.024,
         "NO2": 1.925,
@@ -13860,6 +14149,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T00:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.136,
         "NO": 0.96,
         "NO2": 2.392,
@@ -13884,6 +14174,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T00:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.151,
         "NO": 2.168,
         "NO2": 3.527,
@@ -13908,6 +14199,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T00:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.173,
         "NO": 9.539,
         "NO2": 4.666,
@@ -13932,6 +14224,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T00:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.136,
         "NO": 0.986,
         "NO2": 2.455,
@@ -13956,6 +14249,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T00:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.136,
         "NO": 1.008,
         "NO2": 2.587,
@@ -13980,6 +14274,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T00:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.136,
         "NO": 1.206,
         "NO2": 2.668,
@@ -14004,6 +14299,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T00:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.138,
         "NO": 1.195,
         "NO2": 2.963,
@@ -14028,6 +14324,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T00:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.135,
         "NO": 1.001,
         "NO2": 2.884,
@@ -14052,6 +14349,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T00:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.136,
         "NO": 1.648,
         "NO2": 3.451,
@@ -14076,6 +14374,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T00:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.134,
         "NO": 1.014,
         "NO2": 2.367,
@@ -14100,6 +14399,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T00:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.137,
         "NO": 1.339,
         "NO2": 2.739,
@@ -14124,6 +14424,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T01:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.139,
         "NO": 1.507,
         "NO2": 3.192,
@@ -14148,6 +14449,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T01:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.154,
         "NO": 3.111,
         "NO2": 4.327,
@@ -14172,6 +14474,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T01:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.144,
         "NO": 1.507,
         "NO2": 3.243,
@@ -14196,6 +14499,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T01:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.143,
         "NO": 1.492,
         "NO2": 2.849,
@@ -14220,6 +14524,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T01:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.144,
         "NO": 1.574,
         "NO2": 3.451,
@@ -14244,6 +14549,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T01:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.146,
         "NO": 1.66,
         "NO2": 3.648,
@@ -14268,6 +14574,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T01:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.16,
         "NO": 3.339,
         "NO2": 4.62,
@@ -14292,6 +14599,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T01:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.158,
         "NO": 3.325,
         "NO2": 4.531,
@@ -14316,6 +14624,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T01:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.152,
         "NO": 2.72,
         "NO2": 4.291,
@@ -14340,6 +14649,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T01:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.158,
         "NO": 3.443,
         "NO2": 4.694,
@@ -14364,6 +14674,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T01:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.163,
         "NO": 4.584,
         "NO2": 5.137,
@@ -14388,6 +14699,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T01:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.156,
         "NO": 3.205,
         "NO2": 4.65,
@@ -14412,6 +14724,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T02:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.141,
         "NO": 1.4,
         "NO2": 3.234,
@@ -14436,6 +14749,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T02:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.137,
         "NO": 1.279,
         "NO2": 2.876,
@@ -14460,6 +14774,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T02:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.143,
         "NO": 1.532,
         "NO2": 3.477,
@@ -14484,6 +14799,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T02:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.142,
         "NO": 1.504,
         "NO2": 3.35,
@@ -14508,6 +14824,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T02:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.136,
         "NO": 1.348,
         "NO2": 3.455,
@@ -14532,6 +14849,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T02:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.135,
         "NO": 1.089,
         "NO2": 2.976,
@@ -14556,6 +14874,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T02:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.135,
         "NO": 1.146,
         "NO2": 2.797,
@@ -14580,6 +14899,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T02:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.137,
         "NO": 1.167,
         "NO2": 2.378,
@@ -14604,6 +14924,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T02:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.149,
         "NO": 2.876,
         "NO2": 4.278,
@@ -14628,6 +14949,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T02:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.155,
         "NO": 3.126,
         "NO2": 4.538,
@@ -14652,6 +14974,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T02:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.14,
         "NO": 1.604,
         "NO2": 3.377,
@@ -14676,6 +14999,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T02:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.138,
         "NO": 1.429,
         "NO2": 3.103,
@@ -14700,6 +15024,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T03:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.135,
         "NO": 1.431,
         "NO2": 2.939,
@@ -14724,6 +15049,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T03:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.148,
         "NO": 2.902,
         "NO2": 4.332,
@@ -14748,6 +15074,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T03:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.157,
         "NO": 3.153,
         "NO2": 4.689,
@@ -14772,6 +15099,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T03:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.166,
         "NO": 4.373,
         "NO2": 5.458,
@@ -14796,6 +15124,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T03:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.161,
         "NO": 3.738,
         "NO2": 5.088,
@@ -14820,6 +15149,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T03:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.165,
         "NO": 3.79,
         "NO2": 5.336,
@@ -14844,6 +15174,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T03:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.16,
         "NO": 4.258,
         "NO2": 5.213,
@@ -14868,6 +15199,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T03:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.159,
         "NO": 3.607,
         "NO2": 5.03,
@@ -14892,6 +15224,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T03:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.156,
         "NO": 3.27,
         "NO2": 4.737,
@@ -14916,6 +15249,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T03:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.157,
         "NO": 3.231,
         "NO2": 4.717,
@@ -14940,6 +15274,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T03:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.154,
         "NO": 2.918,
         "NO2": 4.587,
@@ -14964,6 +15299,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T03:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.152,
         "NO": 2.936,
         "NO2": 4.576,
@@ -14988,6 +15324,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T04:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.152,
         "NO": 2.876,
         "NO2": 4.495,
@@ -15012,6 +15349,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T04:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.152,
         "NO": 2.859,
         "NO2": 4.471,
@@ -15036,6 +15374,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T04:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.148,
         "NO": 2.759,
         "NO2": 4.38,
@@ -15060,6 +15399,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T04:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.142,
         "NO": 2.362,
         "NO2": 4.076,
@@ -15084,6 +15424,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T04:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.14,
         "NO": 2.33,
         "NO2": 3.962,
@@ -15108,6 +15449,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T04:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.14,
         "NO": 2.296,
         "NO2": 4.046,
@@ -15132,6 +15474,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T04:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.142,
         "NO": 2.329,
         "NO2": 4.337,
@@ -15156,6 +15499,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T04:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.141,
         "NO": 2.264,
         "NO2": 4.34,
@@ -15180,6 +15524,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T04:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.197,
         "NO": 9.586,
         "NO2": 6.468,
@@ -15204,6 +15549,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T04:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.192,
         "NO": 8.951,
         "NO2": 8.62,
@@ -15228,6 +15574,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T04:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.225,
         "NO": 4.578,
         "NO2": 5.679,
@@ -15252,6 +15599,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T04:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.153,
         "NO": 1.759,
         "NO2": 5.018,
@@ -15276,6 +15624,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T05:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.214,
         "NO": 5.121,
         "NO2": 5.987,
@@ -15300,6 +15649,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T05:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.215,
         "NO": 5.776,
         "NO2": 5.948,
@@ -15324,6 +15674,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T05:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.222,
         "NO": 5.85,
         "NO2": 5.869,
@@ -15348,6 +15699,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T05:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.216,
         "NO": 5.739,
         "NO2": 5.415,
@@ -15372,6 +15724,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T05:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.239,
         "NO": 4.47,
         "NO2": 5.181,
@@ -15396,6 +15749,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T05:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.205,
         "NO": 4.628,
         "NO2": 4.564,
@@ -15420,6 +15774,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T05:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.204,
         "NO": 26.593,
         "NO2": 7.262,
@@ -15444,6 +15799,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T05:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.199,
         "NO": 17.37,
         "NO2": 7.691,
@@ -15468,6 +15824,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T05:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.204,
         "NO": 14.894,
         "NO2": 5.508,
@@ -15492,6 +15849,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T05:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.205,
         "NO": 14.368,
         "NO2": 5.36,
@@ -15516,6 +15874,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T05:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.194,
         "NO": 7.904,
         "NO2": 5.419,
@@ -15540,6 +15899,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T05:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.182,
         "NO": 8.508,
         "NO2": 4.498,
@@ -15564,6 +15924,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T06:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.185,
         "NO": 8.883,
         "NO2": 4.529,
@@ -15588,6 +15949,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T06:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.185,
         "NO": 8.861,
         "NO2": 4.482,
@@ -15612,6 +15974,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T06:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.183,
         "NO": 7.67,
         "NO2": 5.275,
@@ -15636,6 +15999,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T06:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.185,
         "NO": 7.754,
         "NO2": 5.354,
@@ -15660,6 +16024,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T06:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.201,
         "NO": 7.905,
         "NO2": 5.467,
@@ -15684,6 +16049,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T06:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.193,
         "NO": 7.794,
         "NO2": 5.318,
@@ -15708,6 +16074,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T06:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.186,
         "NO": 8.268,
         "NO2": 4.377,
@@ -15732,6 +16099,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T06:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.223,
         "NO": 10.236,
         "NO2": 5.268,
@@ -15756,6 +16124,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T06:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.23,
         "NO": 10.183,
         "NO2": 5.218,
@@ -15780,6 +16149,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T06:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.223,
         "NO": 10.01,
         "NO2": 5.077,
@@ -15804,6 +16174,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T06:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.196,
         "NO": 6.86,
         "NO2": 4.25,
@@ -15828,6 +16199,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T06:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.191,
         "NO": 6.888,
         "NO2": 4.192,
@@ -15852,6 +16224,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T07:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.194,
         "NO": 7.015,
         "NO2": 4.535,
@@ -15876,6 +16249,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T07:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.187,
         "NO": 7.444,
         "NO2": 5.233,
@@ -15900,6 +16274,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T07:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.204,
         "NO": 7.796,
         "NO2": 5.404,
@@ -15924,6 +16299,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T07:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.21,
         "NO": 15.206,
         "NO2": 5.394,
@@ -15948,6 +16324,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T07:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.21,
         "NO": 15.23,
         "NO2": 5.438,
@@ -15972,6 +16349,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T07:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.2,
         "NO": 10.4,
         "NO2": 5.44,
@@ -15996,6 +16374,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T07:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.199,
         "NO": 7.996,
         "NO2": 5.62,
@@ -16020,6 +16399,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T07:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.189,
         "NO": 7.629,
         "NO2": 5.204,
@@ -16044,6 +16424,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T07:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.187,
         "NO": 7.705,
         "NO2": 5.308,
@@ -16068,6 +16449,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T07:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.189,
         "NO": 7.682,
         "NO2": 5.28,
@@ -16092,6 +16474,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T07:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.212,
         "NO": 16.195,
         "NO2": 5.468,
@@ -16116,6 +16499,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T07:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.216,
         "NO": 16.766,
         "NO2": 5.319,
@@ -16140,6 +16524,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T08:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.213,
         "NO": 17.509,
         "NO2": 5.453,
@@ -16164,6 +16549,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T08:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.215,
         "NO": 17.787,
         "NO2": 5.536,
@@ -16188,6 +16574,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T08:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.213,
         "NO": 15.719,
         "NO2": 5.489,
@@ -16212,6 +16599,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T08:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.2,
         "NO": 11.013,
         "NO2": 5.919,
@@ -16236,6 +16624,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T08:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.218,
         "NO": 17.916,
         "NO2": 5.974,
@@ -16260,6 +16649,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T08:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.218,
         "NO": 17.784,
         "NO2": 5.418,
@@ -16284,6 +16674,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T08:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.22,
         "NO": 15.746,
         "NO2": 5.465,
@@ -16308,6 +16699,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T08:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.203,
         "NO": 7.991,
         "NO2": 5.781,
@@ -16332,6 +16724,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T08:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.213,
         "NO": 13.443,
         "NO2": 5.724,
@@ -16356,6 +16749,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T08:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.218,
         "NO": 15.692,
         "NO2": 5.764,
@@ -16380,6 +16774,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T08:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.219,
         "NO": 16.532,
         "NO2": 5.753,
@@ -16404,6 +16799,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T08:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.219,
         "NO": 15.789,
         "NO2": 5.658,
@@ -16428,6 +16824,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T09:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.206,
         "NO": 8.097,
         "NO2": 5.697,
@@ -16452,6 +16849,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T09:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.206,
         "NO": 7.963,
         "NO2": 5.775,
@@ -16476,6 +16874,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T09:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.203,
         "NO": 7.957,
         "NO2": 5.778,
@@ -16500,6 +16899,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T09:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.193,
         "NO": 7.758,
         "NO2": 5.367,
@@ -16524,6 +16924,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T09:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.201,
         "NO": 7.976,
         "NO2": 5.593,
@@ -16548,6 +16949,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T09:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.205,
         "NO": 8.082,
         "NO2": 5.557,
@@ -16572,6 +16974,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T09:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.216,
         "NO": 15.651,
         "NO2": 5.73,
@@ -16596,6 +16999,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T09:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.214,
         "NO": 15.791,
         "NO2": 5.772,
@@ -16620,6 +17024,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T09:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.217,
         "NO": 15.777,
         "NO2": 5.563,
@@ -16644,6 +17049,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T09:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.22,
         "NO": 15.92,
         "NO2": 5.473,
@@ -16668,6 +17074,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T09:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.22,
         "NO": 16.178,
         "NO2": 5.467,
@@ -16692,6 +17099,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T09:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.189,
         "NO": 8.039,
         "NO2": 5.459,
@@ -16716,6 +17124,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T10:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.189,
         "NO": 8.331,
         "NO2": 5.215,
@@ -16740,6 +17149,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T10:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.188,
         "NO": 8.147,
         "NO2": 4.884,
@@ -16764,6 +17174,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T10:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.189,
         "NO": 8.207,
         "NO2": 4.681,
@@ -16788,6 +17199,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T10:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.193,
         "NO": 8.775,
         "NO2": 4.498,
@@ -16812,6 +17224,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T10:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.196,
         "NO": 9.712,
         "NO2": 4.429,
@@ -16836,6 +17249,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T10:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.197,
         "NO": 10.195,
         "NO2": 4.652,
@@ -16860,6 +17274,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T10:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.193,
         "NO": 8.494,
         "NO2": 4.451,
@@ -16884,6 +17299,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T10:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.191,
         "NO": 9.05,
         "NO2": 4.562,
@@ -16908,6 +17324,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T10:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.195,
         "NO": 8.611,
         "NO2": 5.574,
@@ -16932,6 +17349,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T10:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.207,
         "NO": 16.035,
         "NO2": 5.741,
@@ -16956,6 +17374,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T10:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.208,
         "NO": 15.865,
         "NO2": 5.585,
@@ -16980,6 +17399,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T10:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.195,
         "NO": 8.825,
         "NO2": 5.548,
@@ -17004,6 +17424,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T11:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.187,
         "NO": 8.332,
         "NO2": 4.902,
@@ -17028,6 +17449,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T11:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.187,
         "NO": 8.96,
         "NO2": 5.29,
@@ -17052,6 +17474,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T11:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.186,
         "NO": 8.931,
         "NO2": 4.908,
@@ -17076,6 +17499,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T11:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.184,
         "NO": 8.42,
         "NO2": 5.073,
@@ -17100,6 +17524,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T11:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.19,
         "NO": 8.659,
         "NO2": 5.555,
@@ -17124,6 +17549,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T11:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.196,
         "NO": 9.129,
         "NO2": 5.51,
@@ -17148,6 +17574,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T11:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.181,
         "NO": 8.815,
         "NO2": 4.551,
@@ -17172,6 +17599,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T11:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.183,
         "NO": 8.342,
         "NO2": 5.304,
@@ -17196,6 +17624,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T11:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.191,
         "NO": 8.063,
         "NO2": 5.607,
@@ -17220,6 +17649,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T11:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.193,
         "NO": 8.521,
         "NO2": 5.6,
@@ -17244,6 +17674,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T11:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.191,
         "NO": 8.712,
         "NO2": 5.457,
@@ -17268,6 +17699,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T11:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.186,
         "NO": 8.939,
         "NO2": 5.293,
@@ -17292,6 +17724,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T12:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.198,
         "NO": 9.271,
         "NO2": 5.502,
@@ -17316,6 +17749,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T12:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.206,
         "NO": 16.547,
         "NO2": 5.547,
@@ -17340,6 +17774,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T12:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.191,
         "NO": 8.553,
         "NO2": 5.555,
@@ -17364,6 +17799,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T12:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.181,
         "NO": 8.397,
         "NO2": 5.404,
@@ -17388,6 +17824,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T12:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.196,
         "NO": 8.931,
         "NO2": 5.565,
@@ -17412,6 +17849,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T12:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.195,
         "NO": 9.165,
         "NO2": 5.653,
@@ -17436,6 +17874,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T12:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.195,
         "NO": 9.145,
         "NO2": 5.558,
@@ -17460,6 +17899,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T12:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.185,
         "NO": 8.821,
         "NO2": 5.433,
@@ -17484,6 +17924,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T12:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.194,
         "NO": 9.138,
         "NO2": 5.58,
@@ -17508,6 +17949,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T12:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.208,
         "NO": 17.63,
         "NO2": 5.643,
@@ -17532,6 +17974,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T12:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.208,
         "NO": 17.678,
         "NO2": 5.671,
@@ -17556,6 +17999,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T12:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.21,
         "NO": 17.555,
         "NO2": 5.517,
@@ -17580,6 +18024,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T13:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.21,
         "NO": 17.678,
         "NO2": 5.597,
@@ -17604,6 +18049,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T13:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.208,
         "NO": 17.651,
         "NO2": 5.622,
@@ -17628,6 +18074,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T13:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.208,
         "NO": 18.109,
         "NO2": 5.644,
@@ -17652,6 +18099,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T13:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.21,
         "NO": 19.512,
         "NO2": 5.532,
@@ -17676,6 +18124,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T13:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.21,
         "NO": 19.519,
         "NO2": 5.423,
@@ -17700,6 +18149,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T13:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.21,
         "NO": 19.606,
         "NO2": 5.485,
@@ -17724,6 +18174,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T13:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.209,
         "NO": 19.531,
         "NO2": 5.543,
@@ -17748,6 +18199,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T13:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.213,
         "NO": 19.597,
         "NO2": 5.168,
@@ -17772,6 +18224,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T13:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.215,
         "NO": 18.539,
         "NO2": 5.077,
@@ -17796,6 +18249,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T13:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.216,
         "NO": 19.187,
         "NO2": 4.877,
@@ -17820,6 +18274,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T13:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.212,
         "NO": 17.31,
         "NO2": 4.858,
@@ -17844,6 +18299,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T13:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.215,
         "NO": 18.164,
         "NO2": 4.773,
@@ -17868,6 +18324,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T14:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.218,
         "NO": 18.173,
         "NO2": 4.605,
@@ -17892,6 +18349,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T14:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.227,
         "NO": 18.286,
         "NO2": 4.481,
@@ -17916,6 +18374,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T14:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.223,
         "NO": 18.739,
         "NO2": 4.48,
@@ -17940,6 +18399,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T14:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.216,
         "NO": 18.477,
         "NO2": 4.779,
@@ -17964,6 +18424,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T14:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.221,
         "NO": 20.476,
         "NO2": 4.611,
@@ -17988,6 +18449,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T14:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.226,
         "NO": 24.039,
         "NO2": 4.505,
@@ -18012,6 +18474,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T14:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.235,
         "NO": 23.335,
         "NO2": 4.476,
@@ -18036,6 +18499,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T14:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.234,
         "NO": 23.002,
         "NO2": 4.465,
@@ -18060,6 +18524,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T14:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.232,
         "NO": 22.476,
         "NO2": 4.389,
@@ -18084,6 +18549,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T14:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.226,
         "NO": 20.581,
         "NO2": 4.48,
@@ -18108,6 +18574,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T14:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.22,
         "NO": 19.273,
         "NO2": 4.612,
@@ -18132,6 +18599,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T14:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.214,
         "NO": 18.45,
         "NO2": 5.248,
@@ -18156,6 +18624,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T15:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.214,
         "NO": 18.508,
         "NO2": 5.324,
@@ -18180,6 +18649,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T15:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.215,
         "NO": 18.434,
         "NO2": 5.459,
@@ -18204,6 +18674,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T15:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.216,
         "NO": 20.329,
         "NO2": 6.024,
@@ -18228,6 +18699,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T15:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.221,
         "NO": 23.489,
         "NO2": 6.005,
@@ -18252,6 +18724,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T15:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.219,
         "NO": 20.448,
         "NO2": 6.104,
@@ -18276,6 +18749,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T15:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.22,
         "NO": 20.916,
         "NO2": 6.303,
@@ -18300,6 +18774,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T15:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.224,
         "NO": 22.991,
         "NO2": 6.162,
@@ -18324,6 +18799,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T15:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.22,
         "NO": 22.641,
         "NO2": 5.916,
@@ -18348,6 +18824,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T15:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.225,
         "NO": 23.24,
         "NO2": 5.97,
@@ -18372,6 +18849,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T15:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.222,
         "NO": 21.267,
         "NO2": 5.755,
@@ -18396,6 +18874,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T15:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.213,
         "NO": 13.209,
         "NO2": 5.707,
@@ -18420,6 +18899,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T15:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.221,
         "NO": 20.728,
         "NO2": 5.909,
@@ -18444,6 +18924,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T16:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.219,
         "NO": 21.253,
         "NO2": 5.92,
@@ -18468,6 +18949,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T16:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.226,
         "NO": 24.19,
         "NO2": 5.929,
@@ -18492,6 +18974,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T16:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.214,
         "NO": 13.537,
         "NO2": 5.745,
@@ -18516,6 +18999,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T16:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.215,
         "NO": 13.336,
         "NO2": 5.888,
@@ -18540,6 +19024,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T16:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.214,
         "NO": 13.337,
         "NO2": 5.799,
@@ -18564,6 +19049,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T16:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.215,
         "NO": 13.442,
         "NO2": 5.773,
@@ -18588,6 +19074,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T16:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.222,
         "NO": 13.755,
         "NO2": 6.005,
@@ -18612,6 +19099,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T16:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.213,
         "NO": 22.646,
         "NO2": 6.252,
@@ -18636,6 +19124,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T16:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.27,
         "NO": 31.244,
         "NO2": 11.925,
@@ -18660,6 +19149,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T16:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.213,
         "NO": 12.692,
         "NO2": 5.799,
@@ -18684,6 +19174,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T16:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.258,
         "NO": 26.304,
         "NO2": 11.679,
@@ -18708,6 +19199,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T16:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.299,
         "NO": 31.219,
         "NO2": 11.662,
@@ -18732,6 +19224,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T17:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.225,
         "NO": 23.836,
         "NO2": 5.905,
@@ -18756,6 +19249,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T17:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.291,
         "NO": 25.968,
         "NO2": 11.625,
@@ -18780,6 +19274,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T17:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.241,
         "NO": 22.038,
         "NO2": 10.718,
@@ -18804,6 +19299,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T17:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.282,
         "NO": 26.175,
         "NO2": 11.662,
@@ -18828,6 +19324,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T17:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.216,
         "NO": 13.551,
         "NO2": 5.836,
@@ -18852,6 +19349,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T17:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.217,
         "NO": 16.483,
         "NO2": 5.824,
@@ -18876,6 +19374,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T17:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.211,
         "NO": 15.495,
         "NO2": 5.872,
@@ -18900,6 +19399,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T17:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.209,
         "NO": 13.408,
         "NO2": 5.846,
@@ -18924,6 +19424,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T17:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.207,
         "NO": 11.775,
         "NO2": 5.865,
@@ -18948,6 +19449,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T17:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.206,
         "NO": 10.132,
         "NO2": 5.594,
@@ -18972,6 +19474,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T17:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.179,
         "NO": 3.984,
         "NO2": 5.481,
@@ -18996,6 +19499,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T17:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.192,
         "NO": 3.441,
         "NO2": 5.237,
@@ -19020,6 +19524,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T18:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.198,
         "NO": 3.294,
         "NO2": 4.844,
@@ -19044,6 +19549,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T18:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.236,
         "NO": 4.808,
         "NO2": 5.47,
@@ -19068,6 +19574,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T18:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.194,
         "NO": 4.368,
         "NO2": 4.862,
@@ -19092,6 +19599,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T18:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.153,
         "NO": 2.726,
         "NO2": 5.053,
@@ -19116,6 +19624,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T18:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.238,
         "NO": 4.637,
         "NO2": 5.702,
@@ -19140,6 +19649,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T18:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.23,
         "NO": 5.621,
         "NO2": 5.901,
@@ -19164,6 +19674,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T18:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.227,
         "NO": 4.94,
         "NO2": 6.052,
@@ -19188,6 +19699,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T18:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.221,
         "NO": 3.52,
         "NO2": 5.753,
@@ -19212,6 +19724,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T18:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.222,
         "NO": 3.292,
         "NO2": 5.615,
@@ -19236,6 +19749,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T18:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.154,
         "NO": 2.586,
         "NO2": 5.315,
@@ -19260,6 +19774,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T18:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.152,
         "NO": 2.771,
         "NO2": 5.122,
@@ -19284,6 +19799,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T18:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.152,
         "NO": 2.498,
         "NO2": 5.062,
@@ -19308,6 +19824,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T19:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.161,
         "NO": 2.313,
         "NO2": 5.438,
@@ -19332,6 +19849,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T19:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.164,
         "NO": 2.807,
         "NO2": 5.341,
@@ -19356,6 +19874,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T19:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.161,
         "NO": 3.396,
         "NO2": 5.364,
@@ -19380,6 +19899,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T19:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.158,
         "NO": 3.073,
         "NO2": 5.089,
@@ -19404,6 +19924,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T19:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.147,
         "NO": 2.676,
         "NO2": 4.406,
@@ -19428,6 +19949,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T19:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.168,
         "NO": 8.854,
         "NO2": 4.417,
@@ -19452,6 +19974,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T19:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.144,
         "NO": 2.501,
         "NO2": 4.043,
@@ -19476,6 +19999,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T19:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.136,
         "NO": 1.517,
         "NO2": 3.4,
@@ -19500,6 +20024,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T19:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.128,
         "NO": 1.321,
         "NO2": 2.672,
@@ -19524,6 +20049,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T19:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.132,
         "NO": 1.334,
         "NO2": 3.174,
@@ -19548,6 +20074,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T19:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.135,
         "NO": 1.37,
         "NO2": 3.282,
@@ -19572,6 +20099,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T19:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.138,
         "NO": 1.432,
         "NO2": 3.554,
@@ -19596,6 +20124,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T20:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.13,
         "NO": 1.24,
         "NO2": 3.226,
@@ -19620,6 +20149,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T20:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.154,
         "NO": 2.494,
         "NO2": 4.775,
@@ -19644,6 +20174,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T20:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.133,
         "NO": 1.124,
         "NO2": 2.954,
@@ -19668,6 +20199,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T20:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.13,
         "NO": 0.769,
         "NO2": 2.038,
@@ -19692,6 +20224,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T20:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.127,
         "NO": 0.73,
         "NO2": 1.887,
@@ -19716,6 +20249,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T20:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.128,
         "NO": 0.787,
         "NO2": 2.171,
@@ -19740,6 +20274,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T20:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.127,
         "NO": 0.68,
         "NO2": 1.899,
@@ -19764,6 +20299,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T20:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.123,
         "NO": 0.81,
         "NO2": 2.032,
@@ -19788,6 +20324,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T20:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.127,
         "NO": 0.923,
         "NO2": 2.29,
@@ -19812,6 +20349,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T20:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.17,
         "NO": 2.823,
         "NO2": 5.557,
@@ -19836,6 +20374,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T20:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.138,
         "NO": 1.91,
         "NO2": 4.419,
@@ -19860,6 +20399,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T20:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.129,
         "NO": 1.102,
         "NO2": 3.074,
@@ -19884,6 +20424,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T21:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.152,
         "NO": 2.69,
         "NO2": 5.285,
@@ -19908,6 +20449,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T21:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.141,
         "NO": 1.939,
         "NO2": 4.529,
@@ -19932,6 +20474,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T21:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.144,
         "NO": 2.02,
         "NO2": 4.612,
@@ -19956,6 +20499,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T21:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.148,
         "NO": 2.426,
         "NO2": 4.761,
@@ -19980,6 +20524,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T21:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.233,
         "NO": 8.573,
         "NO2": 5.702,
@@ -20004,6 +20549,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T21:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.218,
         "NO": 13.501,
         "NO2": 5.799,
@@ -20028,6 +20574,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T21:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.171,
         "NO": 9.18,
         "NO2": 4.948,
@@ -20052,6 +20599,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T21:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.162,
         "NO": 7.107,
         "NO2": 2.681,
@@ -20076,6 +20624,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T21:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.136,
         "NO": 1.257,
         "NO2": 2.37,
@@ -20100,6 +20649,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T21:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.135,
         "NO": 1.142,
         "NO2": 2.339,
@@ -20124,6 +20674,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T21:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.159,
         "NO": 1.719,
         "NO2": 3.435,
@@ -20148,6 +20699,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T21:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.207,
         "NO": 9.582,
         "NO2": 5.435,
@@ -20172,6 +20724,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T22:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.178,
         "NO": 9.09,
         "NO2": 5.229,
@@ -20196,6 +20749,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T22:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.129,
         "NO": 1.071,
         "NO2": 2.217,
@@ -20220,6 +20774,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T22:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.126,
         "NO": 0.959,
         "NO2": 1.999,
@@ -20244,6 +20799,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T22:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.129,
         "NO": 0.991,
         "NO2": 1.922,
@@ -20268,6 +20824,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T22:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.136,
         "NO": 1.224,
         "NO2": 2.017,
@@ -20292,6 +20849,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T22:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.125,
         "NO": 0.964,
         "NO2": 2.024,
@@ -20316,6 +20874,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T22:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.136,
         "NO": 1.197,
         "NO2": 2.143,
@@ -20340,6 +20899,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T22:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.159,
         "NO": 1.841,
         "NO2": 3.489,
@@ -20364,6 +20924,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T22:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.163,
         "NO": 4.287,
         "NO2": 4.556,
@@ -20388,6 +20949,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T22:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.137,
         "NO": 1.569,
         "NO2": 2.517,
@@ -20412,6 +20974,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T22:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.131,
         "NO": 1.163,
         "NO2": 1.991,
@@ -20436,6 +20999,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T22:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.131,
         "NO": 1.085,
         "NO2": 1.943,
@@ -20460,6 +21024,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T23:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.145,
         "NO": 1.67,
         "NO2": 2.938,
@@ -20484,6 +21049,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T23:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.148,
         "NO": 1.957,
         "NO2": 3.641,
@@ -20508,6 +21074,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T23:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.143,
         "NO": 1.606,
         "NO2": 2.439,
@@ -20532,6 +21099,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T23:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.13,
         "NO": 1.197,
         "NO2": 2.228,
@@ -20556,6 +21124,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T23:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.13,
         "NO": 1.106,
         "NO2": 1.908,
@@ -20580,6 +21149,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T23:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.128,
         "NO": 0.932,
         "NO2": 2.056,
@@ -20604,6 +21174,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T23:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.128,
         "NO": 1.194,
         "NO2": 2.487,
@@ -20628,6 +21199,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T23:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.142,
         "NO": 1.792,
         "NO2": 3.498,
@@ -20652,6 +21224,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T23:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.177,
         "NO": 9.086,
         "NO2": 5.212,
@@ -20676,6 +21249,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T23:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.13,
         "NO": 1.201,
         "NO2": 2.738,
@@ -20700,6 +21274,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T23:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.159,
         "NO": 7.202,
         "NO2": 2.188,
@@ -20724,6 +21299,7 @@
       },
       "properties": {
         "timestamp": "2026-06-11T23:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.182,
         "NO": 10.45,
         "NO2": 5.192,
@@ -20748,6 +21324,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T00:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.183,
         "NO": 10.508,
         "NO2": 5.249,
@@ -20772,6 +21349,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T00:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.179,
         "NO": 9.286,
         "NO2": 4.971,
@@ -20796,6 +21374,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T00:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.181,
         "NO": 9.799,
         "NO2": 5.002,
@@ -20820,6 +21399,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T00:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.144,
         "NO": 1.533,
         "NO2": 2.26,
@@ -20844,6 +21424,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T00:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.153,
         "NO": 5.77,
         "NO2": 2.208,
@@ -20868,6 +21449,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T00:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.145,
         "NO": 1.369,
         "NO2": 2.263,
@@ -20892,6 +21474,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T00:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.14,
         "NO": 1.284,
         "NO2": 2.773,
@@ -20916,6 +21499,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T00:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.144,
         "NO": 1.516,
         "NO2": 2.969,
@@ -20940,6 +21524,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T00:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.171,
         "NO": 3.595,
         "NO2": 5.129,
@@ -20964,6 +21549,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T00:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.199,
         "NO": 7.535,
         "NO2": 5.627,
@@ -20988,6 +21574,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T00:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.159,
         "NO": 3.242,
         "NO2": 4.792,
@@ -21012,6 +21599,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T00:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.179,
         "NO": 3.648,
         "NO2": 5.369,
@@ -21036,6 +21624,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T01:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.196,
         "NO": 3.708,
         "NO2": 5.402,
@@ -21060,6 +21649,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T01:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.17,
         "NO": 3.236,
         "NO2": 5.176,
@@ -21084,6 +21674,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T01:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.167,
         "NO": 3.204,
         "NO2": 4.841,
@@ -21108,6 +21699,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T01:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.19,
         "NO": 4.613,
         "NO2": 5.075,
@@ -21132,6 +21724,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T01:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.198,
         "NO": 2.724,
         "NO2": 4.902,
@@ -21156,6 +21749,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T01:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.177,
         "NO": 3.077,
         "NO2": 5.319,
@@ -21180,6 +21774,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T01:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.146,
         "NO": 1.928,
         "NO2": 4.416,
@@ -21204,6 +21799,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T01:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.148,
         "NO": 1.928,
         "NO2": 4.628,
@@ -21228,6 +21824,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T01:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.148,
         "NO": 2.283,
         "NO2": 4.55,
@@ -21252,6 +21849,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T01:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.181,
         "NO": 8.114,
         "NO2": 5.339,
@@ -21276,6 +21874,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T01:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.169,
         "NO": 8.326,
         "NO2": 4.755,
@@ -21300,6 +21899,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T01:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.135,
         "NO": 2.286,
         "NO2": 4.045,
@@ -21324,6 +21924,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T02:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.131,
         "NO": 1.36,
         "NO2": 3.339,
@@ -21348,6 +21949,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T02:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.146,
         "NO": 2.374,
         "NO2": 4.461,
@@ -21372,6 +21974,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T02:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.141,
         "NO": 2.334,
         "NO2": 4.411,
@@ -21396,6 +21999,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T02:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.141,
         "NO": 2.021,
         "NO2": 4.587,
@@ -21420,6 +22024,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T02:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.145,
         "NO": 2.041,
         "NO2": 4.531,
@@ -21444,6 +22049,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T02:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.147,
         "NO": 2.148,
         "NO2": 4.669,
@@ -21468,6 +22074,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T02:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.148,
         "NO": 2.423,
         "NO2": 4.793,
@@ -21492,6 +22099,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T02:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.153,
         "NO": 2.62,
         "NO2": 4.954,
@@ -21516,6 +22124,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T02:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.21,
         "NO": 15.575,
         "NO2": 5.747,
@@ -21540,6 +22149,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T02:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.195,
         "NO": 5.112,
         "NO2": 5.138,
@@ -21564,6 +22174,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T02:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.26,
         "NO": 17.089,
         "NO2": 12.812,
@@ -21588,6 +22199,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T02:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.193,
         "NO": 3.695,
         "NO2": 4.966,
@@ -21612,6 +22224,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T03:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.191,
         "NO": 4.339,
         "NO2": 4.93,
@@ -21636,6 +22249,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T03:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.19,
         "NO": 5.92,
         "NO2": 5.259,
@@ -21660,6 +22274,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T03:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.192,
         "NO": 6.796,
         "NO2": 5.616,
@@ -21684,6 +22299,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T03:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.194,
         "NO": 6.608,
         "NO2": 5.732,
@@ -21708,6 +22324,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T03:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.168,
         "NO": 4.558,
         "NO2": 5.484,
@@ -21732,6 +22349,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T03:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.167,
         "NO": 5.697,
         "NO2": 5.526,
@@ -21756,6 +22374,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T03:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.163,
         "NO": 4.698,
         "NO2": 4.974,
@@ -21780,6 +22399,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T03:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.163,
         "NO": 4.567,
         "NO2": 4.983,
@@ -21804,6 +22424,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T03:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.165,
         "NO": 4.878,
         "NO2": 5.115,
@@ -21828,6 +22449,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T03:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.164,
         "NO": 5.253,
         "NO2": 5.312,
@@ -21852,6 +22474,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T03:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.155,
         "NO": 2.967,
         "NO2": 4.726,
@@ -21876,6 +22499,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T03:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.155,
         "NO": 3.24,
         "NO2": 4.755,
@@ -21900,6 +22524,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T04:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.156,
         "NO": 3.136,
         "NO2": 4.641,
@@ -21924,6 +22549,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T04:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.155,
         "NO": 3.207,
         "NO2": 4.859,
@@ -21948,6 +22574,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T04:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.149,
         "NO": 3.041,
         "NO2": 4.651,
@@ -21972,6 +22599,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T04:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.145,
         "NO": 2.527,
         "NO2": 4.416,
@@ -21996,6 +22624,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T04:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.148,
         "NO": 2.418,
         "NO2": 4.5,
@@ -22020,6 +22649,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T04:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.145,
         "NO": 2.102,
         "NO2": 4.339,
@@ -22044,6 +22674,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T04:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.145,
         "NO": 1.951,
         "NO2": 4.579,
@@ -22068,6 +22699,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T04:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.145,
         "NO": 1.767,
         "NO2": 4.746,
@@ -22092,6 +22724,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T04:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.148,
         "NO": 2.108,
         "NO2": 4.752,
@@ -22116,6 +22749,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T04:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.146,
         "NO": 2.007,
         "NO2": 4.644,
@@ -22140,6 +22774,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T04:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.144,
         "NO": 1.772,
         "NO2": 4.595,
@@ -22164,6 +22799,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T04:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.23,
         "NO": 2.803,
         "NO2": 4.78,
@@ -22188,6 +22824,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T05:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.218,
         "NO": 5.932,
         "NO2": 5.649,
@@ -22212,6 +22849,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T05:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.222,
         "NO": 4.93,
         "NO2": 5.143,
@@ -22236,6 +22874,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T05:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.222,
         "NO": 5.098,
         "NO2": 5.658,
@@ -22260,6 +22899,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T05:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.208,
         "NO": 5.284,
         "NO2": 6.055,
@@ -22284,6 +22924,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T05:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.212,
         "NO": 5.557,
         "NO2": 6.441,
@@ -22308,6 +22949,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T05:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.163,
         "NO": 2.17,
         "NO2": 4.798,
@@ -22332,6 +22974,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T05:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.152,
         "NO": 1.75,
         "NO2": 4.655,
@@ -22356,6 +22999,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T05:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.169,
         "NO": 2.554,
         "NO2": 5.07,
@@ -22380,6 +23024,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T05:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.214,
         "NO": 2.691,
         "NO2": 5.231,
@@ -22404,6 +23049,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T05:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.207,
         "NO": 3.245,
         "NO2": 5.307,
@@ -22428,6 +23074,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T05:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.21,
         "NO": 4.898,
         "NO2": 5.752,
@@ -22452,6 +23099,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T05:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.205,
         "NO": 4.641,
         "NO2": 5.694,
@@ -22476,6 +23124,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T06:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.191,
         "NO": 5.576,
         "NO2": 6.176,
@@ -22500,6 +23149,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T06:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.195,
         "NO": 6.266,
         "NO2": 6.165,
@@ -22524,6 +23174,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T06:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.19,
         "NO": 6.117,
         "NO2": 5.819,
@@ -22548,6 +23199,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T06:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.185,
         "NO": 5.913,
         "NO2": 5.689,
@@ -22572,6 +23224,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T06:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.182,
         "NO": 5.864,
         "NO2": 5.652,
@@ -22596,6 +23249,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T06:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.185,
         "NO": 5.956,
         "NO2": 5.778,
@@ -22620,6 +23274,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T06:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.184,
         "NO": 5.553,
         "NO2": 5.581,
@@ -22644,6 +23299,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T06:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.183,
         "NO": 5.407,
         "NO2": 5.479,
@@ -22668,6 +23324,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T06:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.183,
         "NO": 5.45,
         "NO2": 5.491,
@@ -22692,6 +23349,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T06:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.188,
         "NO": 5.553,
         "NO2": 5.403,
@@ -22716,6 +23374,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T06:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.19,
         "NO": 5.259,
         "NO2": 5.345,
@@ -22740,6 +23399,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T06:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.187,
         "NO": 4.444,
         "NO2": 5.354,
@@ -22764,6 +23424,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T07:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.194,
         "NO": 4.099,
         "NO2": 5.294,
@@ -22788,6 +23449,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T07:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.192,
         "NO": 3.403,
         "NO2": 5.341,
@@ -22812,6 +23474,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T07:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.194,
         "NO": 3.174,
         "NO2": 5.186,
@@ -22836,6 +23499,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T07:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.184,
         "NO": 3.122,
         "NO2": 5.191,
@@ -22860,6 +23524,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T07:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.186,
         "NO": 3.038,
         "NO2": 5.239,
@@ -22884,6 +23549,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T07:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.181,
         "NO": 2.942,
         "NO2": 5.281,
@@ -22908,6 +23574,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T07:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.181,
         "NO": 2.89,
         "NO2": 5.233,
@@ -22932,6 +23599,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T07:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.182,
         "NO": 3.126,
         "NO2": 5.186,
@@ -22956,6 +23624,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T07:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.179,
         "NO": 3.533,
         "NO2": 5.189,
@@ -22980,6 +23649,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T07:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.182,
         "NO": 3.025,
         "NO2": 5.165,
@@ -23004,6 +23674,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T07:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.17,
         "NO": 5.278,
         "NO2": 5.471,
@@ -23028,6 +23699,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T07:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.168,
         "NO": 4.735,
         "NO2": 5.359,
@@ -23052,6 +23724,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T08:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.168,
         "NO": 4.566,
         "NO2": 5.348,
@@ -23076,6 +23749,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T08:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.169,
         "NO": 4.603,
         "NO2": 5.306,
@@ -23100,6 +23774,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T08:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.173,
         "NO": 4.83,
         "NO2": 5.256,
@@ -23124,6 +23799,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T08:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.169,
         "NO": 5.227,
         "NO2": 5.286,
@@ -23148,6 +23824,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T08:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.175,
         "NO": 5.286,
         "NO2": 5.382,
@@ -23172,6 +23849,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T08:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.175,
         "NO": 4.524,
         "NO2": 5.051,
@@ -23196,6 +23874,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T08:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.178,
         "NO": 4.401,
         "NO2": 5.111,
@@ -23220,6 +23899,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T08:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.179,
         "NO": 4.87,
         "NO2": 5.15,
@@ -23244,6 +23924,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T08:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.172,
         "NO": 5.516,
         "NO2": 5.116,
@@ -23268,6 +23949,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T08:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.174,
         "NO": 5.642,
         "NO2": 4.983,
@@ -23292,6 +23974,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T08:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.173,
         "NO": 5.83,
         "NO2": 4.865,
@@ -23316,6 +23999,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T08:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.173,
         "NO": 5.959,
         "NO2": 5.091,
@@ -23340,6 +24024,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T09:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.178,
         "NO": 6.254,
         "NO2": 4.947,
@@ -23364,6 +24049,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T09:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.181,
         "NO": 6.41,
         "NO2": 5.02,
@@ -23388,6 +24074,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T09:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.181,
         "NO": 6.238,
         "NO2": 5.494,
@@ -23412,6 +24099,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T09:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.182,
         "NO": 6.392,
         "NO2": 5.537,
@@ -23436,6 +24124,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T09:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.184,
         "NO": 6.688,
         "NO2": 5.551,
@@ -23460,6 +24149,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T09:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.182,
         "NO": 6.654,
         "NO2": 5.587,
@@ -23484,6 +24174,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T09:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.18,
         "NO": 6.557,
         "NO2": 5.053,
@@ -23508,6 +24199,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T09:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.18,
         "NO": 6.569,
         "NO2": 6.897,
@@ -23532,6 +24224,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T09:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.185,
         "NO": 6.568,
         "NO2": 5.792,
@@ -23556,6 +24249,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T09:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.181,
         "NO": 6.829,
         "NO2": 5.407,
@@ -23580,6 +24274,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T09:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.18,
         "NO": 6.872,
         "NO2": 5.217,
@@ -23604,6 +24299,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T09:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.19,
         "NO": 6.427,
         "NO2": 5.651,
@@ -23628,6 +24324,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T10:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.182,
         "NO": 6.538,
         "NO2": 5.506,
@@ -23652,6 +24349,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T10:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.178,
         "NO": 5.724,
         "NO2": 5.505,
@@ -23676,6 +24374,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T10:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.179,
         "NO": 5.808,
         "NO2": 5.288,
@@ -23700,6 +24399,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T10:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.178,
         "NO": 5.438,
         "NO2": 5.435,
@@ -23724,6 +24424,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T10:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.178,
         "NO": 5.343,
         "NO2": 4.865,
@@ -23748,6 +24449,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T10:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.177,
         "NO": 4.875,
         "NO2": 5.427,
@@ -23772,6 +24474,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T10:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.176,
         "NO": 4.607,
         "NO2": 6.659,
@@ -23796,6 +24499,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T10:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.174,
         "NO": 4.532,
         "NO2": 5.502,
@@ -23820,6 +24524,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T10:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.173,
         "NO": 4.533,
         "NO2": 6.522,
@@ -23844,6 +24549,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T10:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.175,
         "NO": 4.373,
         "NO2": 6.214,
@@ -23868,6 +24574,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T10:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.174,
         "NO": 4.321,
         "NO2": 5.325,
@@ -23892,6 +24599,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T10:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.173,
         "NO": 4.282,
         "NO2": 6.629,
@@ -23916,6 +24624,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T11:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.174,
         "NO": 4.286,
         "NO2": 6.655,
@@ -23940,6 +24649,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T11:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.174,
         "NO": 4.15,
         "NO2": 5.505,
@@ -23964,6 +24674,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T11:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.172,
         "NO": 4.231,
         "NO2": 6.375,
@@ -23988,6 +24699,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T11:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.169,
         "NO": 4.004,
         "NO2": 5.469,
@@ -24012,6 +24724,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T11:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.168,
         "NO": 4.051,
         "NO2": 6.452,
@@ -24036,6 +24749,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T11:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.166,
         "NO": 4.14,
         "NO2": 6.986,
@@ -24060,6 +24774,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T11:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.164,
         "NO": 4.079,
         "NO2": 6.557,
@@ -24084,6 +24799,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T11:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.168,
         "NO": 4.136,
         "NO2": 6.021,
@@ -24108,6 +24824,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T11:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.167,
         "NO": 3.961,
         "NO2": 6.464,
@@ -24132,6 +24849,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T11:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.165,
         "NO": 4.236,
         "NO2": 6.887,
@@ -24156,6 +24874,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T11:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.166,
         "NO": 5.216,
         "NO2": 6.474,
@@ -24180,6 +24899,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T11:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.164,
         "NO": 5.004,
         "NO2": 6.628,
@@ -24204,6 +24924,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T12:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.164,
         "NO": 4.779,
         "NO2": 6.395,
@@ -24228,6 +24949,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T12:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.163,
         "NO": 4.521,
         "NO2": 6.315,
@@ -24252,6 +24974,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T12:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.163,
         "NO": 4.469,
         "NO2": 6.364,
@@ -24276,6 +24999,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T12:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.165,
         "NO": 4.489,
         "NO2": 6.154,
@@ -24300,6 +25024,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T12:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.164,
         "NO": 4.397,
         "NO2": 6.203,
@@ -24324,6 +25049,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T12:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.165,
         "NO": 6.735,
         "NO2": 6.214,
@@ -24348,6 +25074,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T12:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.168,
         "NO": 8.37,
         "NO2": 6.367,
@@ -24372,6 +25099,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T12:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.177,
         "NO": 8.415,
         "NO2": 6.976,
@@ -24396,6 +25124,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T12:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.181,
         "NO": 8.871,
         "NO2": 6.133,
@@ -24420,6 +25149,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T12:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.188,
         "NO": 9.408,
         "NO2": 5.395,
@@ -24444,6 +25174,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T12:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.189,
         "NO": 9.294,
         "NO2": 5.712,
@@ -24468,6 +25199,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T12:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.19,
         "NO": 9.231,
         "NO2": 5.544,
@@ -24492,6 +25224,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T13:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.196,
         "NO": 9.081,
         "NO2": 4.997,
@@ -24516,6 +25249,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T13:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.198,
         "NO": 9.047,
         "NO2": 4.947,
@@ -24540,6 +25274,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T13:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.202,
         "NO": 9.166,
         "NO2": 4.992,
@@ -24564,6 +25299,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T13:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.204,
         "NO": 11.87,
         "NO2": 4.824,
@@ -24588,6 +25324,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T13:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.212,
         "NO": 16.08,
         "NO2": 4.711,
@@ -24612,6 +25349,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T13:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.201,
         "NO": 15.357,
         "NO2": 4.866,
@@ -24636,6 +25374,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T13:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.212,
         "NO": 20.661,
         "NO2": 4.797,
@@ -24660,6 +25399,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T13:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.206,
         "NO": 10.502,
         "NO2": 4.667,
@@ -24684,6 +25424,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T13:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.199,
         "NO": 9.352,
         "NO2": 4.689,
@@ -24708,6 +25449,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T13:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.199,
         "NO": 5.837,
         "NO2": 4.853,
@@ -24732,6 +25474,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T13:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.199,
         "NO": 6.188,
         "NO2": 5.24,
@@ -24756,6 +25499,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T13:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.192,
         "NO": 6.038,
         "NO2": 4.959,
@@ -24780,6 +25524,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T14:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.214,
         "NO": 14.049,
         "NO2": 5.148,
@@ -24804,6 +25549,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T14:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.192,
         "NO": 6.72,
         "NO2": 5.035,
@@ -24828,6 +25574,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T14:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.195,
         "NO": 6.478,
         "NO2": 4.881,
@@ -24852,6 +25599,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T14:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.186,
         "NO": 6.396,
         "NO2": 4.773,
@@ -24876,6 +25624,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T14:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.197,
         "NO": 6.071,
         "NO2": 4.886,
@@ -24900,6 +25649,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T14:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.204,
         "NO": 5.871,
         "NO2": 4.82,
@@ -24924,6 +25674,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T14:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.206,
         "NO": 5.578,
         "NO2": 4.916,
@@ -24948,6 +25699,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T14:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.212,
         "NO": 11.775,
         "NO2": 4.727,
@@ -24972,6 +25724,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T14:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.201,
         "NO": 7.03,
         "NO2": 4.816,
@@ -24996,6 +25749,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T14:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.212,
         "NO": 11.904,
         "NO2": 4.701,
@@ -25020,6 +25774,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T14:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.205,
         "NO": 9.345,
         "NO2": 4.943,
@@ -25044,6 +25799,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T14:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.203,
         "NO": 5.982,
         "NO2": 4.854,
@@ -25068,6 +25824,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T15:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.199,
         "NO": 5.523,
         "NO2": 4.672,
@@ -25092,6 +25849,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T15:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.201,
         "NO": 5.733,
         "NO2": 4.764,
@@ -25116,6 +25874,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T15:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.201,
         "NO": 5.736,
         "NO2": 4.786,
@@ -25140,6 +25899,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T15:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.199,
         "NO": 5.575,
         "NO2": 4.739,
@@ -25164,6 +25924,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T15:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.203,
         "NO": 5.597,
         "NO2": 4.93,
@@ -25188,6 +25949,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T15:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.2,
         "NO": 5.624,
         "NO2": 4.827,
@@ -25212,6 +25974,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T15:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.199,
         "NO": 5.485,
         "NO2": 4.788,
@@ -25236,6 +25999,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T15:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.204,
         "NO": 5.751,
         "NO2": 4.867,
@@ -25260,6 +26024,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T15:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.205,
         "NO": 5.482,
         "NO2": 4.938,
@@ -25284,6 +26049,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T15:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.204,
         "NO": 9.21,
         "NO2": 4.896,
@@ -25308,6 +26074,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T15:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.208,
         "NO": 9.241,
         "NO2": 4.698,
@@ -25332,6 +26099,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T15:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.207,
         "NO": 5.52,
         "NO2": 4.968,
@@ -25356,6 +26124,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T16:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.213,
         "NO": 5.271,
         "NO2": 4.854,
@@ -25380,6 +26149,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T16:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.211,
         "NO": 4.541,
         "NO2": 4.708,
@@ -25404,6 +26174,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T16:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.227,
         "NO": 11.418,
         "NO2": 4.853,
@@ -25428,6 +26199,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T16:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.208,
         "NO": 5.179,
         "NO2": 4.923,
@@ -25452,6 +26224,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T16:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.206,
         "NO": 5.79,
         "NO2": 5.099,
@@ -25476,6 +26249,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T16:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.208,
         "NO": 5.585,
         "NO2": 5.013,
@@ -25500,6 +26274,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T16:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.194,
         "NO": 3.073,
         "NO2": 4.516,
@@ -25524,6 +26299,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T16:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.148,
         "NO": 1.947,
         "NO2": 3.06,
@@ -25548,6 +26324,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T16:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.151,
         "NO": 1.965,
         "NO2": 3.174,
@@ -25572,6 +26349,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T16:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.224,
         "NO": 3.198,
         "NO2": 4.021,
@@ -25596,6 +26374,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T16:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.157,
         "NO": 1.958,
         "NO2": 3.726,
@@ -25620,6 +26399,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T16:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.157,
         "NO": 2.012,
         "NO2": 3.162,
@@ -25644,6 +26424,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T17:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.15,
         "NO": 2.069,
         "NO2": 3.125,
@@ -25668,6 +26449,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T17:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.171,
         "NO": 7.93,
         "NO2": 4.12,
@@ -25692,6 +26474,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T17:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.151,
         "NO": 1.837,
         "NO2": 3.083,
@@ -25716,6 +26499,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T17:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.15,
         "NO": 1.805,
         "NO2": 2.833,
@@ -25740,6 +26524,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T17:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.147,
         "NO": 1.695,
         "NO2": 3.244,
@@ -25764,6 +26549,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T17:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.142,
         "NO": 1.93,
         "NO2": 3.404,
@@ -25788,6 +26574,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T17:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.144,
         "NO": 1.925,
         "NO2": 3.785,
@@ -25812,6 +26599,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T17:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.141,
         "NO": 1.9,
         "NO2": 4.124,
@@ -25836,6 +26624,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T17:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.133,
         "NO": 1.839,
         "NO2": 3.654,
@@ -25860,6 +26649,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T17:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.134,
         "NO": 2.007,
         "NO2": 3.777,
@@ -25884,6 +26674,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T17:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.132,
         "NO": 1.966,
         "NO2": 3.421,
@@ -25908,6 +26699,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T17:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.186,
         "NO": 7.615,
         "NO2": 4.754,
@@ -25932,6 +26724,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T18:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.127,
         "NO": 2.016,
         "NO2": 2.904,
@@ -25956,6 +26749,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T18:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.135,
         "NO": 1.107,
         "NO2": 3.1,
@@ -25980,6 +26774,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T18:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.169,
         "NO": 1.94,
         "NO2": 4.513,
@@ -26004,6 +26799,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T18:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.176,
         "NO": 3.741,
         "NO2": 5.244,
@@ -26028,6 +26824,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T18:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.138,
         "NO": 2.365,
         "NO2": 3.581,
@@ -26052,6 +26849,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T18:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.132,
         "NO": 2.168,
         "NO2": 3.399,
@@ -26076,6 +26874,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T18:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.132,
         "NO": 2.139,
         "NO2": 3.331,
@@ -26100,6 +26899,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T18:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.131,
         "NO": 2.142,
         "NO2": 3.419,
@@ -26124,6 +26924,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T18:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.128,
         "NO": 2.08,
         "NO2": 3.129,
@@ -26148,6 +26949,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T18:45:00+00:00",
+        "coord_source": "unknown",
         "CO": null,
         "NO": null,
         "NO2": null,
@@ -26172,6 +26974,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T18:50:00+00:00",
+        "coord_source": "unknown",
         "CO": null,
         "NO": null,
         "NO2": null,
@@ -26196,6 +26999,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T18:55:00+00:00",
+        "coord_source": "unknown",
         "CO": null,
         "NO": null,
         "NO2": null,
@@ -26220,6 +27024,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T19:00:00+00:00",
+        "coord_source": "unknown",
         "CO": null,
         "NO": null,
         "NO2": null,
@@ -26244,6 +27049,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T19:05:00+00:00",
+        "coord_source": "unknown",
         "CO": null,
         "NO": null,
         "NO2": null,
@@ -26268,6 +27074,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T19:10:00+00:00",
+        "coord_source": "unknown",
         "CO": null,
         "NO": null,
         "NO2": null,
@@ -26292,6 +27099,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T19:15:00+00:00",
+        "coord_source": "unknown",
         "CO": null,
         "NO": null,
         "NO2": null,
@@ -26316,6 +27124,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T19:20:00+00:00",
+        "coord_source": "unknown",
         "CO": null,
         "NO": null,
         "NO2": null,
@@ -26340,6 +27149,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T19:25:00+00:00",
+        "coord_source": "unknown",
         "CO": null,
         "NO": null,
         "NO2": null,
@@ -26364,6 +27174,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T19:30:00+00:00",
+        "coord_source": "unknown",
         "CO": null,
         "NO": null,
         "NO2": null,
@@ -26388,6 +27199,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T19:35:00+00:00",
+        "coord_source": "unknown",
         "CO": null,
         "NO": null,
         "NO2": null,
@@ -26412,6 +27224,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T19:40:00+00:00",
+        "coord_source": "unknown",
         "CO": null,
         "NO": null,
         "NO2": null,
@@ -26436,6 +27249,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T19:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.227,
         "NO": 12.097,
         "NO2": 5.882,
@@ -26460,6 +27274,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T19:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.219,
         "NO": 12.058,
         "NO2": 5.689,
@@ -26484,6 +27299,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T19:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.217,
         "NO": 12.403,
         "NO2": 5.623,
@@ -26508,6 +27324,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T20:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.233,
         "NO": 13.369,
         "NO2": 5.487,
@@ -26532,6 +27349,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T20:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.234,
         "NO": 15.539,
         "NO2": 5.395,
@@ -26556,6 +27374,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T20:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.232,
         "NO": 15.896,
         "NO2": 5.543,
@@ -26580,6 +27399,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T20:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.23,
         "NO": 15.775,
         "NO2": 5.593,
@@ -26604,6 +27424,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T20:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.222,
         "NO": 11.794,
         "NO2": 5.807,
@@ -26628,6 +27449,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T20:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.165,
         "NO": 3.582,
         "NO2": 4.574,
@@ -26652,6 +27474,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T20:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.162,
         "NO": 2.418,
         "NO2": 4.163,
@@ -26676,6 +27499,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T20:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.144,
         "NO": 2.059,
         "NO2": 2.913,
@@ -26700,6 +27524,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T20:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.144,
         "NO": 2.03,
         "NO2": 3.276,
@@ -26724,6 +27549,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T20:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.15,
         "NO": 2.219,
         "NO2": 3.966,
@@ -26748,6 +27574,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T20:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.157,
         "NO": 2.286,
         "NO2": 4.083,
@@ -26772,6 +27599,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T20:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.16,
         "NO": 2.533,
         "NO2": 4.331,
@@ -26796,6 +27624,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T21:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.168,
         "NO": 2.36,
         "NO2": 4.017,
@@ -26820,6 +27649,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T21:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.167,
         "NO": 2.63,
         "NO2": 5.085,
@@ -26844,6 +27674,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T21:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.169,
         "NO": 3.315,
         "NO2": 5.093,
@@ -26868,6 +27699,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T21:15:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.177,
         "NO": 4.68,
         "NO2": 5.56,
@@ -26892,6 +27724,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T21:20:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.18,
         "NO": 9.01,
         "NO2": 5.913,
@@ -26916,6 +27749,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T21:25:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.189,
         "NO": 10.671,
         "NO2": 5.907,
@@ -26940,6 +27774,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T21:30:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.187,
         "NO": 10.354,
         "NO2": 5.614,
@@ -26964,6 +27799,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T21:35:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.185,
         "NO": 9.685,
         "NO2": 5.147,
@@ -26988,6 +27824,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T21:40:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.179,
         "NO": 9.554,
         "NO2": 4.976,
@@ -27012,6 +27849,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T21:45:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.175,
         "NO": 9.046,
         "NO2": 4.626,
@@ -27036,6 +27874,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T21:50:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.175,
         "NO": 8.664,
         "NO2": 4.613,
@@ -27060,6 +27899,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T21:55:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.174,
         "NO": 8.834,
         "NO2": 4.596,
@@ -27084,6 +27924,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T22:00:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.166,
         "NO": 7.657,
         "NO2": 3.377,
@@ -27108,6 +27949,7 @@
       },
       "properties": {
         "timestamp": "2026-06-12T22:05:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.165,
         "NO": 7.789,
         "NO2": 3.186,
@@ -27132,16 +27974,92 @@
       },
       "properties": {
         "timestamp": "2026-06-12T22:10:00+00:00",
+        "coord_source": "unknown",
         "CO": 0.165,
-        "NO": 7.839,
+        "NO": 7.764,
         "NO2": 3.038,
-        "O3": 31.304,
-        "CO2": 436.885,
-        "PM2_5": 2.942,
-        "PM1": 2.44,
-        "PM10": 4.91,
-        "T": 24.15,
-        "RH": 41.33,
+        "O3": 31.373,
+        "CO2": 436.798,
+        "PM2_5": 2.892,
+        "PM1": 2.4,
+        "PM10": 5.456,
+        "T": 24.16,
+        "RH": 41.36,
+        "AQHI": 2.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0289786,
+          48.3670681
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-06-12T22:15:00+00:00",
+        "coord_source": "gps",
+        "CO": 0.168,
+        "NO": 7.808,
+        "NO2": 3.558,
+        "O3": 30.209,
+        "CO2": 437.386,
+        "PM2_5": 2.756,
+        "PM1": 2.276,
+        "PM10": 10.374,
+        "T": 24.22,
+        "RH": 41.32,
+        "AQHI": 2.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0289786,
+          48.3670681
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-06-12T22:20:00+00:00",
+        "coord_source": "gps",
+        "CO": 0.166,
+        "NO": 7.656,
+        "NO2": 3.128,
+        "O3": 31.158,
+        "CO2": 437.572,
+        "PM2_5": 2.78,
+        "PM1": 2.346,
+        "PM10": 5.832,
+        "T": 24.3,
+        "RH": 40.98,
+        "AQHI": 2.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0289786,
+          48.3670681
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-06-12T22:25:00+00:00",
+        "coord_source": "gps",
+        "CO": 0.159,
+        "NO": 1.978,
+        "NO2": 2.684,
+        "O3": 32.041,
+        "CO2": 433.98,
+        "PM2_5": 3.008,
+        "PM1": 2.524,
+        "PM10": 4.668,
+        "T": 24.26,
+        "RH": 41.12,
         "AQHI": 2.0
       }
     }
