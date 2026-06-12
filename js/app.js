@@ -875,54 +875,27 @@ function renderTimeMarkers() {
 }
 
 
-function renderCurrentMarker() {
-  const latestUsablePoint = getLatestUsableHistoryPoint();
+function makeVesselArrowIcon(bearing, options = {}) {
+  const rotation = Number.isFinite(bearing) ? bearing : 0;
+  const opacity = Number.isFinite(bearing) ? 1 : 0.55;
+  const isStale = options.stale === true;
 
-  const fallbackLat = Number(latestData?.lat);
-  const fallbackLon = Number(latestData?.lon);
-
-  const lat = latestUsablePoint
-    ? latestUsablePoint.lat
-    : fallbackLat;
-
-  const lon = latestUsablePoint
-    ? latestUsablePoint.lon
-    : fallbackLon;
-
-  if (!Number.isFinite(lat) || !Number.isFinite(lon)) return;
-
-  const bearing = getLatestBearing();
-  const arrowIcon = makeVesselArrowIcon(bearing);
-
-  if (currentMarker) {
-    currentMarker.setLatLng([lat, lon]);
-    currentMarker.setIcon(arrowIcon);
-  } else {
-    currentMarker = L.marker([lat, lon], {
-      icon: arrowIcon
-    }).addTo(map);
-  }
-
-  const headingText = Number.isFinite(bearing)
-    ? `${Math.round(bearing)}°`
-    : "Unknown";
-
-  const latestPoint = getSortedHistoryPointsAscending().at(-1);
-  const isShowingLastValidFix = latestUsablePoint && latestPoint && latestUsablePoint.index !== latestPoint.index;
-  const timestamp = latestUsablePoint?.properties?.timestamp || latestData?.timestamp;
-  const gpsLabel = isShowingLastValidFix
-    ? "Last valid GPS fix"
-    : "Current vessel location";
-  const gpsNote = isShowingLastValidFix
-    ? "<br><strong>GPS status</strong>: latest coordinates are flagged as stale"
-    : "";
-
-  currentMarker.bindPopup(`
-    <strong>${gpsLabel}</strong><br>
-    <strong>Heading</strong>: ${headingText}<br>
-    <strong>Time</strong>: ${timestamp ? formatTimestamp(timestamp) : "Unknown"}<br>
-    <strong>Location</strong>: ${lat.toFixed(5)}, ${lon.toFixed(5)}${gpsNote}
-  `);
+  return L.divIcon({
+    className: "vessel-arrow-icon",
+    iconSize: [36, 36],
+    iconAnchor: [18, 18],
+    popupAnchor: [0, -18],
+    html: `
+      <div
+        class="vessel-arrow-wrap ${isStale ? "stale" : ""}"
+        style="transform: rotate(${rotation}deg); opacity: ${opacity};"
+        title="${isStale ? "GPS stale" : "Current vessel location"}"
+      >
+        <div class="vessel-arrow"></div>
+        ${isStale ? '<div class="vessel-stale-label">STALE</div>' : ""}
+      </div>
+    `
+  });
 }
 
 function fitRouteToMap() {
