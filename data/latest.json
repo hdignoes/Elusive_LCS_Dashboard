@@ -1,8 +1,8 @@
 {
   "timestamp": "2026-06-21T18:35:00+00:00",
-  "lat": 50.8808533,
-  "lon": -127.5777096,
-  "coord_source": "gps",
+  "lat": 49.2526,
+  "lon": -123.2387,
+  "coord_source": "default",
   "pollutants": {
     "CO": 0.198,
     "NO": 6.875,
