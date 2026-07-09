@@ -1586,7 +1586,14 @@ function renderTimeseriesChart() {
   timeseriesRawCount = displayResult.rawCount;
   timeseriesDisplayCount = displayResult.displayCount;
 
-  const xScaleOptions = makeTimeseriesXScaleOptions(timeseriesPointsRaw);
+  let chartWidth = els.timeseriesScroll?.clientWidth || 0;
+
+  if (els.timeseriesChartInner) {
+    chartWidth = makeTimeseriesChartWidth(timeseriesPointsRaw);
+    els.timeseriesChartInner.style.width = `${chartWidth}px`;
+  }
+
+  const xScaleOptions = makeTimeseriesXScaleOptions(timeseriesPointsRaw, chartWidth);
 
   timeseriesGapIntervals = makeTimeseriesGapIntervals(
     timeseriesPointsRaw,
@@ -1600,11 +1607,6 @@ function renderTimeseriesChart() {
   );
 
   timeseriesChartPointRefs = chartData.pointRefs;
-
-  if (els.timeseriesChartInner) {
-    const chartWidth = makeTimeseriesChartWidth(timeseriesPointsRaw);
-    els.timeseriesChartInner.style.width = `${chartWidth}px`;
-  }
 
   const values = timeseriesPoints.map((point) => {
     const value = Number(point.properties[selectedPollutant]);
@@ -1719,7 +1721,7 @@ function renderTimeseriesChart() {
           ...xScaleOptions,
           ticks: {
             ...xScaleOptions.ticks,
-            maxTicksLimit: 12,
+            maxTicksLimit: xScaleOptions.ticks?.maxTicksLimit ?? 8,
             padding: 4
           },
           grid: {
@@ -1885,16 +1887,20 @@ function getPointTimeMs(point) {
   return Number.isFinite(parsed) ? parsed : null;
 }
 
-function makeTimeseriesXScaleOptions(points) {
+function makeTimeseriesXScaleOptions(points, chartWidth = 0) {
   const times = points
     .map(getPointTimeMs)
     .filter((time) => Number.isFinite(time));
+
+  const width = Number(chartWidth) || els.timeseriesScroll?.clientWidth || 720;
+  const maxTicksLimit = Math.max(3, Math.min(80, Math.floor(width / 150)));
 
   if (!times.length) {
     return {
       type: "linear",
       ticks: {
-        callback: (value) => formatTimestampShort(Number(value))
+        maxTicksLimit,
+        callback: (value) => formatTimeseriesAxisTick(Number(value), null, 0)
       }
     };
   }
@@ -1915,16 +1921,75 @@ function makeTimeseriesXScaleOptions(points) {
     maxTime += rightPadding;
   }
 
+  const spanMs = maxTime - minTime;
+
   return {
     type: "linear",
     min: minTime,
     max: maxTime,
     ticks: {
-      callback: (value) => formatTimestampShort(Number(value)),
+      maxTicksLimit,
+      callback(value, index, ticks) {
+        const previousValue = index > 0 ? Number(ticks[index - 1]?.value) : null;
+        return formatTimeseriesAxisTick(Number(value), previousValue, spanMs);
+      },
       autoSkip: true,
-      maxRotation: 0
+      autoSkipPadding: 24,
+      maxRotation: 0,
+      minRotation: 0
     }
   };
+}
+
+function formatTimeseriesAxisTick(value, previousValue = null, spanMs = 0) {
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
+    return "";
+  }
+
+  const parts = getLocalTimeParts(date.toISOString());
+
+  if (!parts) {
+    return "";
+  }
+
+  const previousParts = Number.isFinite(previousValue)
+    ? getLocalTimeParts(new Date(previousValue).toISOString())
+    : null;
+
+  const dateLabel = new Intl.DateTimeFormat([], {
+    timeZone: CONFIG.displayTimeZone,
+    month: "short",
+    day: "numeric"
+  }).format(date);
+
+  const timeLabel = new Intl.DateTimeFormat([], {
+    timeZone: CONFIG.displayTimeZone,
+    hour: "2-digit",
+    minute: "2-digit"
+  }).format(date);
+
+  const dayChanged = !previousParts ||
+    previousParts.year !== parts.year ||
+    previousParts.month !== parts.month ||
+    previousParts.day !== parts.day;
+
+  const oneDay = 24 * 60 * 60 * 1000;
+
+  if (spanMs >= 5 * oneDay) {
+    return dayChanged ? dateLabel : "";
+  }
+
+  if (spanMs >= 2 * oneDay) {
+    return dayChanged ? dateLabel : timeLabel;
+  }
+
+  if (spanMs >= oneDay) {
+    return dayChanged ? `${dateLabel} ${timeLabel}` : timeLabel;
+  }
+
+  return timeLabel;
 }
 
 function makeTimeseriesChartWidth(points) {
@@ -1933,19 +1998,30 @@ function makeTimeseriesChartWidth(points) {
     .filter((time) => Number.isFinite(time));
 
   const minWidth = Number(CONFIG.chart?.minWidthPx) || 720;
+  const viewportWidth = els.timeseriesScroll?.clientWidth || 0;
+  const minUsableWidth = Math.max(minWidth, viewportWidth);
   const pixelsPerPoint = Number(CONFIG.chart?.pixelsPerPoint) || 9;
-  const pixelsPerHour = Number(CONFIG.chart?.pixelsPerHour) || 42;
+  const pixelsPerHour = Number(CONFIG.chart?.pixelsPerHour) || 36;
+  const pixelsPerDay = Number(CONFIG.chart?.pixelsPerDay) || 420;
+  const maxSafeWidth = Number(CONFIG.chart?.maxWidthPx) || 24000;
 
-  const pointWidth = Math.max(minWidth, timeseriesPoints.length * pixelsPerPoint);
+  const pointWidth = Math.max(
+    minUsableWidth,
+    timeseriesPoints.length * pixelsPerPoint
+  );
 
   if (times.length < 2) {
-    return pointWidth;
+    return Math.min(pointWidth, maxSafeWidth);
   }
 
   const spanHours = (Math.max(...times) - Math.min(...times)) / 3600000;
-  const timeWidth = Math.ceil(spanHours * pixelsPerHour);
+  const spanDays = spanHours / 24;
+  const timeWidthByHour = Math.ceil(spanHours * pixelsPerHour);
+  const timeWidthByDay = Math.ceil(spanDays * pixelsPerDay);
+  const timeWidth = Math.max(timeWidthByHour, timeWidthByDay);
+  const desiredWidth = Math.max(minUsableWidth, pointWidth, timeWidth);
 
-  return Math.max(minWidth, pointWidth, timeWidth);
+  return Math.min(desiredWidth, maxSafeWidth);
 }
 
 function getTimeseriesGapThresholdMs(points) {
@@ -2750,6 +2826,9 @@ const dayBoundaryChartPlugin = {
 
     ctx.save();
 
+    let lastLabelRight = -Infinity;
+    const minLabelSpacing = Number(CONFIG.dayBoundaryLines?.labelSpacingPx) || 72;
+
     markers.forEach((marker) => {
       const pointTime = getPointTimeMs(marker.point);
 
@@ -2768,18 +2847,26 @@ const dayBoundaryChartPlugin = {
       ctx.stroke();
 
       const label = formatBoundaryDate(marker.point.properties.timestamp);
-      const nearRightEdge = x > chartArea.right - 48;
+      const nearRightEdge = x > chartArea.right - 56;
 
       ctx.fillStyle = CONFIG.dayBoundaryLines.textColor;
       ctx.font = "700 10px system-ui, sans-serif";
       ctx.textBaseline = "top";
       ctx.textAlign = nearRightEdge ? "right" : "left";
 
+      const labelWidth = ctx.measureText(label).width;
+      const labelLeft = nearRightEdge ? x - 4 - labelWidth : x + 4;
+      const labelRight = nearRightEdge ? x - 4 : x + 4 + labelWidth;
+
+      if (labelLeft <= lastLabelRight + minLabelSpacing) return;
+
       ctx.fillText(
         label,
         nearRightEdge ? x - 4 : x + 4,
         chartArea.top + 4
       );
+
+      lastLabelRight = labelRight;
     });
 
     ctx.restore();
@@ -2804,6 +2891,9 @@ const sunEventChartPlugin = {
 
     ctx.save();
 
+    let lastIconX = -Infinity;
+    const minIconSpacing = Number(CONFIG.sunMarkers?.chartIconSpacingPx) || 28;
+
     markers.forEach((marker) => {
       const pointTime = getPointTimeMs(marker.point);
 
@@ -2813,8 +2903,10 @@ const sunEventChartPlugin = {
       const y = chartArea.bottom + 22;
 
       if (x < chartArea.left || x > chartArea.right) return;
+      if (x - lastIconX < minIconSpacing) return;
 
       drawSunEventIcon(ctx, x, y, marker.type);
+      lastIconX = x;
     });
 
     ctx.restore();
