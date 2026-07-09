@@ -7,6 +7,8 @@ let timeMarkerLayer;
 let currentMarker;
 let selectedHistoryMarker;
 let timeseriesChart;
+let timeseriesChartPointRefs = [];
+let timeseriesGapIntervals = [];
 let selectedHistoryPointIndex = null;
 let hasCenteredOnInitialLatest = false;
 
@@ -1427,118 +1429,6 @@ function getTimestampAgeMinutes(timestamp) {
   return (Date.now() - parsedTime) / 60000;
 }
 
-function getCurrentAirQualitySensorStatus() {
-  if (!latestData) {
-    return {
-      label: "Air quality data missing",
-      status: "bad"
-    };
-  }
-
-  const airQualityKeys = getAirQualitySensorKeys();
-
-  const missingKeys = airQualityKeys.filter((key) => {
-    const value = getLatestPollutantValue(key);
-    return !Number.isFinite(Number(value));
-  });
-
-  if (missingKeys.length === 0) {
-    return {
-      label: "Air quality sensors OK",
-      status: "good"
-    };
-  }
-
-  const missingLabels = missingKeys.map((key) => {
-    return CONFIG.pollutants[key]?.label || key;
-  });
-
-  return {
-    label: `Sensor issue: ${missingLabels.join(", ")} missing`,
-    status: "warn"
-  };
-}
-
-function getAirQualitySensorKeys() {
-  const configuredAirKeys = CONFIG.pollutantGroups
-    ?.find((group) => group.label === "Air pollutants")
-    ?.keys || [];
-
-  return configuredAirKeys.filter((key) => {
-    return key !== "AQHI" && CONFIG.pollutants[key];
-  });
-}
-
-function getCurrentGpsStatus() {
-  if (!latestData) {
-    return {
-      label: "Current GPS missing",
-      status: "bad"
-    };
-  }
-
-  const lat = Number(latestData.lat);
-  const lon = Number(latestData.lon);
-
-  if (!Number.isFinite(lat) || !Number.isFinite(lon)) {
-    return {
-      label: "Current GPS missing",
-      status: "bad"
-    };
-  }
-
-  const ageInfo = getDataAgeInfo(latestData.timestamp);
-
-  if (ageInfo.status !== "good") {
-    return {
-      label: "Current GPS timestamp stale",
-      status: "warn"
-    };
-  }
-
-  const points = getSortedHistoryPointsAscending();
-
-  if (points.length < 2) {
-    return {
-      label: "Current GPS OK",
-      status: "good"
-    };
-  }
-
-  const latestPoint = points[points.length - 1];
-  const previousPoint = findPreviousDistinctGpsPoint(points, latestPoint);
-
-  if (!previousPoint) {
-    return {
-      label: "Current GPS stale",
-      status: "warn"
-    };
-  }
-
-  const staleCoordinateStatus = getRepeatedCoordinateStatus(points, latestPoint);
-
-  if (!staleCoordinateStatus.ok) {
-    return {
-      label: "Current GPS stale",
-      status: "warn"
-    };
-  }
-
-  const jumpStatus = getGpsJumpStatus(previousPoint, latestPoint);
-
-  if (!jumpStatus.ok) {
-    return {
-      label: "Current GPS jump detected",
-      status: "warn"
-    };
-  }
-
-  return {
-    label: "Current GPS OK",
-    status: "good"
-  };
-}
-
 function findPreviousDistinctGpsPoint(points, latestPoint) {
   const toleranceMeters = CONFIG.gpsQuality?.sameCoordinateToleranceMeters ?? 5;
 
@@ -1676,6 +1566,7 @@ function addDataChip(text, status) {
    Time-series chart
    ========================================================= */
 
+
 function renderTimeseriesChart() {
   if (!els.timeseriesChart || !els.timeseriesYAxisChart || typeof Chart === "undefined") {
     return;
@@ -1695,27 +1586,34 @@ function renderTimeseriesChart() {
   timeseriesRawCount = displayResult.rawCount;
   timeseriesDisplayCount = displayResult.displayCount;
 
-  if (els.timeseriesChartInner) {
-    const chartWidth = Math.max(
-      CONFIG.chart.minWidthPx,
-      timeseriesPoints.length * CONFIG.chart.pixelsPerPoint
-    );
+  const xScaleOptions = makeTimeseriesXScaleOptions(timeseriesPointsRaw);
 
+  timeseriesGapIntervals = makeTimeseriesGapIntervals(
+    timeseriesPointsRaw,
+    selectedPollutant
+  );
+
+  const chartData = buildTimeseriesChartData(
+    timeseriesPoints,
+    selectedPollutant,
+    timeseriesGapIntervals
+  );
+
+  timeseriesChartPointRefs = chartData.pointRefs;
+
+  if (els.timeseriesChartInner) {
+    const chartWidth = makeTimeseriesChartWidth(timeseriesPointsRaw);
     els.timeseriesChartInner.style.width = `${chartWidth}px`;
   }
-
-  const labels = timeseriesPoints.map((point) => {
-    return point.properties.timestamp
-      ? formatTimestampShort(point.properties.timestamp)
-      : "Unknown";
-  });
 
   const values = timeseriesPoints.map((point) => {
     const value = Number(point.properties[selectedPollutant]);
     return Number.isFinite(value) ? value : null;
   });
 
-  const pointColors = timeseriesPoints.map((point) => {
+  const pointColors = timeseriesChartPointRefs.map((point) => {
+    if (!point) return "rgba(0, 0, 0, 0)";
+
     const value = Number(point.properties[selectedPollutant]);
 
     if (!Number.isFinite(value)) {
@@ -1725,19 +1623,22 @@ function renderTimeseriesChart() {
     return getPollutantColor(value, pollutantMeta);
   });
 
-  const pointRadii = timeseriesPoints.map((point) => {
+  const pointRadii = timeseriesChartPointRefs.map((point) => {
+    if (!point) return 0;
     return point.index === selectedHistoryPointIndex ? 7 : 2.5;
   });
 
-  const pointHoverRadii = timeseriesPoints.map((point) => {
+  const pointHoverRadii = timeseriesChartPointRefs.map((point) => {
+    if (!point) return 0;
     return point.index === selectedHistoryPointIndex ? 9 : 6;
   });
 
-  const pointBorderColors = timeseriesPoints.map(() => {
+  const pointBorderColors = timeseriesChartPointRefs.map(() => {
     return "#0f172a";
   });
 
-  const pointBorderWidths = timeseriesPoints.map((point) => {
+  const pointBorderWidths = timeseriesChartPointRefs.map((point) => {
+    if (!point) return 0;
     return point.index === selectedHistoryPointIndex ? 3 : 1;
   });
 
@@ -1751,7 +1652,7 @@ function renderTimeseriesChart() {
       : "";
 
     els.timeseriesSubtitle.textContent =
-      `Showing ${pollutantMeta.label}. Scroll horizontally for long trips. Click a point to jump to the map.${decimationText}`;
+      `Showing ${pollutantMeta.label}. Scroll horizontally for long trips. Gray bands mark periods without usable time-series data. Click a point to jump to the map.${decimationText}`;
   }
 
   if (timeseriesChart) {
@@ -1769,13 +1670,13 @@ function renderTimeseriesChart() {
   timeseriesChart = new Chart(els.timeseriesChart, {
     type: "line",
     data: {
-      labels,
       datasets: [
         {
           label: pollutantMeta.unit
             ? `${pollutantMeta.label} (${pollutantMeta.unit})`
             : pollutantMeta.label,
-          data: values,
+          data: chartData.data,
+          parsing: false,
           borderColor: "#0f172a",
           backgroundColor: "rgba(15, 23, 42, 0.08)",
           borderWidth: 2,
@@ -1785,7 +1686,8 @@ function renderTimeseriesChart() {
           pointBackgroundColor: pointColors,
           pointBorderColor: pointBorderColors,
           pointBorderWidth: pointBorderWidths,
-          spanGaps: false
+          spanGaps: false,
+          clip: false
         }
       ]
     },
@@ -1814,7 +1716,9 @@ function renderTimeseriesChart() {
       },
       scales: {
         x: {
+          ...xScaleOptions,
           ticks: {
+            ...xScaleOptions.ticks,
             maxTicksLimit: 12,
             padding: 4
           },
@@ -1844,7 +1748,7 @@ function renderTimeseriesChart() {
         if (chartPoints.length === 0) return;
 
         const index = chartPoints[0].index;
-        const point = timeseriesPoints[index];
+        const point = timeseriesChartPointRefs[index];
 
         if (!point) return;
 
@@ -1855,7 +1759,13 @@ function renderTimeseriesChart() {
         });
       }
     },
-    plugins: [dayBoundaryChartPlugin, sunEventChartPlugin, hoverGuidePlugin, fixedYAxisPlugin]
+    plugins: [
+      missingDataBandPlugin,
+      dayBoundaryChartPlugin,
+      sunEventChartPlugin,
+      hoverGuidePlugin,
+      fixedYAxisPlugin
+    ]
   });
 
   requestAnimationFrame(() => {
@@ -1960,6 +1870,267 @@ function makeDisplayTimeseriesPoints(rawPoints, pollutantKey) {
     decimated: true,
     rawCount,
     displayCount: displayPoints.length
+  };
+}
+
+
+function getPointTimeMs(point) {
+  const time = Number(point?.time);
+
+  if (Number.isFinite(time)) {
+    return time;
+  }
+
+  const parsed = Date.parse(point?.properties?.timestamp);
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
+function makeTimeseriesXScaleOptions(points) {
+  const times = points
+    .map(getPointTimeMs)
+    .filter((time) => Number.isFinite(time));
+
+  if (!times.length) {
+    return {
+      type: "linear",
+      ticks: {
+        callback: (value) => formatTimestampShort(Number(value))
+      }
+    };
+  }
+
+  let minTime = Math.min(...times);
+  let maxTime = Math.max(...times);
+
+  if (minTime === maxTime) {
+    const oneHour = 60 * 60 * 1000;
+    minTime -= oneHour / 2;
+    maxTime += oneHour / 2;
+  } else {
+    const span = maxTime - minTime;
+    const leftPadding = Math.min(Math.max(span * 0.01, 60 * 1000), 20 * 60 * 1000);
+    const rightPadding = Math.min(Math.max(span * 0.025, 2 * 60 * 1000), 30 * 60 * 1000);
+
+    minTime -= leftPadding;
+    maxTime += rightPadding;
+  }
+
+  return {
+    type: "linear",
+    min: minTime,
+    max: maxTime,
+    ticks: {
+      callback: (value) => formatTimestampShort(Number(value)),
+      autoSkip: true,
+      maxRotation: 0
+    }
+  };
+}
+
+function makeTimeseriesChartWidth(points) {
+  const times = points
+    .map(getPointTimeMs)
+    .filter((time) => Number.isFinite(time));
+
+  const minWidth = Number(CONFIG.chart?.minWidthPx) || 720;
+  const pixelsPerPoint = Number(CONFIG.chart?.pixelsPerPoint) || 9;
+  const pixelsPerHour = Number(CONFIG.chart?.pixelsPerHour) || 42;
+
+  const pointWidth = Math.max(minWidth, timeseriesPoints.length * pixelsPerPoint);
+
+  if (times.length < 2) {
+    return pointWidth;
+  }
+
+  const spanHours = (Math.max(...times) - Math.min(...times)) / 3600000;
+  const timeWidth = Math.ceil(spanHours * pixelsPerHour);
+
+  return Math.max(minWidth, pointWidth, timeWidth);
+}
+
+function getTimeseriesGapThresholdMs(points) {
+  const configuredMinutes = Number(
+    CONFIG.chart?.missingGapMinutes ??
+    CONFIG.chart?.gapThresholdMinutes
+  );
+
+  if (Number.isFinite(configuredMinutes) && configuredMinutes > 0) {
+    return configuredMinutes * 60000;
+  }
+
+  const times = points
+    .map(getPointTimeMs)
+    .filter((time) => Number.isFinite(time))
+    .sort((a, b) => a - b);
+
+  const diffs = [];
+
+  for (let i = 1; i < times.length; i += 1) {
+    const diff = times[i] - times[i - 1];
+
+    if (diff > 0 && diff < 6 * 60 * 60 * 1000) {
+      diffs.push(diff);
+    }
+  }
+
+  if (!diffs.length) {
+    return 20 * 60 * 1000;
+  }
+
+  diffs.sort((a, b) => a - b);
+  const median = diffs[Math.floor(diffs.length / 2)];
+
+  return Math.max(median * 3.5, 20 * 60 * 1000);
+}
+
+function makeTimeseriesGapIntervals(rawPoints, pollutantKey) {
+  const points = rawPoints
+    .map((point) => {
+      return {
+        ...point,
+        time: getPointTimeMs(point)
+      };
+    })
+    .filter((point) => Number.isFinite(point.time))
+    .sort((a, b) => a.time - b.time);
+
+  const intervals = [];
+  const gapThresholdMs = getTimeseriesGapThresholdMs(points);
+
+  for (let i = 1; i < points.length; i += 1) {
+    const previous = points[i - 1];
+    const current = points[i];
+    const gapMs = current.time - previous.time;
+
+    if (gapMs > gapThresholdMs) {
+      intervals.push({
+        start: previous.time,
+        end: current.time,
+        type: "time-gap"
+      });
+    }
+  }
+
+  let missingRunStartIndex = null;
+
+  points.forEach((point, index) => {
+    const value = Number(point.properties[pollutantKey]);
+    const isMissing = !Number.isFinite(value);
+
+    if (isMissing && missingRunStartIndex === null) {
+      missingRunStartIndex = index;
+    }
+
+    const isRunEnding =
+      missingRunStartIndex !== null &&
+      (!isMissing || index === points.length - 1);
+
+    if (!isRunEnding) return;
+
+    const runEndIndex = isMissing ? index : index - 1;
+    const startPoint = points[missingRunStartIndex];
+    const endPoint = points[runEndIndex];
+
+    const previousPoint = points[missingRunStartIndex - 1];
+    const nextPoint = points[runEndIndex + 1];
+
+    const start = previousPoint
+      ? (previousPoint.time + startPoint.time) / 2
+      : startPoint.time;
+
+    const end = nextPoint
+      ? (endPoint.time + nextPoint.time) / 2
+      : endPoint.time;
+
+    if (end > start) {
+      intervals.push({
+        start,
+        end,
+        type: "missing-value"
+      });
+    }
+
+    missingRunStartIndex = null;
+  });
+
+  return mergeTimeseriesIntervals(intervals);
+}
+
+function mergeTimeseriesIntervals(intervals) {
+  const sorted = intervals
+    .filter((interval) => {
+      return (
+        Number.isFinite(interval.start) &&
+        Number.isFinite(interval.end) &&
+        interval.end > interval.start
+      );
+    })
+    .sort((a, b) => a.start - b.start);
+
+  const merged = [];
+
+  sorted.forEach((interval) => {
+    const last = merged[merged.length - 1];
+
+    if (!last || interval.start > last.end) {
+      merged.push({ ...interval });
+      return;
+    }
+
+    last.end = Math.max(last.end, interval.end);
+  });
+
+  return merged;
+}
+
+function findGapIntervalBetween(startTime, endTime, intervals) {
+  return intervals.find((interval) => {
+    return interval.end > startTime && interval.start < endTime;
+  }) || null;
+}
+
+function buildTimeseriesChartData(points, pollutantKey, gapIntervals) {
+  const data = [];
+  const pointRefs = [];
+
+  let previousTime = null;
+
+  points.forEach((point) => {
+    const time = getPointTimeMs(point);
+
+    if (!Number.isFinite(time)) return;
+
+    if (previousTime !== null && time > previousTime) {
+      const gap = findGapIntervalBetween(previousTime, time, gapIntervals);
+
+      if (gap) {
+        const gapStart = Math.min(Math.max(gap.start, previousTime + 1), time - 1);
+        const gapEnd = Math.min(Math.max(gap.end, gapStart + 1), time - 1);
+
+        data.push({ x: gapStart, y: null });
+        pointRefs.push(null);
+
+        if (gapEnd > gapStart) {
+          data.push({ x: gapEnd, y: null });
+          pointRefs.push(null);
+        }
+      }
+    }
+
+    const value = Number(point.properties[pollutantKey]);
+
+    data.push({
+      x: time,
+      y: Number.isFinite(value) ? value : null
+    });
+
+    pointRefs.push(point);
+    previousTime = time;
+  });
+
+  return {
+    data,
+    pointRefs
   };
 }
 
@@ -2149,6 +2320,7 @@ function stabilizeYAxisDomain(yScaleOptions) {
   };
 }
 
+
 function getVisibleTimeseriesValues(values) {
   if (!timeseriesChart || !els.timeseriesScroll || !Array.isArray(timeseriesPoints)) {
     return values;
@@ -2171,8 +2343,12 @@ function getVisibleTimeseriesValues(values) {
 
   const visibleValues = [];
 
-  timeseriesPoints.forEach((point, index) => {
-    const x = xScale.getPixelForValue(index);
+  timeseriesPoints.forEach((point) => {
+    const pointTime = getPointTimeMs(point);
+
+    if (!Number.isFinite(pointTime)) return;
+
+    const x = xScale.getPixelForValue(pointTime);
 
     if (x >= scaledLeft && x <= scaledRight) {
       const value = Number(point.properties[selectedPollutant]);
@@ -2237,6 +2413,7 @@ function applyYScaleOptions(chart, yScaleOptions) {
   };
 }
 
+
 function updateTimeseriesHighlight() {
   if (!timeseriesChart || !Array.isArray(timeseriesPoints)) return;
 
@@ -2255,24 +2432,27 @@ function updateTimeseriesHighlight() {
 
   const dataset = timeseriesChart.data.datasets[0];
 
-  dataset.pointRadius = timeseriesPoints.map((point) => {
+  dataset.pointRadius = timeseriesChartPointRefs.map((point) => {
+    if (!point) return 0;
     return point.index === selectedHistoryPointIndex ? 7 : 2.5;
   });
 
-  dataset.pointHoverRadius = timeseriesPoints.map((point) => {
+  dataset.pointHoverRadius = timeseriesChartPointRefs.map((point) => {
+    if (!point) return 0;
     return point.index === selectedHistoryPointIndex ? 9 : 6;
   });
 
-  dataset.pointBorderColor = timeseriesPoints.map(() => {
+  dataset.pointBorderColor = timeseriesChartPointRefs.map(() => {
     return "#0f172a";
   });
 
-  dataset.pointBorderWidth = timeseriesPoints.map((point) => {
+  dataset.pointBorderWidth = timeseriesChartPointRefs.map((point) => {
+    if (!point) return 0;
     return point.index === selectedHistoryPointIndex ? 3 : 1;
   });
 
-  const chartIndex = timeseriesPoints.findIndex((point) => {
-    return point.index === selectedHistoryPointIndex;
+  const chartIndex = timeseriesChartPointRefs.findIndex((point) => {
+    return point && point.index === selectedHistoryPointIndex;
   });
 
   if (chartIndex >= 0) {
@@ -2294,6 +2474,40 @@ function updateTimeseriesHighlight() {
    Chart plugins
    ========================================================= */
 
+
+
+const missingDataBandPlugin = {
+  id: "missingDataBands",
+
+  beforeDatasetsDraw(chart) {
+    if (!Array.isArray(timeseriesGapIntervals) || !timeseriesGapIntervals.length) {
+      return;
+    }
+
+    const { ctx, chartArea, scales } = chart;
+    const xScale = scales.x;
+
+    if (!xScale || !chartArea) return;
+
+    ctx.save();
+    ctx.fillStyle = CONFIG.chart?.missingDataFill || "rgba(100, 116, 139, 0.16)";
+
+    timeseriesGapIntervals.forEach((interval) => {
+      const xStart = xScale.getPixelForValue(interval.start);
+      const xEnd = xScale.getPixelForValue(interval.end);
+
+      const left = Math.max(chartArea.left, Math.min(xStart, xEnd));
+      const right = Math.min(chartArea.right, Math.max(xStart, xEnd));
+
+      if (right <= chartArea.left || left >= chartArea.right) return;
+
+      ctx.fillRect(left, chartArea.top, right - left, chartArea.bottom - chartArea.top);
+    });
+
+    ctx.restore();
+  }
+};
+
 const hoverGuidePlugin = {
   id: "hoverGuide",
 
@@ -2303,7 +2517,7 @@ const hoverGuidePlugin = {
     if (!activeElements || activeElements.length === 0) return;
 
     const active = activeElements[0];
-    const point = timeseriesPoints[active.index];
+    const point = timeseriesChartPointRefs[active.index];
 
     if (!point) return;
 
@@ -2312,7 +2526,11 @@ const hoverGuidePlugin = {
 
     if (!xScale || !chartArea) return;
 
-    const x = xScale.getPixelForValue(active.index);
+    const pointTime = getPointTimeMs(point);
+
+    if (!Number.isFinite(pointTime)) return;
+
+    const x = xScale.getPixelForValue(pointTime);
 
     if (x < chartArea.left || x > chartArea.right) return;
 
@@ -2516,6 +2734,7 @@ function formatYAxisTick(value) {
   return value.toPrecision(2);
 }
 
+
 const dayBoundaryChartPlugin = {
   id: "dayBoundaryMarkers",
 
@@ -2532,13 +2751,13 @@ const dayBoundaryChartPlugin = {
     ctx.save();
 
     markers.forEach((marker) => {
-      const chartIndex = timeseriesPoints.findIndex((point) => {
-        return point.index === marker.point.index;
-      });
+      const pointTime = getPointTimeMs(marker.point);
 
-      if (chartIndex < 0) return;
+      if (!Number.isFinite(pointTime)) return;
 
-      const x = xScale.getPixelForValue(chartIndex);
+      const x = xScale.getPixelForValue(pointTime);
+
+      if (x < chartArea.left || x > chartArea.right) return;
 
       ctx.beginPath();
       ctx.moveTo(x, chartArea.top);
@@ -2567,6 +2786,7 @@ const dayBoundaryChartPlugin = {
   }
 };
 
+
 const sunEventChartPlugin = {
   id: "sunEventMarkers",
 
@@ -2585,13 +2805,11 @@ const sunEventChartPlugin = {
     ctx.save();
 
     markers.forEach((marker) => {
-      const chartIndex = timeseriesPoints.findIndex((point) => {
-        return point.index === marker.point.index;
-      });
+      const pointTime = getPointTimeMs(marker.point);
 
-      if (chartIndex < 0) return;
+      if (!Number.isFinite(pointTime)) return;
 
-      const x = xScale.getPixelForValue(chartIndex);
+      const x = xScale.getPixelForValue(pointTime);
       const y = chartArea.bottom + 22;
 
       if (x < chartArea.left || x > chartArea.right) return;
@@ -3007,11 +3225,13 @@ function setStatusFromTimestamp(timestamp) {
 
   const gpsSuffix = gpsStatus.status === "good"
     ? ""
-    : ` · ${gpsStatus.label.replace("Current ", "")}`;
+    : ` · ${gpsStatus.label}`;
 
   els.status.textContent = `${info.label}${gpsSuffix}`;
 
-  const shouldShowWarning = info.status !== "good" || gpsStatus.status !== "good";
+  const shouldShowWarning =
+    info.status !== "good" ||
+    gpsStatus.status !== "good";
 
   els.status.className = shouldShowWarning
     ? "status-pill stale"
