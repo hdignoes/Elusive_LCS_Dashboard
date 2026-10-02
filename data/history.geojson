@@ -262462,6 +262462,81 @@
         "RH": 84.64,
         "AQHI": 1.0
       }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.25521,
+          49.263859
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-10-02T14:45:00+00:00",
+        "coord_source": "previous",
+        "CO": 0.207,
+        "NO": 17.53,
+        "NO2": 6.905,
+        "O3": 11.239,
+        "CO2": 459.713,
+        "PM2_5": 3.13,
+        "PM1": 2.74,
+        "PM10": 9.848,
+        "T": 14.7,
+        "RH": 84.52,
+        "AQHI": 1.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.25521,
+          49.263859
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-10-02T14:50:00+00:00",
+        "coord_source": "previous",
+        "CO": 0.207,
+        "NO": 17.567,
+        "NO2": 6.896,
+        "O3": 11.231,
+        "CO2": 459.617,
+        "PM2_5": 2.976,
+        "PM1": 2.454,
+        "PM10": 15.902,
+        "T": 14.7,
+        "RH": 84.56,
+        "AQHI": 1.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.25521,
+          49.263859
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-10-02T14:55:00+00:00",
+        "coord_source": "previous",
+        "CO": 0.207,
+        "NO": 17.632,
+        "NO2": 6.939,
+        "O3": 11.17,
+        "CO2": 459.64,
+        "PM2_5": 3.06,
+        "PM1": 2.525,
+        "PM10": 15.9,
+        "T": 14.7,
+        "RH": 84.6,
+        "AQHI": 1.0
+      }
     }
   ]
 }
