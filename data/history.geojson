@@ -268950,16 +268950,116 @@
       "properties": {
         "timestamp": "2026-10-03T12:20:00+00:00",
         "coord_source": "previous",
-        "CO": null,
-        "NO": null,
-        "NO2": null,
-        "O3": null,
-        "CO2": null,
-        "PM2_5": null,
-        "PM1": null,
-        "PM10": null,
+        "CO": 0.221,
+        "NO": 30.37,
+        "NO2": 8.454,
+        "O3": 11.398,
+        "CO2": 464.724,
+        "PM2_5": 5.86,
+        "PM1": 3.66,
+        "PM10": 67.003,
         "T": 14.4,
         "RH": 84.7,
+        "AQHI": 1.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.25521,
+          49.263859
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-10-03T12:25:00+00:00",
+        "coord_source": "previous",
+        "CO": 0.221,
+        "NO": 30.603,
+        "NO2": 8.481,
+        "O3": 11.355,
+        "CO2": 464.863,
+        "PM2_5": 7.834,
+        "PM1": 3.488,
+        "PM10": 244.386,
+        "T": 14.4,
+        "RH": 84.76,
+        "AQHI": 1.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.25521,
+          49.263859
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-10-03T12:30:00+00:00",
+        "coord_source": "previous",
+        "CO": 0.223,
+        "NO": 31.721,
+        "NO2": 9.036,
+        "O3": 11.323,
+        "CO2": 465.643,
+        "PM2_5": 6.74,
+        "PM1": 3.512,
+        "PM10": 137.47,
+        "T": 14.34,
+        "RH": 84.78,
+        "AQHI": 1.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.25521,
+          49.263859
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-10-03T12:35:00+00:00",
+        "coord_source": "previous",
+        "CO": 0.223,
+        "NO": 31.494,
+        "NO2": 8.623,
+        "O3": 11.545,
+        "CO2": 464.889,
+        "PM2_5": 7.138,
+        "PM1": 3.786,
+        "PM10": 127.666,
+        "T": 14.3,
+        "RH": 84.68,
+        "AQHI": 1.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.25521,
+          49.263859
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-10-03T12:40:00+00:00",
+        "coord_source": "previous",
+        "CO": 0.224,
+        "NO": 31.519,
+        "NO2": 8.614,
+        "O3": 11.331,
+        "CO2": 464.88,
+        "PM2_5": 7.045,
+        "PM1": 3.495,
+        "PM10": 131.225,
+        "T": 14.3,
+        "RH": 84.85,
         "AQHI": 1.0
       }
     }
