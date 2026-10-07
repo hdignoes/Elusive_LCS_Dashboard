@@ -296650,16 +296650,91 @@
       "properties": {
         "timestamp": "2026-10-07T08:40:00+00:00",
         "coord_source": "previous",
+        "CO": 0.222,
+        "NO": 30.729,
+        "NO2": 6.956,
+        "O3": 11.531,
+        "CO2": 465.117,
+        "PM2_5": 9.892,
+        "PM1": 8.62,
+        "PM10": 24.74,
+        "T": 13.5,
+        "RH": 86.5,
+        "AQHI": 2.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.25521,
+          49.263859
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-10-07T08:45:00+00:00",
+        "coord_source": "previous",
         "CO": null,
         "NO": null,
         "NO2": null,
         "O3": null,
         "CO2": null,
-        "PM2_5": 9.937,
-        "PM1": 8.687,
-        "PM10": 24.973,
-        "T": 13.5,
-        "RH": 86.43,
+        "PM2_5": 10.098,
+        "PM1": 8.96,
+        "PM10": 22.21,
+        "T": 13.48,
+        "RH": 86.22,
+        "AQHI": 2.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.25521,
+          49.263859
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-10-07T08:50:00+00:00",
+        "coord_source": "previous",
+        "CO": 0.222,
+        "NO": 30.976,
+        "NO2": 8.37,
+        "O3": 11.51,
+        "CO2": 465.782,
+        "PM2_5": 10.188,
+        "PM1": 9.122,
+        "PM10": 26.55,
+        "T": 13.4,
+        "RH": 85.94,
+        "AQHI": 2.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.25521,
+          49.263859
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-10-07T08:55:00+00:00",
+        "coord_source": "previous",
+        "CO": 0.223,
+        "NO": 31.598,
+        "NO2": 8.496,
+        "O3": 11.436,
+        "CO2": 465.445,
+        "PM2_5": 10.83,
+        "PM1": 9.678,
+        "PM10": 25.515,
+        "T": 13.4,
+        "RH": 85.8,
         "AQHI": 2.0
       }
     }
