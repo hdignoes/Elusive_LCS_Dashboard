@@ -371200,16 +371200,91 @@
       "properties": {
         "timestamp": "2026-10-17T17:10:00+00:00",
         "coord_source": "gps",
-        "CO": 0.209,
-        "NO": 11.75,
-        "NO2": 5.342,
-        "O3": 11.791,
-        "CO2": 439.613,
-        "PM2_5": 3.855,
-        "PM1": 2.405,
-        "PM10": 10.525,
-        "T": 15.85,
-        "RH": 67.25,
+        "CO": 0.206,
+        "NO": 11.685,
+        "NO2": 5.334,
+        "O3": 11.657,
+        "CO2": 439.157,
+        "PM2_5": 4.514,
+        "PM1": 3.074,
+        "PM10": 11.504,
+        "T": 15.88,
+        "RH": 67.48,
+        "AQHI": 2.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1311795,
+          49.2721476
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-10-17T17:15:00+00:00",
+        "coord_source": "gps",
+        "CO": 0.213,
+        "NO": 28.329,
+        "NO2": 7.074,
+        "O3": 11.729,
+        "CO2": 455.82,
+        "PM2_5": 14.828,
+        "PM1": 13.342,
+        "PM10": 36.756,
+        "T": 15.9,
+        "RH": 73.24,
+        "AQHI": 2.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1312092,
+          49.2721738
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-10-17T17:20:00+00:00",
+        "coord_source": "gps",
+        "CO": null,
+        "NO": null,
+        "NO2": null,
+        "O3": null,
+        "CO2": null,
+        "PM2_5": 15.678,
+        "PM1": 14.296,
+        "PM10": 32.04,
+        "T": 15.98,
+        "RH": 74.62,
+        "AQHI": 2.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1311822,
+          49.2720919
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-10-17T17:25:00+00:00",
+        "coord_source": "gps",
+        "CO": null,
+        "NO": null,
+        "NO2": null,
+        "O3": null,
+        "CO2": null,
+        "PM2_5": 14.533,
+        "PM1": 12.99,
+        "PM10": 37.197,
+        "T": 16.13,
+        "RH": 72.97,
         "AQHI": 2.0
       }
     }
