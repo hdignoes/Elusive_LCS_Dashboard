@@ -4,15 +4,15 @@
   const url = new URL(window.location.href);
   if (url.searchParams.get('themes') !== '1') return;
   const themes = [
-    {id:'sea-glass',name:'Sea glass · current',note:'The original navy, cream and sea green.',colors:['#f5f4ed','#15343b','#607375','#d8ded7','#102c34','#f5f4ed','#bdcdcd','#b3dcc7','#102c34','#b3dcc7','#fffef9','#e9ece4','#4b6467','#d4eadc','#a9bfbd']},
+    {id:'sea-glass',name:'Sea glass',note:'The original navy, cream and sea green.',colors:['#f5f4ed','#15343b','#607375','#d8ded7','#102c34','#f5f4ed','#bdcdcd','#b3dcc7','#102c34','#b3dcc7','#fffef9','#e9ece4','#4b6467','#d4eadc','#a9bfbd']},
     {id:'admiralty',name:'Admiralty chart',note:'Warm ivory, deep navy and brass.',colors:['#F3F0E5','#24343A','#617071','#D9D5C8','#18333F','#F3F0E5','#C3CFCE','#C8AA68','#18333F','#A9CBBF','#FCFAF2','#E8E3D5','#4B5D60','#DDC48D','#B7C8C4']},
-    {id:'harbour',name:'Working harbour',note:'Charcoal teal with a buoy-orange accent.',colors:['#ECEFEC','#263431','#5E7069','#CCD5CE','#243B3B','#F1F4EE','#C6D2C8','#D98255','#222E2B','#B8D2C4','#F7F9F5','#DDE4DC','#435A51','#E79D77','#BCCFC3']},
+    {id:'harbour',name:'Working harbour · current',note:'Charcoal teal with a buoy-orange accent.',colors:['#ECEFEC','#263431','#5E7069','#CCD5CE','#243B3B','#F1F4EE','#C6D2C8','#D98255','#222E2B','#B8D2C4','#F7F9F5','#DDE4DC','#435A51','#E79D77','#BCCFC3']},
     {id:'regatta',name:'Faded regatta',note:'Sailcloth, indigo and weathered red.',colors:['#F7F0DF','#26384D','#68717C','#DFD6C4','#354B68','#FFF8E9','#D7DFE8','#B9554D','#FFFFFF','#F2DCA6','#FFFAEF','#EDE3D0','#4D5F73','#A1433C','#D5DFEA']},
     {id:'north-pacific',name:'North Pacific',note:'Cool paper, slate blue and muted gold.',colors:['#F0F4F5','#233B4A','#5D7480','#D0DDE1','#263E50','#F4F8FA','#C3D3DF','#DDC68D','#233B4A','#B7D8E6','#FAFDFD','#E0E9ED','#496675','#EAD9AD','#B8CBD8']},
     {id:'evening-watch',name:'Evening watch',note:'Warm paper, oxblood and soft peach.',colors:['#F5EEE8','#413432','#7A6760','#E0D2C9','#462D36','#FFF3E8','#DEC9C6','#E2B48C','#382A2D','#EBCFA6','#FFF9F1','#EADDD2','#69524C','#F0C8A4','#D7BFC1']}
   ];
   const keys=['paper','ink','muted','line','hero','hero-text','hero-muted','accent','button-text','sea','panel','footer','about-text','button-hover','hero-soft'];
-  let index=Math.max(0,themes.findIndex(t=>t.id===url.searchParams.get('theme')));
+  let index=Math.max(0,themes.findIndex(t=>t.id===(url.searchParams.get('theme')||'harbour')));
   const panel=document.createElement('details');panel.id='theme-tester';panel.open=true;panel.setAttribute('aria-label','Testing-only theme selector');
   const summary=document.createElement('summary');summary.textContent='Theme tester';
   const body=document.createElement('div');body.className='theme-tester-body';
@@ -42,7 +42,7 @@
   next.addEventListener('click',()=>{index=(index+1)%themes.length;apply();});
   exit.addEventListener('click',()=>{
     keys.concat(['focus']).forEach(k=>document.documentElement.style.removeProperty('--'+k));delete document.documentElement.dataset.previewTheme;
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content','#102c34');
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content','#243B3B');
     const nextUrl=new URL(window.location.href);nextUrl.searchParams.delete('themes');nextUrl.searchParams.delete('theme');history.replaceState(null,'',nextUrl);panel.remove();window.dispatchEvent(new Event('elusive-theme-change'));
   });
   apply(false);

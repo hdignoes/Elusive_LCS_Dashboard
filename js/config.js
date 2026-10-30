@@ -12,7 +12,7 @@ const AQHI_PLUS_COLORS = {
 };
 
 const CONFIG = {
-  displayTimeZone: "America/Vancouver",
+  displayTimeZone: "Etc/GMT+7",
 
   startView: {
     center: [49.2827, -123.1207],
