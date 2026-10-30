@@ -15,10 +15,35 @@ const pageColor = name => getComputedStyle(document.documentElement).getProperty
 const format = v => finite(v)?v.toLocaleString('en-CA',{maximumFractionDigits:2}):'Unavailable';
 function distance(a,b){const rad=Math.PI/180;const x=(b.lat-a.lat)*rad,y=(b.lon-a.lon)*rad;const h=Math.sin(x/2)**2+Math.cos(a.lat*rad)*Math.cos(b.lat*rad)*Math.sin(y/2)**2;return 6371*2*Math.asin(Math.sqrt(Math.min(1,h)));}
 function connected(a,b){const hours=(b.time-a.time)/3600;return mappable(a)&&mappable(b)&&hours>0&&hours<=.5&&distance(a,b)/hours/1.852<=20;}
+// Leave ordinary page scrolling alone; opt in to map zoom with Ctrl.
+function initCtrlScroll(map){
+ const container=map.getContainer(),hint=document.getElementById('map-scroll-hint');
+ let hintTimer,zoomTimer,delta=0,point;
+ function hideHint(){hint.classList.remove('visible');clearTimeout(hintTimer);}
+ container.addEventListener('wheel',e=>{
+  if(!e.deltaY)return;
+  if(!e.ctrlKey){
+   clearTimeout(zoomTimer);delta=0;
+   hint.classList.add('visible');clearTimeout(hintTimer);hintTimer=setTimeout(hideHint,1400);
+   return;
+  }
+  e.preventDefault();e.stopPropagation();hideHint();
+  delta+=e.deltaY*(e.deltaMode===1?20:e.deltaMode===2?container.clientHeight:1);
+  point=map.mouseEventToContainerPoint(e);clearTimeout(zoomTimer);
+  zoomTimer=setTimeout(()=>{
+   const step=Math.sign(delta)*Math.min(1,Math.max(.25,Math.abs(delta)/200));
+   const zoom=Math.max(map.getMinZoom(),Math.min(map.getMaxZoom(),map.getZoom()-step));
+   if(delta)map.setZoomAround(point,zoom);
+   delta=0;
+  },60);
+ },{passive:false});
+ container.addEventListener('mouseleave',()=>{hideHint();clearTimeout(zoomTimer);delta=0;});
+}
 function initMap(){
  if(!window.L){$('map-status').textContent='The map could not load. The observations remain available below.';return;}
  map=L.map('map',{zoomControl:false,preferCanvas:true,scrollWheelZoom:false,zoomSnap:.25,zoomDelta:.5});
  L.control.zoom({position:'topright'}).addTo(map);
+ initCtrlScroll(map);
  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',{attribution:'Tiles &copy; Esri — Sources: Esri, HERE, Garmin, USGS, NGA, EPA, NPS',maxZoom:18}).addTo(map);
  canvasRenderer=L.canvas({padding:.2});layers=L.layerGroup().addTo(map);
  map.on('click',e=>{let nearest=null,best=Infinity;for(const r of visible){if(!mappable(r))continue;const p=map.latLngToContainerPoint([r.lat,r.lon]);const d=p.distanceTo(e.containerPoint);if(d<best){best=d;nearest=r;}}if(nearest&&best<45)selectRecord(nearest);});
