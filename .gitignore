@@ -3,3 +3,10 @@
 .RData
 .Ruserdata
 data/
+
+!data/
+data/*
+!data/june-2026.json
+
+!data/outliers-track-june-2026.json
+!data/position-matches-june-2026.json

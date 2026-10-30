@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SV Elusive R2AK Air Pollution Tracker</title>
+
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+  <main id="app">
+    <div id="map"></div>
+
+    <aside id="info-panel">
+      <header>
+        <p class="eyebrow">Race2AK</p>
+        <h1>SV Elusive R2AK Air Pollution Tracker</h1>
+
+        <p class="subtitle">
+          Air-quality observations from a moving vessel during Race to Alaska.
+        </p>
+
+        <p class="subtitle-linkline">
+          <a
+            class="tracking-link subtle"
+            href="https://r2akcurrentdata.netlify.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Take a look at our current tracking
+          </a>
+        </p>
+
+        <p class="mobile-pc-note">
+          This dashboard is best viewed on a desktop or laptop. Mobile view is intended for quick checks.
+        </p>
+
+        <p id="status-pill" class="status-pill">Loading...</p>
+      </header>
+
+      <section class="card current-reading-card">
+        <h2 id="selected-reading-name">Current reading</h2>
+        <p id="selected-reading-value" class="current-reading-value">—</p>
+        <p id="selected-reading-meta" class="current-reading-meta">—</p>
+      </section>
+
+      <details class="card" id="current-pollutants-card">
+        <summary>All Current Pollutants</summary>
+        <div id="pollutant-list" class="pollutant-list"></div>
+      </details>
+
+      <section class="card metadata-card">
+        <h2>Last Updated</h2>
+        <p id="last-updated">—</p>
+      </section>
+
+      <details class="card data-status-card metadata-card" id="data-status-card">
+        <summary>Data Status</summary>
+        <div id="data-quality-list" class="data-quality-list"></div>
+      </details>
+    </aside>
+
+    <section id="timeseries-panel" class="timeseries-panel">
+      <div class="timeseries-header">
+        <div>
+          <h2>
+            Pollutant Time Series
+            <span id="timeseries-unit-label" class="timeseries-unit-label"></span>
+          </h2>
+          <p id="timeseries-subtitle">
+            Click a point on the chart to jump to that location on the map.
+          </p>
+        </div>
+
+        <button
+          id="timeseries-toggle"
+          class="timeseries-toggle"
+          type="button"
+          aria-expanded="true"
+        >
+          Minimize
+        </button>
+      </div>
+
+      <div class="timeseries-body">
+        <div class="timeseries-plot-wrap">
+          <div class="timeseries-y-axis">
+            <canvas id="timeseries-y-axis-chart"></canvas>
+          </div>
+
+          <div class="timeseries-scroll">
+            <div id="timeseries-chart-inner" class="timeseries-chart-inner">
+              <canvas id="timeseries-chart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

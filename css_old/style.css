@@ -1,0 +1,990 @@
+/* =========================================================
+   Design tokens
+   ========================================================= */
+
+:root {
+  --panel-width: 360px;
+  --timeseries-height: 270px;
+
+  --bg: #0f172a;
+  --panel: #ffffff;
+  --text: #0f172a;
+  --muted: #64748b;
+  --border: #e2e8f0;
+}
+
+/* =========================================================
+   Base reset and page layout
+   ========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--text);
+}
+
+body {
+  overflow: hidden;
+}
+
+#app {
+  display: grid;
+  grid-template-columns: 1fr var(--panel-width);
+  background: var(--bg);
+}
+
+/* =========================================================
+   Map
+   ========================================================= */
+
+#map {
+  width: 100%;
+  height: 100vh;
+}
+
+/* =========================================================
+   Info panel layout
+   ========================================================= */
+
+#info-panel {
+  height: 100vh;
+  overflow-y: auto;
+  padding: 1rem;
+  background: #f8fafc;
+  border-left: 1px solid var(--border);
+}
+
+header {
+  margin-bottom: 1rem;
+}
+
+/* =========================================================
+   Typography
+   ========================================================= */
+
+.eyebrow {
+  margin: 0 0 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 0 0 0.5rem;
+  font-size: 1.35rem;
+  line-height: 1.2;
+}
+
+h2 {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+}
+
+.subtitle {
+  margin: 0 0 0.75rem;
+  font-size: 0.9rem;
+  line-height: 1.35;
+  color: var(--muted);
+}
+
+/* =========================================================
+   Cards
+   ========================================================= */
+
+.card {
+  margin-bottom: 0.75rem;
+  padding: 0.9rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 0.9rem;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+.card p {
+  margin: 0;
+}
+
+.metadata-card h2 {
+  color: var(--muted);
+}
+
+.metadata-card p,
+.metadata-card .data-quality-list {
+  font-size: 0.86rem;
+}
+
+/* =========================================================
+   Tracking link
+   ========================================================= */
+
+.subtitle-linkline {
+  margin: -0.35rem 0 0.75rem;
+}
+
+.tracking-link {
+  text-decoration: none;
+}
+
+.tracking-link.subtle {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.tracking-link.subtle:hover {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+.tracking-link.subtle::after {
+  content: " ↗";
+  font-size: 0.85em;
+}
+
+/* =========================================================
+   Current reading and data status
+   ========================================================= */
+
+.current-reading-card {
+  border-color: rgba(37, 99, 235, 0.18);
+}
+
+.current-reading-value {
+  margin: 0.1rem 0 0.2rem;
+  font-size: 1.55rem;
+  font-weight: 900;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.current-reading-meta {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.data-quality-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.data-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.75rem;
+  padding: 0.28rem 0.5rem;
+  font-size: 0.76rem;
+  font-weight: 800;
+  border-radius: 999px;
+  background: #e2e8f0;
+  color: #334155;
+}
+
+.data-chip.good {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.data-chip.warn {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.data-chip.bad {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.data-chip.info {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+/* =========================================================
+   Form controls
+   ========================================================= */
+
+label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+select {
+  width: 100%;
+  min-height: 2.35rem;
+  padding: 0.55rem;
+  font: inherit;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 0.6rem;
+}
+
+summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+/* =========================================================
+   Current vessel marker
+   ========================================================= */
+
+.vessel-arrow-icon {
+  background: transparent;
+  border: none;
+}
+
+.vessel-arrow-wrap {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  transform-origin: center center;
+}
+
+.vessel-arrow-wrap::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 28px;
+  height: 28px;
+  transform: translate(-50%, -50%);
+  background: rgba(15, 23, 42, 0.16);
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  border-radius: 999px;
+}
+
+.vessel-arrow {
+  position: absolute;
+  left: 50%;
+  top: 2px;
+  z-index: 2;
+  width: 0;
+  height: 0;
+  transform: translateX(-50%);
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 24px solid #0f172a;
+  filter: drop-shadow(0 2px 4px rgba(15, 23, 42, 0.35));
+}
+
+.vessel-arrow-wrap.stale::after {
+  background: rgba(100, 116, 139, 0.22);
+  border-color: rgba(255, 255, 255, 0.85);
+}
+
+.vessel-arrow-wrap.stale .vessel-arrow {
+  border-bottom-color: #64748b;
+  filter: drop-shadow(0 2px 4px rgba(15, 23, 42, 0.22));
+}
+
+.vessel-stale-label {
+  position: absolute;
+  left: 50%;
+  bottom: -0.65rem;
+  z-index: 3;
+  transform: translateX(-50%);
+  padding: 0.08rem 0.28rem;
+  font-size: 0.52rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  color: #475569;
+  background: rgba(248, 250, 252, 0.92);
+  border: 1px solid rgba(100, 116, 139, 0.45);
+  border-radius: 999px;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.18);
+}
+
+.popup-stale-badge {
+  display: inline-block;
+  margin-left: 0.25rem;
+  padding: 0.08rem 0.35rem;
+  font-size: 0.68rem;
+  font-weight: 800;
+  line-height: 1.2;
+  color: #475569;
+  background: #e2e8f0;
+  border-radius: 999px;
+}
+
+/* =========================================================
+   Pollutant list
+   ========================================================= */
+
+.pollutant-list {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 0.75rem;
+}
+
+.pollutant-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.pollutant-name {
+  color: var(--muted);
+}
+
+.pollutant-value {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* =========================================================
+   Status pill
+   ========================================================= */
+
+.status-pill {
+  display: inline-block;
+  margin: 0;
+  padding: 0.35rem 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #334155;
+  background: #e2e8f0;
+  border-radius: 999px;
+}
+
+.status-pill.live {
+  color: #166534;
+  background: #dcfce7;
+}
+
+.status-pill.stale {
+  color: #92400e;
+  background: #fef3c7;
+}
+
+.status-pill.error {
+  color: #991b1b;
+  background: #fee2e2;
+}
+
+/* =========================================================
+   Map controls and legend
+   ========================================================= */
+
+.leaflet-top.leaflet-right {
+  top: 0.75rem;
+  right: 0.75rem;
+}
+
+.map-control-stack {
+  display: grid;
+  gap: 0.5rem;
+  min-width: 170px;
+  max-width: 210px;
+}
+
+.map-select-control,
+.map-control-button-row,
+.map-legend {
+  background: rgba(248, 250, 252, 0.84);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  border-radius: 0.9rem;
+  box-shadow: 0 5px 16px rgba(15, 23, 42, 0.14);
+  backdrop-filter: blur(8px);
+}
+
+.map-select-control {
+  padding: 0.55rem;
+}
+
+.map-select-label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-size: 0.72rem;
+  font-weight: 900;
+  color: #334155;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.map-pollutant-select {
+  width: 100%;
+  min-height: 2.15rem;
+  padding: 0.4rem 0.5rem;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: 0.65rem;
+}
+
+.map-control-button-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+  padding: 0.45rem;
+}
+
+.map-button {
+  display: block;
+  width: 100%;
+  min-height: 2.15rem;
+  padding: 0.42rem 0.55rem;
+  font: inherit;
+  font-size: 0.76rem;
+  font-weight: 900;
+  color: #334155;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.map-button:hover {
+  background: rgba(255, 255, 255, 0.98);
+}
+
+.map-legend {
+  padding: 0.65rem 0.75rem;
+  overflow: hidden;
+}
+
+.map-legend-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.map-legend-title {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 900;
+  color: var(--text);
+}
+
+.map-legend-toggle {
+  flex: 0 0 auto;
+  font-size: 0.8rem;
+  font-weight: 900;
+  color: var(--muted);
+}
+
+.map-legend-body {
+  margin-top: 0.45rem;
+}
+
+.map-legend.collapsed .map-legend-body {
+  display: none;
+}
+
+.legend-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.32rem;
+  font-size: 0.78rem;
+}
+
+.legend-swatch {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+  border: 1px solid rgba(15, 23, 42, 0.25);
+  border-radius: 999px;
+}
+
+/* =========================================================
+   Sunrise / sunset markers on map
+   ========================================================= */
+
+.time-marker {
+  background: transparent;
+  border: none;
+}
+
+.time-marker-wrap {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 5px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  border-radius: 999px;
+  box-shadow: 0 3px 10px rgba(15, 23, 42, 0.25);
+  backdrop-filter: blur(6px);
+}
+
+.time-marker-wrap svg {
+  width: 30px;
+  height: 30px;
+  display: block;
+}
+
+.time-marker-wrap.sunrise svg path,
+.time-marker-wrap.sunrise svg line,
+.time-marker-wrap.sunrise svg circle,
+.time-marker-wrap.sunrise svg polyline {
+  stroke: #1f2937;
+  fill: none;
+  stroke-width: 2.3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.time-marker-wrap.sunset svg path,
+.time-marker-wrap.sunset svg line,
+.time-marker-wrap.sunset svg circle,
+.time-marker-wrap.sunset svg polyline {
+  stroke: #1f2937;
+  fill: none;
+  stroke-width: 2.3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.time-marker-wrap.sunset svg .sun-fill {
+  fill: #1f2937;
+  stroke: #1f2937;
+}
+
+/* =========================================================
+   Bottom time-series panel
+   ========================================================= */
+
+.timeseries-panel {
+  position: fixed;
+  left: 0.75rem;
+  right: calc(var(--panel-width) + 0.75rem);
+  bottom: 0.75rem;
+  z-index: 900;
+
+  height: var(--timeseries-height);
+  max-height: var(--timeseries-height);
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 0.8rem 1rem 1rem;
+  background: rgba(248, 250, 252, 0.68);
+  border: 1px solid rgba(226, 232, 240, 0.72);
+  border-radius: 1rem;
+  box-shadow: 0 -12px 30px rgba(15, 23, 42, 0.18);
+  backdrop-filter: blur(10px);
+
+  overflow: hidden;
+}
+
+.timeseries-panel.collapsed {
+  height: 3.35rem;
+  max-height: 3.35rem;
+  padding: 0.65rem 0.85rem;
+}
+
+.timeseries-header {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.timeseries-header h2 {
+  margin: 0 0 0.15rem;
+  font-size: 0.95rem;
+  line-height: 1.15;
+}
+
+.timeseries-header p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.timeseries-unit-label {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 0.4rem;
+  padding: 0.12rem 0.4rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #334155;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 999px;
+}
+
+.timeseries-unit-label:empty {
+  display: none;
+}
+
+.timeseries-toggle {
+  flex: 0 0 auto;
+  min-width: 4.75rem;
+  min-height: 2.25rem;
+  padding: 0.45rem 0.75rem;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #334155;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.timeseries-toggle:hover {
+  background: rgba(255, 255, 255, 0.98);
+}
+
+.timeseries-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: auto;
+
+  padding: 0.5rem 0.5rem 1.25rem;
+  background: rgba(255, 255, 255, 0.30);
+  border: 1px solid rgba(226, 232, 240, 0.55);
+  border-radius: 0.9rem;
+
+  overflow: hidden;
+}
+
+.timeseries-panel.collapsed .timeseries-body,
+.timeseries-panel.collapsed #timeseries-subtitle,
+.timeseries-panel.collapsed .timeseries-unit-label {
+  display: none;
+}
+
+.timeseries-plot-wrap {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.timeseries-y-axis {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  min-height: 0;
+  background: rgba(255, 255, 255, 0.58);
+  border-right: 1px solid rgba(226, 232, 240, 0.85);
+  border-radius: 0.65rem 0 0 0.65rem;
+  overflow: hidden;
+}
+
+.timeseries-scroll {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 0.9rem;
+  overscroll-behavior-x: contain;
+}
+
+.timeseries-chart-inner {
+  height: 100%;
+  min-height: 0;
+  min-width: 760px;
+}
+
+#timeseries-chart,
+#timeseries-y-axis-chart {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  max-height: 100% !important;
+}
+
+/* =========================================================
+   Responsive layout
+   ========================================================= */
+
+@media (max-width: 800px) {
+  :root {
+    --timeseries-height: 40vh;
+  }
+
+  html,
+  body,
+  #app {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  #app {
+    display: block;
+  }
+
+  #map {
+    height: 100dvh;
+    width: 100%;
+  }
+
+  #info-panel {
+    position: fixed;
+    top: 0.75rem;
+    left: 0.75rem;
+    right: 0.75rem;
+    z-index: 950;
+
+    height: auto;
+    max-height: 34dvh;
+    overflow-y: auto;
+
+    padding: 0.75rem;
+    background: rgba(248, 250, 252, 0.88);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    border-radius: 1rem;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.22);
+    backdrop-filter: blur(10px);
+  }
+
+  #info-panel header {
+    margin-bottom: 0.55rem;
+  }
+
+  .eyebrow {
+    font-size: 0.68rem;
+  }
+
+  #info-panel h1 {
+    margin-bottom: 0.3rem;
+    font-size: 1rem;
+    line-height: 1.15;
+  }
+
+  .subtitle {
+    display: none;
+  }
+
+  .subtitle-linkline {
+    margin: -0.1rem 0 0.55rem;
+  }
+
+  .tracking-link.subtle {
+    font-size: 0.78rem;
+  }
+
+  .status-pill {
+    font-size: 0.72rem;
+    padding: 0.32rem 0.55rem;
+  }
+
+  .card {
+    padding: 0.65rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.75rem;
+  }
+
+  .card h2,
+  summary,
+  label {
+    font-size: 0.86rem;
+  }
+
+  .current-reading-value {
+    font-size: 1.25rem;
+  }
+
+  .data-status-card {
+    display: none;
+  }
+
+  select,
+  .timeseries-toggle,
+  .map-button {
+    min-height: 2.5rem;
+  }
+
+  .pollutant-list {
+    gap: 0.25rem;
+    margin-top: 0.55rem;
+  }
+
+  .pollutant-row {
+    font-size: 0.82rem;
+    padding-bottom: 0.25rem;
+  }
+
+  .leaflet-top.leaflet-right {
+    top: auto;
+    right: 0.75rem;
+    bottom: calc(var(--timeseries-height) + 1.5rem);
+  }
+
+  .map-control-stack {
+    min-width: 138px;
+    max-width: 150px;
+    gap: 0.4rem;
+  }
+
+  .map-select-control {
+    padding: 0.45rem;
+  }
+
+  .map-select-label {
+    font-size: 0.64rem;
+  }
+
+  .map-pollutant-select {
+    min-height: 2.35rem;
+    font-size: 0.76rem;
+  }
+
+  .map-control-button-row {
+    padding: 0.35rem;
+    gap: 0.3rem;
+  }
+
+  .map-button {
+    padding: 0.42rem 0.45rem;
+    font-size: 0.7rem;
+  }
+
+  .map-legend {
+    max-height: 145px;
+    overflow-y: auto;
+    padding: 0.55rem 0.6rem;
+    font-size: 0.7rem;
+    background: rgba(248, 250, 252, 0.86);
+  }
+
+  .map-legend-title {
+    font-size: 0.72rem;
+  }
+
+  .legend-row {
+    gap: 0.4rem;
+    font-size: 0.7rem;
+  }
+
+  .legend-swatch {
+    width: 0.85rem;
+    height: 0.85rem;
+  }
+
+  .timeseries-panel {
+    left: 0.5rem;
+    right: 0.5rem;
+    bottom: 0.5rem;
+
+    height: var(--timeseries-height);
+    max-height: var(--timeseries-height);
+
+    padding: 0.65rem;
+    border-radius: 1rem;
+    background: rgba(248, 250, 252, 0.82);
+  }
+
+  .timeseries-panel.collapsed {
+    height: 3.25rem;
+    max-height: 3.25rem;
+  }
+
+  .timeseries-header {
+    align-items: center;
+    margin-bottom: 0.4rem;
+  }
+
+  .timeseries-header h2 {
+    font-size: 0.86rem;
+  }
+
+  .timeseries-header p {
+    display: none;
+  }
+
+  .timeseries-body {
+    padding: 0.45rem 0.45rem 1.15rem;
+  }
+
+  .timeseries-plot-wrap {
+    grid-template-columns: 54px minmax(0, 1fr);
+  }
+
+  .timeseries-chart-inner {
+    min-width: 680px;
+  }
+
+  .time-marker-wrap {
+    width: 36px;
+    height: 36px;
+    padding: 4px;
+  }
+
+  .time-marker-wrap svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --timeseries-height: 38vh;
+  }
+
+  #info-panel {
+    max-height: 30dvh;
+  }
+
+  .card {
+    padding: 0.55rem;
+  }
+
+  .map-control-stack {
+    min-width: 128px;
+    max-width: 138px;
+  }
+
+  .timeseries-plot-wrap {
+    grid-template-columns: 50px minmax(0, 1fr);
+  }
+
+  .timeseries-chart-inner {
+    min-width: 620px;
+  }
+
+  .map-legend {
+    max-height: 125px;
+  }
+}
+
+/* =========================================================
+   Mobile desktop-viewing note
+   ========================================================= */
+
+.mobile-pc-note {
+  display: none;
+  margin: -0.25rem 0 0.65rem;
+  font-size: 0.76rem;
+  line-height: 1.3;
+  color: #92400e;
+  background: #fef3c7;
+  border: 1px solid #fde68a;
+  border-radius: 0.65rem;
+  padding: 0.45rem 0.55rem;
+}
+
+@media (max-width: 800px) {
+  .mobile-pc-note {
+    display: block;
+  }
+}
