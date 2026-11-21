@@ -579862,6 +579862,106 @@
         "RH": 80.22,
         "AQHI": 2.0
       }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.146102,
+          49.272833
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-11-21T16:10:00+00:00",
+        "coord_source": "previous",
+        "CO": 0.391,
+        "NO": 65.61,
+        "NO2": 16.297,
+        "O3": 6.818,
+        "CO2": 522.968,
+        "PM2_5": 6.002,
+        "PM1": 5.446,
+        "PM10": 34.612,
+        "T": 3.1,
+        "RH": 80.28,
+        "AQHI": 2.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.146102,
+          49.272833
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-11-21T16:15:00+00:00",
+        "coord_source": "previous",
+        "CO": 0.398,
+        "NO": 89.584,
+        "NO2": 16.225,
+        "O3": 6.827,
+        "CO2": 524.906,
+        "PM2_5": 7.926,
+        "PM1": 6.706,
+        "PM10": 72.016,
+        "T": 3.1,
+        "RH": 80.26,
+        "AQHI": 2.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.146102,
+          49.272833
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-11-21T16:20:00+00:00",
+        "coord_source": "previous",
+        "CO": 0.397,
+        "NO": 90.199,
+        "NO2": 16.198,
+        "O3": 6.798,
+        "CO2": 524.32,
+        "PM2_5": 8.274,
+        "PM1": 6.776,
+        "PM10": 67.788,
+        "T": 3.16,
+        "RH": 80.5,
+        "AQHI": 2.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.146102,
+          49.272833
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-11-21T16:25:00+00:00",
+        "coord_source": "previous",
+        "CO": 0.395,
+        "NO": 136.133,
+        "NO2": 16.413,
+        "O3": 6.503,
+        "CO2": 522.093,
+        "PM2_5": 8.19,
+        "PM1": 6.97,
+        "PM10": 64.81,
+        "T": 3.2,
+        "RH": 80.7,
+        "AQHI": 2.0
+      }
     }
   ]
 }
